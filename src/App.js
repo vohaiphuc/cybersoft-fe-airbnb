@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import _ from "lodash";
+import { userRoute } from "./user/route/userRoute";
+import { adminRoute } from "./admin/route/adminRoute";
 
 function App() {
+  const createRoutes = (routeList) => (
+    _.values(routeList).map(({ path, element }) => <Route key={path} path={path} element={element} />)
+  )
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <BrowserRouter>
+      <Routes>
+        {createRoutes(userRoute)}
+        {createRoutes(adminRoute)}
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
 export default App;
