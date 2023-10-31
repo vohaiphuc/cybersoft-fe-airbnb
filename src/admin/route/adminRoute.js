@@ -18,10 +18,10 @@ import PageNotFound from "../page/404/PageNotFound";
 
 export const adminRoute = {
     home: { path: "/admin", element: <Home /> },
-    booking: { path: "/booking", element: <Booking /> },
-    location: { path: "/location", element: <Location /> },
-    login: { path: "/login", element: <Login /> },
-    room: { path: "/room", element: <Room /> },
-    user: { path: "/user", element: <User /> },
-    other: { path: "*", element: <PageNotFound /> },
+    booking: { path: "/admin/booking", element: <Booking /> },
+    location: { path: "/admin/location", element: <Location /> },
+    login: { path: "/admin/login", element: <Login /> },
+    room: { path: "/admin/room", element: <Room /> },
+    user: { path: "/admin/user", element: <User /> },
+    other: { path: "admin/*", element: <PageNotFound /> },
 }
