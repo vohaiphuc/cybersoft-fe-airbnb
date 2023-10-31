@@ -5,12 +5,14 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import userSlice from './user/redux/userSlice';
+import { adminReducer } from './admin/redux/adminReducer';
+import { userReducer } from './user/redux/userReducer';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 export const store = configureStore({
   reducer: {
-    userSlice,
+    ...adminReducer,
+    ...userReducer,
   }
 })
 
