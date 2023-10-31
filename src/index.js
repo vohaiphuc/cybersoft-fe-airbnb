@@ -5,10 +5,12 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
+import userSlice from './user/redux/userSlice';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 export const store = configureStore({
   reducer: {
+    userSlice,
   }
 })
 
