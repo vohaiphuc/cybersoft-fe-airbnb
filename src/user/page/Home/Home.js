@@ -1,8 +1,9 @@
 import React from 'react'
 import "./asset/style.scss"
+import Header from '../../component/Header/Header'
 
 export default function Home() {
     return (
-        <div className='text-red-700'>Home</div>
+        <Header />
     )
 }
