@@ -1,0 +1,22 @@
+.nav {
+    button {
+        transition: all 0.2s;
+        &:hover {
+            background: #f7f7f7;
+            padding: 3px 12px;
+            border-radius: 22px;
+        }
+    }
+}
+
+.profile {
+    width: fit-content;
+    padding: 8px 8px 8px 14px;
+    border: 1px solid #dddddd;
+    border-radius: 30px;
+    transition: all 0.2s;
+
+    &:hover {
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+}

@@ -2,17 +2,19 @@ import React from 'react'
 import Logo from './Logo'
 import SearchBar from './SearchBar'
 import NavBar from './NavBar'
+import "./style.scss"
 
-export default function Header() {
+export default function Header({ searchBar }) {
+    console.log("🚀 ~ file: Header.js:8 ~ Header ~ searchBar:", searchBar)
     return (
-        <div className="flex justify-between">
+        <div className="flex items-center justify-between h-20">
             <div className="logo">
                 <Logo />
             </div>
             <div className="search-bar">
-                <SearchBar />
+                {searchBar && <SearchBar />}
             </div>
-            <div className="nav">
+            <div className="nav flex items-center">
                 <NavBar />
             </div>
         </div>

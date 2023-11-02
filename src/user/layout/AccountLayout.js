@@ -6,7 +6,7 @@ export default function DefaultLayout({ children }) {
     return (
         <>
             <header className='px-20 border-b-[1px] border-gray-200'>
-                <Header searchBar />
+                <Header />
             </header>
             <div className="px-20">
                 {children}

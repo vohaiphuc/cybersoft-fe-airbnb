@@ -15,14 +15,49 @@ import Login from "../page/Login/Login";
 import Register from "../page/Register/Register";
 import Account from "../page/Account/Account";
 import PageNotFound from "../page/404/PageNotFound";
+import DefaultLayout from "../layout/DefaultLayout";
+import AccountLayout from "../layout/AccountLayout";
 
 export const userRoute = {
-    home: { path: "/", element: <Home /> },
-    room: { path: "/room", element: <Room /> },
-    detail: { path: "/room/:id", element: <Room />, id: (id) => `/room/${id}` },
-    location: { path: "/location/:city", element: <Location /> },
-    login: { path: "/login", element: <Login /> },
-    register: { path: "/register", element: <Register /> },
-    account: { path: "/account", element: <Account /> },
-    other: { path: "*", element: <PageNotFound /> },
+    home: {
+        path: "/",
+        element: <DefaultLayout><Home /></DefaultLayout>
+    },
+
+    room: {
+        path: "/room",
+        element: <DefaultLayout><Room /></DefaultLayout>
+    },
+
+    detail: {
+        path: "/room/:id",
+        element: <DefaultLayout><Room /></DefaultLayout>,
+        id: (id) => `/room/${id}`
+    },
+
+    location: {
+        path: "/location/:city",
+        element: <DefaultLayout><Location /></DefaultLayout>
+    },
+
+    login: {
+        path: "/login",
+        element: <DefaultLayout><Login /></DefaultLayout>
+    },
+
+    register: {
+        path: "/register",
+        element: <DefaultLayout><Register /></DefaultLayout>
+    },
+
+    account: {
+        path: "/account",
+        element: <AccountLayout><Account /></AccountLayout>
+    },
+
+    other: {
+        path: "*",
+        element: <DefaultLayout><PageNotFound /></DefaultLayout>
+    },
+
 }
