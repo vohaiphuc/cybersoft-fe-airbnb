@@ -5,7 +5,7 @@ import _ from 'lodash';
 import React, { useEffect, useState } from 'react'
 
 export default function FilterModal({ list, handleFilterRoom, resetModal }) {
-    const [isModalOpen, setIsModalOpen] = useState(true)
+    const [isModalOpen, setIsModalOpen] = useState(false)
     const [fitlerResult, setFitlerResult] = useState(null)
     console.log("🚀 ~ file: FilterModal.js:10 ~ FilterModal ~ fitlerResult:", fitlerResult)
 
