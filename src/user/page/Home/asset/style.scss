@@ -1,0 +1,51 @@
+.slider-item {
+    cursor: pointer;
+    text-align: center;
+    padding: 10px 0;
+    border-bottom: 2px solid transparent;
+    transition: 0.3s all;
+    color: gray;
+
+    &:hover {
+        border-color: gray;
+        color: black;
+    }
+    svg {
+        font-size: x-large;
+    }
+    p {
+        font-size: small;
+    }
+}
+
+.slick-arrow.slick-prev {
+    color: black !important;
+    background: white !important;
+}
+
+.slider-carousel {
+    .active {
+        color: black;
+        border-color: gray;
+    }
+}
+.slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #fff;
+    // display: flex;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    border: 1px solid black;
+    border-radius: 50%;
+    cursor: pointer;
+
+    &.slider-arrow-prev {
+        left: 0;
+    }
+    &.slider-arrow-next {
+        right: 0;
+    }
+}
