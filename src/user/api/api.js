@@ -7,3 +7,7 @@ export const userServ = {
 export const roomServ = {
     get: () => https.get('/phong-thue')
 }
+
+export const viTriServ = {
+    get: () => https.get("/vi-tri")
+}
