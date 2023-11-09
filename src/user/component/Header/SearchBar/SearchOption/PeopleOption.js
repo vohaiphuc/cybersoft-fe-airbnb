@@ -47,7 +47,7 @@ export default function PeopleOption({ people, setPeople, handleSetActiveInput, 
                 </button>
             </ConfigProvider>
             {active &&
-                <div className="absolute w-28 h-12 px-5 bg-red-50 sb-people-popup rounded-3xl flex items-center justify-between"
+                <div className="absolute w-28 h-12 px-5 bg-white shadow-2xl sb-people-popup rounded-3xl flex items-center justify-between z-10"
                     tabIndex="0"
                     autoFocus
                     ref={refPeople}

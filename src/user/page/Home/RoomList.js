@@ -1,9 +1,17 @@
 import React from 'react'
 import RoomItem from './RoomItem'
+import _ from 'lodash'
 
-export default function RoomList({ list }) {
+export default function RoomList({ list, locationList }) {
     const renderRoom = () => {
         return list?.map((room, index) => {
+            let idIndex = _.findIndex(locationList, (item) => item.id == room.maViTri)
+            if (idIndex > -1) {
+                room.locationDetail = {
+                    tenViTri: locationList[idIndex]?.tenViTri,
+                    tinhThanh: locationList[idIndex]?.tinhThanh,
+                }
+            }
             return <RoomItem room={room} key={index} />
         })
     }
