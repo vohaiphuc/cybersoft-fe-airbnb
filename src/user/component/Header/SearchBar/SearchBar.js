@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { viTriServ } from '../../../api/api';
-import { slugify } from './utils';
+import React, { useState } from 'react'
 import LocationOption from './SearchOption/LocationOption';
 import PeopleOption from './SearchOption/PeopleOption';
 import DateOption from './SearchOption/DateOption';
+import { useSelector } from 'react-redux';
 
 export const activeInputSlug = {
     location: 'location',
@@ -13,7 +12,7 @@ export const activeInputSlug = {
 }
 
 export default function SearchBar() {
-    const [locationList, setLocationList] = useState(null);
+    const locationList = useSelector(state => state.locationSlide.list)
     const [locationId, setLocationId] = useState("");
     const [date, setDate] = useState("");
     const [people, setPeople] = useState(0);
@@ -39,40 +38,9 @@ export default function SearchBar() {
             people: false,
         }
 
-        // đang tắt, muốn bật -> bật
-        // đang tắt, muốn tắt -> tắt hết
-        // đang bật, muốn tắt -> tắt hết
-        // đang bật, muốn bật -> giữ nguyên
-        // if (!activeInput[input] && state == true) {
-        //     newActiveInput[input] = true
-        //     setActiveInput(newActiveInput)
-        //     console.log(1);
-
-        // } else if (state == false) {
-        //     setActiveInput(newActiveInput)
-        //     console.log(2);
-        // }
-
         newActiveInput[input] = state
         setActiveInput(newActiveInput)
     }
-
-    useEffect(() => {
-        viTriServ.get()
-            .then((res) => {
-                console.log(res.data.content);
-                let list = res.data.content.map(item => {
-                    return {
-                        ...item,
-                        slugTenViTri: slugify(item.tenViTri),
-                    }
-                })
-                setLocationList(list)
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, [])
 
     const handleSubmit = () => {
         const input = {
