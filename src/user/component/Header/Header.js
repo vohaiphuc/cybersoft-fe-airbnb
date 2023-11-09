@@ -12,14 +12,14 @@ export default function Header({ searchBar }) {
     return (
         <div className='flex justify-between h-fit flex-wrap py-5 space-y-2'>
             <div className="flex items-center justify-between w-full">
-                <div className="logo">
+                <div className="logo w-1/3">
                     <Logo />
                 </div>
                 <div className="search-bar" onClick={() => { setExpandSearchBar(!expandSearchBar) }}>
                     {searchBar && !expandSearchBar && <NormalSearchbar />}
                     {searchBar && expandSearchBar && <ExpandSearchbar />}
                 </div>
-                <div className="nav flex items-center">
+                <div className="nav flex items-center justify-end w-1/3">
                     <NavBar />
                 </div>
             </div>
