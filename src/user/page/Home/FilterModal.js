@@ -7,7 +7,6 @@ import React, { useEffect, useState } from 'react'
 export default function FilterModal({ list, handleFilterRoom, resetModal }) {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [fitlerResult, setFitlerResult] = useState(null)
-    console.log("🚀 ~ file: FilterModal.js:10 ~ FilterModal ~ fitlerResult:", fitlerResult)
 
     const [rangeGiaTien, setRangeGiaTien] = useState({ start: 0, end: 0 })
     const [phongNgu, setPhongNgu] = useState(0);
