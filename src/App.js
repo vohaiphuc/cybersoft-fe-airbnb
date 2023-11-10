@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import _ from "lodash";
 import { userRoute } from "./user/route/userRoute";
 import { adminRoute } from "./admin/route/adminRoute";
+import ModalBg from "./user/component/Modal/ModalBg";
 
 function App() {
 	const createRoutes = (routeList) => (
@@ -9,12 +10,15 @@ function App() {
 	)
 
 	return (
-		<BrowserRouter>
-			<Routes>
-				{createRoutes(userRoute)}
-				{createRoutes(adminRoute)}
-			</Routes>
-		</BrowserRouter>
+		<>
+			<ModalBg />
+			<BrowserRouter>
+				<Routes>
+					{createRoutes(userRoute)}
+					{createRoutes(adminRoute)}
+				</Routes>
+			</BrowserRouter>
+		</>
 	)
 }
 

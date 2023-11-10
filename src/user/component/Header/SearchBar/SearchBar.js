@@ -3,6 +3,7 @@ import LocationOption from './SearchOption/LocationOption';
 import PeopleOption from './SearchOption/PeopleOption';
 import DateOption from './SearchOption/DateOption';
 import { useSelector } from 'react-redux';
+import useModalBg from '../../Modal/useModalBg';
 
 export const activeInputSlug = {
     location: 'location',
@@ -16,6 +17,8 @@ export default function SearchBar() {
     const [locationId, setLocationId] = useState("");
     const [date, setDate] = useState("");
     const [people, setPeople] = useState(0);
+    const { isOpenModal } = useModalBg()
+
 
     const [activeInput, setActiveInput] = useState({
         location: false,
@@ -25,8 +28,6 @@ export default function SearchBar() {
     });
 
     const handleSetActiveInput = (input, state) => {
-        console.log(activeInput[input], state);
-
         if (activeInput[input] && state == true) {
             return
         }
@@ -53,12 +54,12 @@ export default function SearchBar() {
     }
 
     return (
-        <div className='border-2 rounded-full h-16 flex items-center'>
+        <div className={`bg-white border-2 rounded-full h-16 flex items-center ${isOpenModal && 'relative z-30'}`}>
             <div className='rounded-full h-full w-1/4 overflow-hidden cursor-pointer'>
                 <LocationOption
                     locationList={locationList}
                     setLocationId={setLocationId}
-                    active={activeInput.location}
+                    isActive={activeInput.location}
                     handleSetActiveInput={handleSetActiveInput}
                 />
             </div>
@@ -75,7 +76,7 @@ export default function SearchBar() {
                     people={people}
                     setPeople={setPeople}
                     handleSubmit={handleSubmit}
-                    active={activeInput.people}
+                    isActive={activeInput.people}
                     handleSetActiveInput={handleSetActiveInput}
                 />
             </div>
