@@ -1,0 +1,10 @@
+.force-image span {
+    height: 100%;
+  }
+  
+  @media screen and (max-width: 960px) {
+    .rdrDateRangePickerWrapper {
+      display: block !important;
+      overflow: auto;
+    }
+  }
