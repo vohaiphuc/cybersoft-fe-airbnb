@@ -2,10 +2,15 @@ import { Select } from 'antd'
 import React from 'react'
 import { slugify } from '../utils'
 import useModalBg from '../../../Modal/useModalBg'
+import useActiveInput from './useActiveInput'
 
-export default function LocationOption({ locationList, setLocationId, isActive, handleSetActiveInput }) {
+export default function LocationOption({ locationList, setLocationId }) {
     const { isOpenModal, openModal } = useModalBg()
-    const active = isActive && isOpenModal
+
+    const { activeIndex, setActiveIndex } = useActiveInput()
+
+    const key = 0
+    const active = (activeIndex == key && isOpenModal)
 
     const handleFilter = (inputValue, option) => {
         let label = slugify(option.label.toLowerCase())
@@ -30,8 +35,8 @@ export default function LocationOption({ locationList, setLocationId, isActive, 
             ))}
             open={active}
             className={`rounded-full w-full h-full sb-location cursor-pointer ${active && 'active'} z-30`}
-            onClick={() => { handleSetActiveInput('location', true); openModal() }}
-            onBlur={() => { handleSetActiveInput('location', false) }}
+            onClick={() => { setActiveIndex(key); openModal() }}
+            onBlur={() => { setActiveIndex(null); }}
         />
     )
 }

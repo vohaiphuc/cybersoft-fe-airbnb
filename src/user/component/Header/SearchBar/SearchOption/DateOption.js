@@ -2,6 +2,7 @@ import { Button, ConfigProvider, DatePicker, Input } from 'antd';
 import React from 'react'
 import DateInput from './DateInput';
 import useModalBg from '../../../Modal/useModalBg';
+import useActiveInput from './useActiveInput';
 
 const { RangePicker } = DatePicker
 const startDate = 'startDate'
@@ -10,27 +11,32 @@ const endDate = 'endDate'
 export default function DateOption({ activeInput, handleSetActiveInput, date, setDate }) {
 
     const { isOpenModal } = useModalBg()
-    const active = (activeInput.startDate || activeInput.endDate) && isOpenModal
+    const { activeIndex, setActiveIndex } = useActiveInput()
+    const key1 = 1
+    const key2 = 2
+    const active = (activeIndex == key1 || activeIndex == key2) && isOpenModal
 
     const handleCalendarChange = ([start, end]) => {
-        if (activeInput[startDate] && start) {
+        if (activeIndex == key1 && start) {
             setDate([start, end])
-            handleSetActiveInput(endDate, true)
+            handleChangeActiveIndex(key2)
         }
-        else if (activeInput[endDate] && end) {
+        else if (activeIndex == key2 && end) {
             setDate([start, end])
         }
+    }
+
+    const handleChangeActiveIndex = (key) => {
+        setActiveIndex(key)
     }
 
     return (
         <>
             <DateInput dateInfo={startDate} title="Nhận phòng"
-                activeInput={activeInput} date={date}
-                handleSetActiveInput={handleSetActiveInput}
+                indexKey={key1} date={date}
             />
             <DateInput dateInfo={endDate} title="Trả phòng"
-                activeInput={activeInput} date={date}
-                handleSetActiveInput={handleSetActiveInput}
+                indexKey={key2} date={date}
             />
 
             {active &&
@@ -42,10 +48,13 @@ export default function DateOption({ activeInput, handleSetActiveInput, date, se
                             style={{ width: "100%", border: 0 }}
                             onCalendarChange={handleCalendarChange}
                             value={date}
-                            activePickerIndex={activeInput.startDate ? 0 : 1}
+                            activePickerIndex={activeIndex == 1 ? 0 : 1}
                             renderExtraFooter={() =>
                                 <Button className='float-right my-2 '
-                                    onClick={() => { handleSetActiveInput(startDate, true); setDate(null) }}
+                                    onClick={() => {
+                                        handleChangeActiveIndex(key1)
+                                        setDate(null)
+                                    }}
                                 >Xóa tất cả</Button>
                             }
                         />

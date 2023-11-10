@@ -8,6 +8,7 @@ export default function useModalBg() {
 
     return {
         isOpenModal,
-        openModal: () => { dispatch(openModal(true)) }
+        openModal: () => { dispatch(openModal(true)) },
+        closeModal: () => { dispatch(openModal(false)) },
     }
 }

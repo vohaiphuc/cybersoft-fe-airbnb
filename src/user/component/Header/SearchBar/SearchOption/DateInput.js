@@ -2,15 +2,23 @@ import React from 'react'
 import useModalBg from '../../../Modal/useModalBg'
 import moment from 'moment'
 import { Input } from 'antd'
+import { useDispatch, useSelector } from 'react-redux'
+import { setActiveIndex } from '../../../../redux/activeSearchbarSlice'
+import useActiveInput from './useActiveInput'
 
-export default function DateInput({ activeInput, handleSetActiveInput, date, dateInfo, title }) {
+export default function DateInput({ date, dateInfo, title, indexKey }) {
     const { isOpenModal, openModal } = useModalBg()
     const activePickerIndex = dateInfo == 'startDate' ? 0 : 1
-    const active = (activeInput[dateInfo] && isOpenModal) ? 'active' : ''
+
+    const { activeIndex, setActiveIndex } = useActiveInput()
+    const active = (activeIndex == indexKey && isOpenModal) ? 'active' : ''
 
     return <div
         className={`relative h-full w-1/2 z-10 sb-date rounded-full px-5 py-2 text-sm ${active}`}
-        onClick={() => { handleSetActiveInput(dateInfo, true); openModal() }}
+        onClick={() => {
+            setActiveIndex(indexKey)
+            openModal()
+        }}
     >
         <p className='text-gray-500 w-1/2'>{title}</p>
         <Input

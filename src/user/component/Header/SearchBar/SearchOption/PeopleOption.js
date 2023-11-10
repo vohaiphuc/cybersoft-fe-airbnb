@@ -3,15 +3,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Input } from 'antd';
 import React from 'react'
 import useModalBg from '../../../Modal/useModalBg';
+import useActiveInput from './useActiveInput';
 
-export default function PeopleOption({ people, setPeople, handleSetActiveInput, handleSubmit, isActive }) {
+export default function PeopleOption({ people, setPeople, handleSubmit }) {
     const { isOpenModal, openModal } = useModalBg()
-    const active = (isActive && isOpenModal) ? 'active' : ''
+    const { activeIndex, setActiveIndex } = useActiveInput()
+    const key = 3
+    const active = (activeIndex == key && isOpenModal) ? 'active' : ''
+
+    const handleOnclick = () => {
+        setActiveIndex(key);
+        openModal();
+    }
 
     return (
         <div className={`relative rounded-full px-5 py-2  w-full h-full flex items-center sb-people ${active}`}>
 
-            <div className='flex-1' onClick={() => { handleSetActiveInput('people', true); openModal() }} >
+            <div className='flex-1' onClick={handleOnclick} >
                 <p className='text-sm text-gray-500 w-1/2'>Khách</p>
                 <Input
                     value={people > 0 ? people + " khách" : ''}
@@ -26,7 +34,7 @@ export default function PeopleOption({ people, setPeople, handleSetActiveInput, 
                 <span>Tìm kiếm</span>
             </button>
 
-            {active && isOpenModal &&
+            {active &&
                 <div className="absolute w-28 h-12 px-5 bg-white shadow-2xl sb-people-popup rounded-3xl flex items-center justify-between z-30"
                     tabIndex="0"
                     autoFocus
