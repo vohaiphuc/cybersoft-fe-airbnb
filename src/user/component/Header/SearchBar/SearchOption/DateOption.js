@@ -3,12 +3,14 @@ import React from 'react'
 import DateInput from './DateInput';
 import useModalBg from '../../../Modal/useModalBg';
 import useActiveInput from './useActiveInput';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 const { RangePicker } = DatePicker
 const startDate = 'startDate'
 const endDate = 'endDate'
 
-export default function DateOption({ activeInput, handleSetActiveInput, date, setDate }) {
+export default function DateOption({ date, setDate }) {
 
     const { isOpenModal } = useModalBg()
     const { activeIndex, setActiveIndex } = useActiveInput()
@@ -38,29 +40,26 @@ export default function DateOption({ activeInput, handleSetActiveInput, date, se
             <DateInput dateInfo={endDate} title="Trả phòng"
                 indexKey={key2} date={date}
             />
-
-            {active &&
-                <div className="absolute bottom-0 left-0 w-full -z-10">
-                    <ThemeRangePicker>
-                        <RangePicker
-                            open={active}
-                            format='DD/MM/YYYY'
-                            style={{ width: "100%", border: 0 }}
-                            onCalendarChange={handleCalendarChange}
-                            value={date}
-                            activePickerIndex={activeIndex == 1 ? 0 : 1}
-                            renderExtraFooter={() =>
-                                <Button className='float-right my-2 '
-                                    onClick={() => {
-                                        handleChangeActiveIndex(key1)
-                                        setDate(null)
-                                    }}
-                                >Xóa tất cả</Button>
-                            }
-                        />
-                    </ThemeRangePicker>
-                </div>
-            }
+            <div className="w-full -z-10 -translate-y-full">
+                <ThemeRangePicker>
+                    <RangePicker
+                        open={active}
+                        format='DD/MM/YYYY'
+                        style={{ width: "100%", border: 0 }}
+                        onCalendarChange={handleCalendarChange}
+                        value={date}
+                        activePickerIndex={activeIndex == 1 ? 0 : 1}
+                        renderExtraFooter={() =>
+                            <Button className='float-right my-2 '
+                                onClick={() => {
+                                    handleChangeActiveIndex(key1)
+                                    setDate(null)
+                                }}
+                            >Xóa tất cả</Button>
+                        }
+                    />
+                </ThemeRangePicker>
+            </div>
         </>
     )
 }

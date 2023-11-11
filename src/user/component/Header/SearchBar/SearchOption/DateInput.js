@@ -14,15 +14,16 @@ export default function DateInput({ date, dateInfo, title, indexKey }) {
     const active = (activeIndex == indexKey && isOpenModal) ? 'active' : ''
 
     return <div
-        className={`relative h-full w-1/2 z-10 sb-date rounded-full px-5 py-2 text-sm ${active}`}
+        className={`relative w-1/2 z-10 sb-date rounded-full px-5 py-2 text-sm ${active} flex flex-col`}
         onClick={() => {
             setActiveIndex(indexKey)
             openModal()
         }}
     >
-        <p className='text-gray-500 w-1/2'>{title}</p>
+        <p className='w-1/2 font-medium'>{title}</p>
         <Input
-            className='absolute w-full h-full top-0 left-0 pl-5 pt-6'
+            // className='absolute w-full h-full top-0 left-0 pl-5 pt-6'
+            className='w-full h-full top-0 left-0 pl-0 pt-1 pb-[1px]'
             readOnly
             bordered={false}
             placeholder="DD/MM/YYYY"

@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import useModalBg from '../../Modal/useModalBg';
 import { useEffect } from 'react';
 import { useRef } from 'react';
+import useActiveInput from './SearchOption/useActiveInput';
 
 export const activeInputSlug = {
     location: 'location',
@@ -19,7 +20,8 @@ export default function SearchBar() {
     const [locationId, setLocationId] = useState("");
     const [date, setDate] = useState("");
     const [people, setPeople] = useState(0);
-    const { isOpenModal } = useModalBg()
+    const { isOpenModal, closeModal } = useModalBg()
+    const { activeIndex, setActiveIndex } = useActiveInput()
 
     const handleSubmit = () => {
         const input = {
@@ -28,18 +30,24 @@ export default function SearchBar() {
             dateEnd: date[1],
             people
         }
-        console.log(input);
+        console.log(input)
+        setActiveIndex(null)
+        closeModal()
     }
 
+    const transitionEffect = isOpenModal ? 'h-16 opacity-100' : 'h-0 opacity-0'
+    const bgColor = activeIndex == null ? 'bg-white' : 'bg-[#e7e7e7]'
+    const zIndex = isOpenModal && 'relative z-30'
+
     return (
-        <div className={`bg-white border-2 rounded-full h-16 flex items-center ${isOpenModal && 'relative z-30'}`}>
-            <div className='rounded-full h-full w-1/4 overflow-hidden cursor-pointer'>
+        <div className={`border-2 rounded-full flex items-center transition-all ${transitionEffect} ${zIndex} ${bgColor}`}>
+            <div className='relative rounded-full h-full w-1/4 cursor-pointer'>
                 <LocationOption
                     locationList={locationList}
                     setLocationId={setLocationId}
                 />
             </div>
-            <div className='rounded-full h-full w-1/2 relative flex'>
+            <div className='rounded-full h-full w-1/2 relative flex flex-wrap sb-date-container'>
                 <DateOption
                     date={date}
                     setDate={setDate}

@@ -23,37 +23,48 @@
 
 .sb-location {
     &:hover {
-        background: #e7e7e7 !important;
-    }
-    input {
-        cursor: pointer !important;
+        background: #d2d2d2 !important;
     }
     .ant-select-clear {
-        background: #e7e7e7;
+        background: transparent;
+    }
+    .ant-select-selector {
+        padding: 0 !important;
+    }
+    .ant-select-single .ant-select-selector .ant-select-selection-search {
+        inset-inline-start: 0;
+        inset-inline-end: 30px;
     }
     &.active {
-        background: #e7e7e7 !important;
+        background: #fbfbfb !important;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
+}
+
+.sb-date-container {
+    .ant-picker {
+        visibility: hidden !important;
     }
 }
 
 .sb-date {
     cursor: pointer !important;
     &:hover {
-        background: #e7e7e7 !important;
+        background: #d2d2d2 !important;
     }
     input {
         cursor: pointer;
         background: transparent;
-        // padding: 0;
     }
     &.active {
-        background: #e7e7e7 !important;
+        background: #fbfbfb !important;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     }
 }
 
 .sb-people {
     &:hover {
-        background: #e7e7e7 !important;
+        background: #d2d2d2 !important;
     }
     input {
         cursor: pointer;
@@ -65,16 +76,24 @@
         box-shadow: none !important;
     }
     &.active {
-        background: #e7e7e7 !important;
+        background: #fbfbfb !important;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     }
     .sb-people-popup {
         bottom: 0;
         left: 0;
         width: 100%;
-        transform: translateY(110%);
+        transform: translateY(calc(100% + 15px));
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04),
+            0 8px 16px rgba(0, 0, 0, 0.15);
     }
-}
 
-.ant-picker {
-    visibility: hidden !important;
+    .people-option-icon {
+        padding: 10px;
+        transition: all 0.1s;
+        border-radius: 50%;
+        &:hover {
+            background: #e1e1e1;
+        }
+    }
 }
