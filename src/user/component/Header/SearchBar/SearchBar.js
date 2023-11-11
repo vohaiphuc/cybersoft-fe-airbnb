@@ -3,6 +3,10 @@ import LocationOption from './SearchOption/LocationOption';
 import PeopleOption from './SearchOption/PeopleOption';
 import DateOption from './SearchOption/DateOption';
 import { useSelector } from 'react-redux';
+import useModalBg from '../../Modal/useModalBg';
+import { useEffect } from 'react';
+import { useRef } from 'react';
+import useActiveInput from './SearchOption/useActiveInput';
 
 export const activeInputSlug = {
     location: 'location',
@@ -16,31 +20,8 @@ export default function SearchBar() {
     const [locationId, setLocationId] = useState("");
     const [date, setDate] = useState("");
     const [people, setPeople] = useState(0);
-
-    const [activeInput, setActiveInput] = useState({
-        location: false,
-        startDate: false,
-        endDate: false,
-        people: false,
-    });
-
-    const handleSetActiveInput = (input, state) => {
-        console.log(activeInput[input], state);
-
-        if (activeInput[input] && state == true) {
-            return
-        }
-
-        let newActiveInput = {
-            location: false,
-            startDate: false,
-            endDate: false,
-            people: false,
-        }
-
-        newActiveInput[input] = state
-        setActiveInput(newActiveInput)
-    }
+    const { isOpenModal, closeModal } = useModalBg()
+    const { activeIndex, setActiveIndex } = useActiveInput()
 
     const handleSubmit = () => {
         const input = {
@@ -49,25 +30,27 @@ export default function SearchBar() {
             dateEnd: date[1],
             people
         }
-        console.log(input);
+        console.log(input)
+        setActiveIndex(null)
+        closeModal()
     }
 
+    const transitionEffect = isOpenModal ? 'h-16 opacity-100' : 'h-0 opacity-0'
+    const bgColor = activeIndex == null ? 'bg-white' : 'bg-[#e7e7e7]'
+    const zIndex = isOpenModal && 'relative z-30'
+
     return (
-        <div className='border-2 rounded-full h-16 flex items-center'>
-            <div className='rounded-full h-full w-1/4 overflow-hidden cursor-pointer'>
+        <div className={`border-2 rounded-full flex items-center transition-all ${transitionEffect} ${zIndex} ${bgColor}`}>
+            <div className='relative rounded-full h-full w-1/4 cursor-pointer'>
                 <LocationOption
                     locationList={locationList}
                     setLocationId={setLocationId}
-                    active={activeInput.location}
-                    handleSetActiveInput={handleSetActiveInput}
                 />
             </div>
-            <div className='rounded-full h-full w-1/2 relative flex'>
+            <div className='rounded-full h-full w-1/2 relative flex flex-wrap sb-date-container'>
                 <DateOption
                     date={date}
                     setDate={setDate}
-                    activeInput={activeInput}
-                    handleSetActiveInput={handleSetActiveInput}
                 />
             </div>
             <div className="rounded-full h-full w-1/4 cursor-pointer">
@@ -75,8 +58,6 @@ export default function SearchBar() {
                     people={people}
                     setPeople={setPeople}
                     handleSubmit={handleSubmit}
-                    active={activeInput.people}
-                    handleSetActiveInput={handleSetActiveInput}
                 />
             </div>
         </div>

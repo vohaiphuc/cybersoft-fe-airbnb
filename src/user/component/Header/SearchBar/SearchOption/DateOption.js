@@ -1,106 +1,84 @@
 import { Button, ConfigProvider, DatePicker, Input } from 'antd';
-import moment from 'moment';
-import React, { useEffect } from 'react'
+import React from 'react'
+import DateInput from './DateInput';
+import useModalBg from '../../../Modal/useModalBg';
+import useActiveInput from './useActiveInput';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 const { RangePicker } = DatePicker
+const startDate = 'startDate'
+const endDate = 'endDate'
 
-export default function DateOption({ activeInput, handleSetActiveInput, date, setDate }) {
+export default function DateOption({ date, setDate }) {
 
-    useEffect(() => {
-        let calendar = document.getElementsByClassName("calendar-dropdown")[0]
+    const { isOpenModal } = useModalBg()
+    const { activeIndex, setActiveIndex } = useActiveInput()
+    const key1 = 1
+    const key2 = 2
+    const active = (activeIndex == key1 || activeIndex == key2) && isOpenModal
 
-        const handleClick = (e) => {
-            console.log("Enddate on click event");
-            if (calendar.contains(e.target) == false) {
-                handleSetActiveInput('startDate', false)
-            }
+    const handleCalendarChange = ([start, end]) => {
+        if (activeIndex == key1 && start) {
+            setDate([start, end])
+            handleChangeActiveIndex(key2)
         }
-        if (activeInput.endDate || activeInput.startDate) {
-            document.addEventListener("mousedown", handleClick)
-        }
-        return () => {
-            document.removeEventListener("mousedown", handleClick)
-        }
-    }, [activeInput.startDate, activeInput.endDate])
-
-
-    const handleCalendarChange = ([startDate, endDate]) => {
-        if (activeInput.startDate && startDate) {
-            setDate([startDate, endDate])
-            handleSetActiveInput('endDate', true)
-        }
-        else if (activeInput.endDate && endDate) {
-            setDate([startDate, endDate])
+        else if (activeIndex == key2 && end) {
+            setDate([start, end])
         }
     }
 
+    const handleChangeActiveIndex = (key) => {
+        setActiveIndex(key)
+    }
 
     return (
         <>
-            <div
-                className={`relative h-full w-1/2 z-10 sb-date rounded-full px-5 py-2 text-sm ${activeInput.startDate && 'active'}`}
-                onClick={() => { handleSetActiveInput('startDate', true) }}
-            >
-                <p className='text-gray-500 w-1/2'>Nhận phòng</p>
-                <Input
-                    className='absolute w-full h-full top-0 left-0 pl-5 pt-6'
-                    onBlur={() => { handleSetActiveInput('startDate', false) }}
-                    placeholder="DD/MM/YYYY"
-                    value={(date && date[0]) ? moment(new Date(date[0])).format("DD/MM/YYYY") : null}
-                    readOnly
-                    bordered={false}
-                    key={date}
-                />
-            </div>
-            <div
-                className={`relative h-full w-1/2 z-10 sb-date rounded-full px-5 py-2 text-sm ${activeInput.endDate && 'active'}`}
-                onClick={() => { handleSetActiveInput('endDate', true) }}
-            >
-                <p className='text-gray-500 w-1/2'>Trả phòng</p>
-                <Input
-                    className='absolute w-full h-full top-0 left-0 pl-5 pt-6'
-                    onBlur={() => { console.log(123); handleSetActiveInput('endDate', false) }}
-                    placeholder="DD/MM/YYYY"
-                    value={(date && date[1]) ? moment(new Date(date[1])).format("DD/MM/YYYY") : null}
-                    readOnly
-                    bordered={false}
-                    key={date}
-                />
-
-            </div>
-
-            <div className="absolute bottom-0 left-0 w-full -z-10">
-                <ConfigProvider
-                    theme={{
-                        components: {
-                            DatePicker: {
-                                cellActiveWithRangeBg: "#f6f6f6",
-                                cellHoverWithRangeBg: "#f6f6f6",
-                                cellRangeBorderColor: "#000"
-                            },
-                        },
-                        token: {
-                            colorPrimary: "#000",
-                        }
-                    }}
-                >
+            <DateInput dateInfo={startDate} title="Nhận phòng"
+                indexKey={key1} date={date}
+            />
+            <DateInput dateInfo={endDate} title="Trả phòng"
+                indexKey={key2} date={date}
+            />
+            <div className="w-full -z-10 -translate-y-full">
+                <ThemeRangePicker>
                     <RangePicker
-                        open={activeInput.startDate || activeInput.endDate}
+                        open={active}
                         format='DD/MM/YYYY'
                         style={{ width: "100%", border: 0 }}
                         onCalendarChange={handleCalendarChange}
                         value={date}
-                        activePickerIndex={activeInput.startDate ? 0 : 1}
-                        popupClassName='calendar-dropdown'
+                        activePickerIndex={activeIndex == 1 ? 0 : 1}
                         renderExtraFooter={() =>
                             <Button className='float-right my-2 '
-                                onClick={() => { handleSetActiveInput('startDate', true); setDate(null) }}
+                                onClick={() => {
+                                    handleChangeActiveIndex(key1)
+                                    setDate(null)
+                                }}
                             >Xóa tất cả</Button>
                         }
                     />
-
-                </ConfigProvider>
+                </ThemeRangePicker>
             </div>
         </>
     )
+}
+
+const ThemeRangePicker = ({ children }) => {
+    return <ConfigProvider
+        theme={{
+            components: {
+                DatePicker: {
+                    cellActiveWithRangeBg: "#f6f6f6",
+                    cellHoverWithRangeBg: "#f6f6f6",
+                    cellRangeBorderColor: "#000"
+                },
+            },
+            token: {
+                colorPrimary: "#000",
+            }
+        }}
+    >
+        {children}
+    </ConfigProvider>
 }
