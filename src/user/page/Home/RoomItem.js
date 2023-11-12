@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom'
 import { userRoute } from "../../route/userRoute";
 
 export default function RoomItem({ room }) {
-    const { id, hinhAnh, tenPhong, giaTien } = room
+    const { id, hinhAnh, tenPhong, giaTien, locationDetail } = room
     return (
         <NavLink to={userRoute.detail.id(id)}>
             <div className='rounded-2xl' style={{
@@ -28,7 +28,7 @@ export default function RoomItem({ room }) {
                 </div>
             </div>
             <div className='font-light'>
-                Quận 1, Hồ Chí Minh
+                {`${locationDetail?.tenViTri}, ${locationDetail?.tinhThanh}`}
             </div>
             <div>
                 {giaTien > 0 && <p>
