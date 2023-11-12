@@ -7,7 +7,6 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { fetchRoomDetail } from "../../../redux/roomSlice";
 import { Helmet } from "react-helmet";
 import { truncateWords } from "../asset/utils";
-import isEmpty from "lodash/isEmpty";
 
 const RoomDetail = () => {
   const dispatch = useDispatch();
@@ -24,12 +23,10 @@ const RoomDetail = () => {
 
   return (
     <article className="container px-4 mx-auto py-6 lg:py-10">
-      {!isEmpty(roomDetail) && (
-        <Helmet>
-          <title>{truncateWords(roomDetail?.tenPhong, 10)}</title>
-          <meta name="description" content={roomDetail?.moTa} />
-        </Helmet>
-      )}
+      <Helmet>
+        <title>{truncateWords(roomDetail?.tenPhong, 10)}</title>
+        <meta name="description" content={roomDetail?.moTa} />
+      </Helmet>
       <Info data={roomDetail} />
       <Property data={roomDetail} />
     </article>

@@ -1,80 +1,80 @@
 .nav {
-    button {
-        transition: all 0.2s;
-        &:hover {
-            background: #e1e1e1;
-            padding: 3px 12px;
-            border-radius: 22px;
-        }
+  button {
+    transition: all 0.2s;
+    &:hover {
+      background: #e1e1e1;
+      padding: 3px 12px;
+      border-radius: 22px;
     }
+  }
 }
 
 .profile {
-    width: fit-content;
-    padding: 8px 8px 8px 14px;
-    border: 1px solid #dddddd;
-    border-radius: 30px;
-    transition: all 0.2s;
+  width: fit-content;
+  padding: 8px 8px 8px 14px;
+  border: 1px solid #dddddd;
+  border-radius: 30px;
+  transition: all 0.2s;
 
-    &:hover {
-        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    }
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  }
 }
 
 .sb-location {
-    &:hover {
-        background: #e7e7e7 !important;
-    }
-    input {
-        cursor: pointer !important;
-    }
-    .ant-select-clear {
-        background: #e7e7e7;
-    }
-    &.active {
-        background: #e7e7e7 !important;
-    }
+  &:hover {
+    background: #e7e7e7 !important;
+  }
+  input {
+    cursor: pointer !important;
+  }
+  .ant-select-clear {
+    background: #e7e7e7;
+  }
+  &.active {
+    background: #e7e7e7 !important;
+  }
 }
 
 .sb-date {
-    cursor: pointer !important;
-    &:hover {
-        background: #e7e7e7 !important;
-    }
-    input {
-        cursor: pointer;
-        background: transparent;
-        padding: 0;
-    }
-    &.active {
-        background: #e7e7e7 !important;
-    }
+  cursor: pointer !important;
+  &:hover {
+    background: #e7e7e7 !important;
+  }
+  input {
+    cursor: pointer;
+    background: transparent;
+    padding: 0;
+  }
+  &.active {
+    background: #e7e7e7 !important;
+  }
 }
 
 .sb-people {
-    &:hover {
-        background: #e7e7e7 !important;
-    }
-    input {
-        cursor: pointer;
-        background: transparent;
-        padding: 0 !important;
-        border: none;
-    }
-    .sb-people-input {
-        box-shadow: none !important;
-    }
-    &.active {
-        background: #e7e7e7 !important;
-    }
-    .sb-people-popup {
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        transform: translateY(110%);
-    }
+  &:hover {
+    background: #e7e7e7 !important;
+  }
+  input {
+    cursor: pointer;
+    background: transparent;
+    padding: 0 !important;
+    border: none;
+  }
+  .sb-people-input {
+    box-shadow: none !important;
+  }
+  &.active {
+    background: #e7e7e7 !important;
+  }
+  .sb-people-popup {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    transform: translateY(110%);
+  }
 }
 
-.ant-picker {
-    visibility: hidden !important;
-}
+// .ant-picker {
+//     visibility: hidden !important;
+// }

@@ -6,7 +6,7 @@ const LazyImage = ({ src, alt, className }) => (
   <LazyLoadImage
     alt={alt}
     src={src}
-    className={className}
+    className={className || ""}
     effect="blur"
     width="100%"
     placeholderSrc="https://cdn1.vectorstock.com/i/1000x1000/72/20/loading-icon-template-update-or-symbol-vector-31047220.jpg"
