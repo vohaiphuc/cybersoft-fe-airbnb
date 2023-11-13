@@ -7,6 +7,8 @@ import useModalBg from '../../Modal/useModalBg';
 import { useEffect } from 'react';
 import { useRef } from 'react';
 import useActiveInput from './SearchOption/useActiveInput';
+import { useNavigate } from 'react-router-dom';
+import { userRoute } from '../../../route/userRoute';
 
 export const activeInputSlug = {
     location: 'location',
@@ -16,6 +18,7 @@ export const activeInputSlug = {
 }
 
 export default function SearchBar() {
+    const navigate = useNavigate()
     const locationList = useSelector(state => state.locationSlide.list)
     const [locationId, setLocationId] = useState("");
     const [date, setDate] = useState("");
@@ -30,9 +33,9 @@ export default function SearchBar() {
             dateEnd: date[1],
             people
         }
-        console.log(input)
         setActiveIndex(null)
         closeModal()
+        navigate(userRoute.location.id(locationId))
     }
 
     const transitionEffect = isOpenModal ? 'h-16 opacity-100' : 'h-0 opacity-0'

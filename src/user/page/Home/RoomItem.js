@@ -32,7 +32,7 @@ export default function RoomItem({ room }) {
             </div>
             <div>
                 {giaTien > 0 && <p>
-                    <span className='font-bold'>{"$" + giaTien}</span> / đêm
+                    <span className='font-bold'>{"$" + giaTien.toLocaleString()}</span> / đêm
                 </p>}
             </div>
         </NavLink>
