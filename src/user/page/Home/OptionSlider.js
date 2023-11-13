@@ -5,13 +5,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Carousel } from 'antd'
 import React, { useRef, useState } from 'react'
 import FilterModal from './FilterModal'
+import { useWindowWidth } from '@react-hook/window-size'
 
 export default function OptionSlider({ list, handleFilterRoom }) {
     const [itemActive, setItemActive] = useState(0);
     const [sliderArrow, setSliderArrow] = useState(0);
     const [modalId, setModalId] = useState(null);
     const refCarousel = useRef()
-    const slidesToShow = 12
+    const windowWidth = useWindowWidth()
+    let slidesToShow = 0
+
+    if (windowWidth <= 640) {
+        slidesToShow = 3
+    } else if (windowWidth > 640 && windowWidth <= 1024) {
+        slidesToShow = 5
+    } else {
+        slidesToShow = 12
+    }
+
     const carouselItems = [
         {
             label: 'Thật ấn tượng',
