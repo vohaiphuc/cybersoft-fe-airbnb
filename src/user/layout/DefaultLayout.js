@@ -3,23 +3,23 @@ import Header from '../component/Header/Header'
 import Footer from '../component/Footer/Footer'
 
 export default function DefaultLayout({ children }) {
-    useEffect(() => {
-        const height = 90
-        const handleScroll = () => {
-            if (document.body.scrollTop > height || document.documentElement.scrollTop > height) {
-                console.log("show");
-            } else {
-                console.log("hide");
-            }
-        }
+    // useEffect(() => {
+    //     const height = 90
+    //     const handleScroll = () => {
+    //         if (document.body.scrollTop > height || document.documentElement.scrollTop > height) {
+    //             console.log("show");
+    //         } else {
+    //             console.log("hide");
+    //         }
+    //     }
 
-        window.addEventListener("scroll", handleScroll)
+    //     window.addEventListener("scroll", handleScroll)
 
-        return () => {
-            window.removeEventListener("scroll", handleScroll)
-        }
+    //     return () => {
+    //         window.removeEventListener("scroll", handleScroll)
+    //     }
 
-    }, [])
+    // }, [])
 
     return (
         <>

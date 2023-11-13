@@ -36,8 +36,9 @@ export const userRoute = {
     },
 
     location: {
-        path: "/location/:city",
-        element: <DefaultLayout><Location /></DefaultLayout>
+        path: "/location/:id",
+        element: <DefaultLayout><Location /></DefaultLayout>,
+        id: (id) => `/location/${id}`
     },
 
     login: {
