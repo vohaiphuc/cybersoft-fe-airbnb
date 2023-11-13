@@ -10,7 +10,7 @@ export default function ListRoom({ list, locationInfo }) {
     return (
         <div className='my-5 space-y-5'>
             <p className='font-semibold'>Hơn 1.000 chỗ ở</p>
-            <div className='grid grid-cols-2 gap-5'>
+            <div className='grid grid-cols-1 lg:grid-cols-2 gap-5'>
                 {renderRooms()}
             </div>
         </div>
