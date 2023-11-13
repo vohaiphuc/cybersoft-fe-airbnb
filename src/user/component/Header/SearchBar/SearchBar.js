@@ -41,19 +41,19 @@ export default function SearchBar() {
 
     return (
         <div className={`border-2 rounded-full flex items-center transition-all ${transitionEffect} ${zIndex} ${bgColor}`}>
-            <div className='relative rounded-full h-full w-1/4 cursor-pointer'>
+            <div className='relative rounded-full h-full w-full lg:w-1/4 cursor-pointer'>
                 <LocationOption
                     locationList={locationList}
                     setLocationId={setLocationId}
                 />
             </div>
-            <div className='rounded-full h-full w-1/2 relative flex flex-wrap sb-date-container'>
+            <div className='rounded-full h-full w-1/2 relative hidden lg:flex flex-wrap sb-date-container'>
                 <DateOption
                     date={date}
                     setDate={setDate}
                 />
             </div>
-            <div className="rounded-full h-full w-1/4 cursor-pointer">
+            <div className="rounded-full h-full w-1/4 hidden lg:block cursor-pointer">
                 <PeopleOption
                     people={people}
                     setPeople={setPeople}

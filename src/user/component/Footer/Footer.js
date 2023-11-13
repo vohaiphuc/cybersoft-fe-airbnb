@@ -7,7 +7,7 @@ import { faGlobe } from '@fortawesome/free-solid-svg-icons'
 export default function Footer() {
     return (
         <div className='footer'>
-            <div className="grid grid-cols-3 py-12">
+            <div className="grid grid-cols-1 lg:grid-cols-3 py-12 space-y-7">
                 <div className='space-y-2 flex flex-col'>
                     <h2 className='font-semibold'>Hỗ trợ</h2>
                     <a href='#'>Trung tâm trợ giúp</a>
@@ -37,8 +37,8 @@ export default function Footer() {
                     <a href='#'>Chỗ ở khẩn cấp Airbnb.org</a>
                 </div>
             </div>
-            <div className="flex items-center justify-between w-full py-6 border-t-[1px] border-gray-200 space-x-5">
-                <div className='space-x-4'>
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between w-full py-6 border-t-[1px] border-gray-200">
+                <div className='space-x-4 order-2 lg:order-1 mt-2 lg:mt-0'>
                     <span>© 2023 Airbnb, Inc.</span>
                     <a href="#">Quyền riêng tư</a>
                     <a href="#">Điều khoản</a>
