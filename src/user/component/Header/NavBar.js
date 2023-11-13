@@ -2,42 +2,79 @@ import { faBars, faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Avatar, Button, Dropdown } from "antd";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setPopup } from "../../redux/popupSlice";
 import { POPUP_NAME } from "../../constants/popup";
+import { userLocalStorage } from "../../api/localService";
 
 export default function NavBar() {
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.userSlice) || {};
+  const { token } = user || {};
+  const handleLogOut = () => {
+    userLocalStorage.remove();
+    window.location.reload();
+  };
   const handleToggleAuth = (type) => {
     if (type === "login") {
       dispatch(setPopup({ popup: POPUP_NAME.LOGIN }));
       return;
+    } else if (type === "register") {
+      dispatch(setPopup({ popup: POPUP_NAME.REGISTER }));
+      return;
     }
-    dispatch(setPopup({ popup: POPUP_NAME.REGISTER }));
+    dispatch(setPopup({ popup: POPUP_NAME.PROFILE }));
   };
 
-  const renderLoginButton = (type) => {
+  const renderAuthButton = (type) => {
     return (
       <Button
         className="text-black w-full h-full shadow-none border-none text-left hover:!border-none hover:!bg-transparent p-0 hover:!text-black"
         onClick={() => handleToggleAuth(type)}
       >
-        {type === "login" ? "Đăng nhập" : "Đăng ky"}
+        {type === "login"
+          ? "Đăng nhập"
+          : type === "register"
+          ? "Đăng ký"
+          : "Thông tin cá nhân"}
       </Button>
     );
   };
 
+  const renderLogoutButton = () => {
+    return (
+      <Button
+        className="text-black w-full h-full shadow-none border-none text-left hover:!border-none hover:!bg-transparent p-0 hover:!text-black"
+        onClick={handleLogOut}
+      >
+        Đăng xuất
+      </Button>
+    );
+  };
+  // const renderProfileButton = () => {
+  //   return (
+  //     <Button
+  //       className="text-black w-full h-full shadow-none border-none text-left hover:!border-none hover:!bg-transparent p-0 hover:!text-black"
+  //       onClick={handleToggleAuth()}
+  //     >
+  //       Thông tin cá nhân
+  //     </Button>
+  //   );
+  // };
+
   const items = [
-    {
-      label: renderLoginButton("register"),
-      // label: <NavLink to={userRoute.register.path}>Đăng ký</NavLink>,
-      key: "0",
-    },
-    {
-      label: renderLoginButton("login"),
-      // label: <NavLink to={userRoute.login.path}>Đăng nhập</NavLink>,
-      key: "1",
-    },
+    token
+      ? { label: "Chuyến đi", key: "0" }
+      : {
+          label: renderAuthButton("register"),
+          key: "0",
+        },
+    token
+      ? { label: renderAuthButton(""), key: "1" }
+      : {
+          label: renderAuthButton("login"),
+          key: "1",
+        },
     {
       type: "divider",
     },
@@ -53,6 +90,7 @@ export default function NavBar() {
       label: "Trợ giúp",
       key: "5",
     },
+    token && { label: renderLogoutButton(), key: "6" },
   ];
 
   return (

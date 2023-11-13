@@ -1,16 +1,13 @@
 import React, { useState } from "react";
-import { Button, Modal, Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 import { UnlockOutlined, UserOutlined } from "@ant-design/icons";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../redux/userSlice";
 
 const FormLogin = () => {
-  const [userLogin, setUserLogin] = useState(false);
   const dispatch = useDispatch();
-  const { loading, user } = useSelector((state) => state.userSlice);
-  // const navigate = useNavigate();
-
+  const { loading } = useSelector((state) => state.userSlice);
   const [isFormDirty, setIsFormDirty] = useState(false);
 
   const onFinish = (values) => {
@@ -26,12 +23,9 @@ const FormLogin = () => {
     }
   };
 
-  const handleUserLogin = () => {
-    setUserLogin(!userLogin);
-  };
   return (
     <Form
-      className="w-full form"
+      className="w-full form-login"
       layout="vertical"
       name="login"
       initialValues={{
@@ -109,7 +103,7 @@ const FormLogin = () => {
           </a>
           <Form.Item>
             <Button
-              className="p-2 text-white focus:outline-none focus:ring-4 font-medium rounded-lg text-sm text-center mr-2 w-full bg-red-500 hover:bg-red-800 duration-300"
+              className="p-2 text-white focus:outline-none focus:ring-4 font-medium rounded-lg disabled:pointer-events-none text-sm text-center mr-2 w-full bg-red-500 hover:bg-red-800 duration-300"
               htmlType="submit"
               disabled={!isFormDirty || loading}
               loading={loading}

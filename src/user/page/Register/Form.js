@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { validatePhoneNumber } from "./asset/utils";
 import { registerUser } from "../../redux/userSlice";
 import dayjs from "dayjs";
-import customParseFormat from "dayjs/plugin/customParseFormat";
 import {
   MailOutlined,
   PhoneOutlined,
@@ -19,15 +18,23 @@ const FormRegister = () => {
   const { loading } = useSelector((state) => state.userSlice);
   const [isFormDirty, setIsFormDirty] = useState(false);
 
+  const dateFormat = "DD/MM/YYYY";
+
   const onFinish = (values) => {
-    // console.log(values);
-    dispatch(registerUser(values));
+    const { birthday, name, email, phone, gender, password, address } = values;
+    const formattedBirthday = dayjs(birthday).format(dateFormat);
+    dispatch(
+      registerUser({
+        birthday: formattedBirthday,
+        name,
+        email,
+        phone,
+        gender,
+        password,
+        address,
+      })
+    );
   };
-
-  dayjs.extend(customParseFormat);
-
-  /** Manually entering any of the following formats will perform date parsing */
-  const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY", "DD-MM-YYYY", "DD-MM-YY"];
 
   const handleValuesChange = () => {
     if (!isFormDirty) {
@@ -37,11 +44,17 @@ const FormRegister = () => {
 
   return (
     <Form
-      className="w-full"
+      className="w-full form-register"
       layout="vertical"
       name="register"
       initialValues={{
-        remember: true,
+        birthday: dayjs("01/01/2001", dateFormat),
+        name: "",
+        email: "",
+        phone: "",
+        gender: "Gender",
+        password: "",
+        address: "",
       }}
       onFinish={onFinish}
       autoComplete="off"
@@ -75,7 +88,7 @@ const FormRegister = () => {
         <div className="mb-1">
           <Form.Item
             label="Username"
-            name="taiKhoan"
+            name="name"
             rules={[
               {
                 required: true,
@@ -107,7 +120,7 @@ const FormRegister = () => {
         <div className="mb-1">
           <Form.Item
             label="Phone number"
-            name="soDt"
+            name="phone"
             rules={[
               {
                 required: true,
@@ -124,7 +137,7 @@ const FormRegister = () => {
         <div className="mb-1">
           <Form.Item
             label="Password"
-            name="matKhau"
+            name="password"
             rules={[
               {
                 required: true,
@@ -157,24 +170,17 @@ const FormRegister = () => {
           </Form.Item>
         </div>
         <div className="mb-1">
-          {/* <Form.Item
+          <Form.Item
             label="Birthday"
             name="birthday"
-            rules={[
-              {
-                required: true,
-                message: "Please input your code!",
-              },
-            ]}
             hasFeedback
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
           >
             <DatePicker
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-[0.3rem] dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              defaultValue={dayjs("01/01/2001", dateFormatList[0])}
-              format={dateFormatList}
+              format={dateFormat}
             />
-          </Form.Item> */}
+          </Form.Item>
         </div>
         <div className="mb-1">
           <Form.Item
@@ -190,7 +196,6 @@ const FormRegister = () => {
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
           >
             <Select
-              defaultValue="Gender"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               options={[
                 {

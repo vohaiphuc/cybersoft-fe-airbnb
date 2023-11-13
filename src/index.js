@@ -7,6 +7,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import { adminReducer } from "./admin/redux/adminReducer";
 import { userReducer } from "./user/redux/userReducer";
+import { notification } from "antd";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 export const store = configureStore({
@@ -16,6 +17,13 @@ export const store = configureStore({
   },
 });
 
+notification.config({
+  placement: "topRight",
+  duration: 2,
+  rtl: false,
+});
+
+// Rest of your React component code
 root.render(
   <Provider store={store}>
     <App />

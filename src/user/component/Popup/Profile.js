@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { clearPopup } from "../../redux/popupSlice";
 import "../../page/Register/asset/style.scss";
 
-const Register = () => {
+const Profile = () => {
   const dispatch = useDispatch();
   const handleClose = () => {
     dispatch(clearPopup({ popup: "" }));
@@ -22,4 +22,4 @@ const Register = () => {
     </Modal>
   );
 };
-export default React.memo(Register);
+export default React.memo(Profile);

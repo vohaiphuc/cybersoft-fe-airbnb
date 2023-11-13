@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { LoadingOutlined } from "@ant-design/icons";
 import { fetchRoomDetail } from "../../../redux/roomSlice";
 import { Helmet } from "react-helmet";
-import { truncateWords } from "../asset/utils";
 
 const RoomDetail = () => {
   const dispatch = useDispatch();
@@ -24,7 +23,7 @@ const RoomDetail = () => {
   return (
     <article className="container px-4 mx-auto py-6 lg:py-10">
       <Helmet>
-        <title>{truncateWords(roomDetail?.tenPhong, 10)}</title>
+        <title>{roomDetail?.tenPhong}</title>
         <meta name="description" content={roomDetail?.moTa} />
       </Helmet>
       <Info data={roomDetail} />

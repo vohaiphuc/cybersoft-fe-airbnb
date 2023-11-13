@@ -1,19 +1,20 @@
-.ant-form-item {
-  margin-bottom: 0 !important;
+.form-register {
+  .ant-form-item {
+    margin-bottom: 0 !important;
+  }
+
+  .ant-btn {
+    height: 100% !important;
+  }
+  .ant-btn:hover {
+    height: 100% !important;
+  }
+
+  .ant-btn:hover {
+    border: 1px solid transparent !important;
+    color: white !important;
+  }
 }
-
-.ant-btn {
-  height: 100% !important;
-}
-// .ant-btn:hover {
-//   height: 100% !important;
-// }
-
-// .ant-btn:hover {
-//   border: 1px solid transparent !important;
-//   color: white !important;
-// }
-
-.ant-modal-wrap > div {
+.form-register-width {
   width: 70% !important;
 }

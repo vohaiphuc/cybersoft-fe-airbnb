@@ -6,7 +6,6 @@
  */
 
 import { format } from "date-fns";
-import moment from "moment";
 
 export const dateFromIsoString = (date) => {
   const originalDate = new Date(date);
