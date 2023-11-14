@@ -49,3 +49,10 @@
         right: 0;
     }
 }
+
+.modal-filter-home.ant-modal-wrap {
+    .ant-modal {
+        width: 100% !important;
+        max-width: 520px !important;
+    }
+}

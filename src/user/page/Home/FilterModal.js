@@ -1,5 +1,6 @@
 import { faSliders } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useWindowWidth } from '@react-hook/window-size';
 import { Button, Checkbox, ConfigProvider, Input, InputNumber, Modal, Slider } from 'antd';
 import _ from 'lodash';
 import React, { useEffect, useState } from 'react'
@@ -20,6 +21,7 @@ export default function FilterModal({ list, handleFilterRoom, resetModal }) {
     const [banUi, setBanUi] = useState(false);
     const [hoBoi, setHoBoi] = useState(false);
 
+    const windowWidth = useWindowWidth()
     useEffect(() => {
         if (list) {
             setRangeGiaTien({ start: minGiaTien, end: maxGiaTien })
@@ -88,7 +90,7 @@ export default function FilterModal({ list, handleFilterRoom, resetModal }) {
     };
 
     const buttonPhong = (setPhongFn, phong) => {
-        const buttonList = [1, 2, 3, 4, 5, 6, 7, 8]
+        const buttonList = windowWidth < 640 ? [1, 2, 3, 4, 5] : [1, 2, 3, 4, 5, 6, 7, 8]
         return <ConfigProvider
             theme={{
                 token: {
@@ -114,13 +116,13 @@ export default function FilterModal({ list, handleFilterRoom, resetModal }) {
 
     return (
         <>
-            <div className='flex items-center space-x-3 border-[1px] px-5 py-4 rounded-lg cursor-pointer'
+            <div className='flex items-center space-x-3 border-[1px] p-3 md:px-5 md:py-4 rounded-lg cursor-pointer'
                 onClick={showModal}>
                 <FontAwesomeIcon icon={faSliders} />
-                <span className='text-xs'>Bộ lọc</span>
+                <span className='text-xs hidden md:block'>Bộ lọc</span>
             </div>
 
-            <Modal title="Bộ lọc" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} key={list}
+            <Modal title="Bộ lọc" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} key={list} wrapClassName="modal-filter-home" width={300}
                 footer={
                     <div className='flex items-center justify-between'>
                         <a className='font-semibold text-black underline'

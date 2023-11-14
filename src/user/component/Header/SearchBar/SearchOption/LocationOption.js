@@ -14,7 +14,7 @@ export default function LocationOption({ locationList, setLocationId }) {
     const key = 0
     const active = (activeIndex == key && isOpenModal)
 
-    if (active) {
+    if (active && ref.current) {
         ref.current.focus()
     }
 

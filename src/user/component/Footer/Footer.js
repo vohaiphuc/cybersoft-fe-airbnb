@@ -58,7 +58,6 @@ export default function Footer() {
                         <FontAwesomeIcon icon={faSquareTwitter} size='lg' />
                         <FontAwesomeIcon icon={faSquareInstagram} size='lg' />
                     </div>
-
                 </div>
             </div>
         </div>

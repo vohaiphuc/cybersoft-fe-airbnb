@@ -113,16 +113,16 @@ export default function OptionSlider({ list, handleFilterRoom }) {
 
 
     return (
-        <div className='mt-5 space-x-5 slider-carousel flex items-center justify-between'>
+        <div className='space-x-2 md:space-x-5 slider-carousel flex items-center justify-between'>
             <div className='flex-auto w-4/5 relative'>
-                <Carousel arrows={true} slidesToShow={slidesToShow} ref={refCarousel}>
+                <Carousel arrows={false} slidesToShow={slidesToShow} ref={refCarousel}>
                     {carouselItems.map((item, index) => {
                         const active = itemActive == index ? 'active' : ""
                         return <div key={index} className={`slider-item ${active}`}
                             onClick={() => { setItemActive(index) }}
                         >
                             {item.icon}
-                            <p>{item.label}</p>
+                            <p className='truncate'>{item.label}</p>
                         </div>
                     })}
                 </Carousel>

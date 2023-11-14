@@ -19,6 +19,7 @@ export default function DateOption({ date, setDate }) {
     const active = (activeIndex == key1 || activeIndex == key2) && isOpenModal
 
     const handleCalendarChange = ([start, end]) => {
+        console.log(123);
         if (activeIndex == key1 && start) {
             setDate([start, end])
             handleChangeActiveIndex(key2)
