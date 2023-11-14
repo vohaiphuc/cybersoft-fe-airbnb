@@ -23,8 +23,10 @@ export const roomServ = {
       maNguoiDung,
     });
   },
+  getAsLocation: (locationId) => https.get(`/phong-thue/lay-phong-theo-vi-tri?maViTri=${locationId}`),
 };
 
 export const viTriServ = {
   get: () => https.get("/vi-tri"),
+  getDetail: (id) => https.get(`/vi-tri/${id}`),
 };

@@ -45,7 +45,7 @@ export default function Home() {
         setRoomListSlider(filteredList ? filteredList : roomList)
     }
 
-    return <div className='space-y-5'>
+    return <div className='space-y-3 lg:space-y-5 mb-3 lg:my-5'>
         <OptionSlider list={roomList} handleFilterRoom={handleFilterRoom} />
         <RoomList list={roomListSlider} locationList={locationLt} />
     </div>

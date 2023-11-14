@@ -20,7 +20,7 @@ export default function DateInput({ date, dateInfo, title, indexKey }) {
             openModal()
         }}
     >
-        <p className='w-1/2 font-medium'>{title}</p>
+        <p className='font-medium text-sm sm:text-base'>{title}</p>
         <Input
             // className='absolute w-full h-full top-0 left-0 pl-5 pt-6'
             className='w-full h-full top-0 left-0 pl-0 pt-1 pb-[1px]'

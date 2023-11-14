@@ -5,13 +5,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Carousel } from 'antd'
 import React, { useRef, useState } from 'react'
 import FilterModal from './FilterModal'
+import { useWindowWidth } from '@react-hook/window-size'
 
 export default function OptionSlider({ list, handleFilterRoom }) {
     const [itemActive, setItemActive] = useState(0);
     const [sliderArrow, setSliderArrow] = useState(0);
     const [modalId, setModalId] = useState(null);
     const refCarousel = useRef()
-    const slidesToShow = 12
+    const windowWidth = useWindowWidth()
+    let slidesToShow = 0
+
+    if (windowWidth <= 640) {
+        slidesToShow = 3
+    } else if (windowWidth > 640 && windowWidth <= 1024) {
+        slidesToShow = 5
+    } else {
+        slidesToShow = 12
+    }
+
     const carouselItems = [
         {
             label: 'Thật ấn tượng',
@@ -102,16 +113,16 @@ export default function OptionSlider({ list, handleFilterRoom }) {
 
 
     return (
-        <div className='mt-5 space-x-5 slider-carousel flex items-center justify-between'>
+        <div className='space-x-2 md:space-x-5 slider-carousel flex items-center justify-between'>
             <div className='flex-auto w-4/5 relative'>
-                <Carousel arrows={true} slidesToShow={slidesToShow} ref={refCarousel}>
+                <Carousel arrows={false} slidesToShow={slidesToShow} ref={refCarousel}>
                     {carouselItems.map((item, index) => {
                         const active = itemActive == index ? 'active' : ""
                         return <div key={index} className={`slider-item ${active}`}
                             onClick={() => { setItemActive(index) }}
                         >
                             {item.icon}
-                            <p>{item.label}</p>
+                            <p className='truncate'>{item.label}</p>
                         </div>
                     })}
                 </Carousel>
