@@ -97,3 +97,34 @@
         }
     }
 }
+
+.search-bar-date-popup {
+    width: 100%;
+    left: 0 !important;
+
+    .ant-picker-panels > *:first-child button.ant-picker-header-next-btn {
+        visibility: visible !important;
+    }
+
+    .ant-picker-panels > *:first-child button.ant-picker-header-super-next-btn {
+        visibility: visible !important;
+    }
+
+    .ant-picker-panels > *:last-child {
+        display: none;
+    }
+
+    .ant-picker-panel-container,
+    .ant-picker-footer {
+        width: 100% !important;
+    }
+
+    .ant-picker-footer-extra > div {
+        flex-wrap: wrap !important;
+    }
+
+    .ant-picker-panel-layout {
+        display: flex;
+        justify-content: center !important;
+    }
+}

@@ -1,0 +1,11 @@
+.menu-mobile {
+    svg {
+        color: #8f8f8f;
+    }
+    .active {
+        span,
+        svg {
+            color: #ff385c;
+        }
+    }
+}

@@ -8,10 +8,13 @@ import ExpandSearchbar from './SearchBar/ExpandSearchbar'
 import useModalBg from '../Modal/useModalBg'
 import { useRef } from 'react'
 import useActiveInput from './SearchBar/SearchOption/useActiveInput'
+import { useWindowWidth } from '@react-hook/window-size'
 
 export default function Header({ searchBar }) {
 	const { isOpenModal } = useModalBg()
 	const expandSearchBar = isOpenModal
+	const windowWidth = useWindowWidth()
+	const isMobile = windowWidth <= 640
 
 	const ref1 = useRef()
 	const ref2 = useRef()
@@ -23,13 +26,25 @@ export default function Header({ searchBar }) {
 				setActiveIndex(null)
 			}
 		}
-		if (expandSearchBar) {
+		if (expandSearchBar && !isMobile) {
 			document.addEventListener("click", handleClick)
 		}
 		return () => {
 			document.removeEventListener("click", handleClick)
 		}
 	}, [expandSearchBar])
+
+	const renderSeachBar = () => {
+		if (isMobile) {
+			return <NormalSearchbar />
+
+		} else if (searchBar && !expandSearchBar) {
+			return <NormalSearchbar />
+
+		} else if (searchBar && expandSearchBar) {
+			return <ExpandSearchbar />
+		}
+	}
 
 	const height = searchBar && expandSearchBar ? 16 : 0
 
@@ -40,8 +55,7 @@ export default function Header({ searchBar }) {
 					<Logo />
 				</div>
 				<div className="search-bar w-fit mx-auto" >
-					{searchBar && !expandSearchBar && <NormalSearchbar />}
-					{searchBar && expandSearchBar && <ExpandSearchbar />}
+					{renderSeachBar()}
 				</div>
 				<div className="nav items-center justify-end w-1/3 hidden lg:flex">
 					<NavBar />

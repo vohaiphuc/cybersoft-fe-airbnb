@@ -10,7 +10,7 @@ const { RangePicker } = DatePicker
 const startDate = 'startDate'
 const endDate = 'endDate'
 
-export default function DateOption({ date, setDate }) {
+export default function DateOption({ date, setDate, singleCalendar }) {
 
     const { isOpenModal } = useModalBg()
     const { activeIndex, setActiveIndex } = useActiveInput()
@@ -19,7 +19,6 @@ export default function DateOption({ date, setDate }) {
     const active = (activeIndex == key1 || activeIndex == key2) && isOpenModal
 
     const handleCalendarChange = ([start, end]) => {
-        console.log(123);
         if (activeIndex == key1 && start) {
             setDate([start, end])
             handleChangeActiveIndex(key2)
@@ -58,6 +57,7 @@ export default function DateOption({ date, setDate }) {
                                 }}
                             >Xóa tất cả</Button>
                         }
+                        popupClassName={singleCalendar ? 'search-bar-date-popup' : ''}
                     />
                 </ThemeRangePicker>
             </div>
