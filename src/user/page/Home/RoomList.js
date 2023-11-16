@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 
 export default function RoomList({ list }) {
     const locationList = useSelector(state => state.locationSlide.list)
+    const loading = useSelector(s => s.skeletonSlice.room)
 
     const renderRoom = () => (
         list?.map((room, index) => {
@@ -15,7 +16,7 @@ export default function RoomList({ list }) {
                     tinhThanh: locationList[idIndex].tinhThanh,
                 }
             }
-            return <RoomItem room={room} key={index} />
+            return <RoomItem key={index} room={room} loading={loading} keyIndex={index} />
         })
     )
 

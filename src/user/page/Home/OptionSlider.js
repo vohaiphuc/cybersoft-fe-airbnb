@@ -2,16 +2,18 @@ import { faRedditAlien } from '@fortawesome/free-brands-svg-icons'
 import { faChessBishop, faChessKing, faChessQueen, faCompass, faFloppyDisk, faHand, faHeart, faHospital, faHourglass, faIdBadge, faLemon, faMap, faMoon, faPaperPlane } from '@fortawesome/free-regular-svg-icons'
 import { faArrowLeft, faArrowRight, faChess, faChevronLeft, faChevronRight, faFilter, faSliders } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Button, Carousel } from 'antd'
+import { Button, Carousel, ConfigProvider, Skeleton } from 'antd'
 import React, { useRef, useState } from 'react'
 import FilterModal from './FilterModal'
 import useDevice from '../../hook/useDevice'
+import { useSelector } from 'react-redux'
 
 export default function OptionSlider({ list, handleFilterRoom }) {
     const [itemActive, setItemActive] = useState(0);
     const [sliderArrow, setSliderArrow] = useState(0);
     const [modalId, setModalId] = useState(null);
     const refCarousel = useRef()
+    const loading = useSelector(s => s.skeletonSlice.room)
 
     const { isMobile, isTablet, isDesktop } = useDevice()
     let slidesToShow
@@ -110,6 +112,22 @@ export default function OptionSlider({ list, handleFilterRoom }) {
         handleFilterRoom(list)
     }
 
+    const CustomSkeleton = ({ children }) => {
+        return !loading ? (
+            <div className='flex flex-col items-center space-y-1'>
+                {children}
+            </div>
+        ) : (
+            <div className='w-10 mx-auto flex flex-col items-center'>
+                <div className='h-0 opacity-0'>
+                    {children}
+                </div>
+                <Skeleton.Avatar active shape='circle' size={24} className='mb-1' />
+                <Skeleton.Button active style={{ height: 20 }} />
+            </div>
+        )
+    }
+
     return (
         <div className='space-x-2 md:space-x-5 slider-carousel flex items-center justify-between'>
             <div className='flex-auto w-4/5 relative'>
@@ -119,8 +137,10 @@ export default function OptionSlider({ list, handleFilterRoom }) {
                         return <div key={index} className={`slider-item ${active}`}
                             onClick={() => { setItemActive(index) }}
                         >
-                            {item.icon}
-                            <p className='truncate'>{item.label}</p>
+                            <CustomSkeleton>
+                                {item.icon}
+                                <p className='truncate w-full text-center'>{item.label}</p>
+                            </CustomSkeleton>
                         </div>
                     })}
                 </Carousel>

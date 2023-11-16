@@ -25,7 +25,6 @@ export default function LocationOption({ setLocationId }) {
                         slugTenViTri: slugify(item.tenViTri),
                     }
                 })
-                console.log("🚀 ~ file: Home.js:35 ~ locationList ~ locationList:", list)
                 setLocationLt(list)
                 dispatch(setLocationList(list))
             })
