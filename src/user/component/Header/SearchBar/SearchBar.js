@@ -52,7 +52,7 @@ export default function SearchBar() {
                     <DateOption
                         date={date}
                         setDate={setDate}
-                        singleCalendar={!(windowWidth > 640)}
+                        singleCalendar={isMobile}
                     />
                 </div>
             }
