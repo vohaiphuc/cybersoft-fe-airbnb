@@ -2,14 +2,11 @@ import React, { useState } from 'react'
 import LocationOption from './SearchOption/LocationOption';
 import PeopleOption from './SearchOption/PeopleOption';
 import DateOption from './SearchOption/DateOption';
-import { useSelector } from 'react-redux';
 import useModalBg from '../../Modal/useModalBg';
-import { useEffect } from 'react';
-import { useRef } from 'react';
 import useActiveInput from './SearchOption/useActiveInput';
 import { useNavigate } from 'react-router-dom';
 import { userRoute } from '../../../route/userRoute';
-import { useWindowWidth } from '@react-hook/window-size';
+import useDevice from '../../../hook/useDevice';
 
 export const activeInputSlug = {
     location: 'location',
@@ -20,8 +17,7 @@ export const activeInputSlug = {
 
 export default function SearchBar() {
     const navigate = useNavigate()
-    const windowWidth = useWindowWidth()
-    const locationList = useSelector(state => state.locationSlide.list)
+    const { isMobile } = useDevice()
     const [locationId, setLocationId] = useState("");
     const [date, setDate] = useState("");
     const [people, setPeople] = useState(0);
@@ -46,15 +42,12 @@ export default function SearchBar() {
 
     return (
         <div className={`border-2 rounded-full flex items-center transition-all ${transitionEffect} ${zIndex} ${bgColor}`}>
-            {(windowWidth > 640 || activeIndex == 0) &&
+            {(!isMobile || activeIndex == 0) &&
                 <div className='relative rounded-full h-full w-full sm:w-1/4 cursor-pointer'>
-                    <LocationOption
-                        locationList={locationList}
-                        setLocationId={setLocationId}
-                    />
+                    <LocationOption setLocationId={setLocationId} />
                 </div>
             }
-            {(windowWidth > 640 || activeIndex == 1 || activeIndex == 2) &&
+            {(!isMobile || activeIndex == 1 || activeIndex == 2) &&
                 <div className='rounded-full h-full w-full sm:w-1/2 relative flex flex-wrap sb-date-container'>
                     <DateOption
                         date={date}
@@ -62,7 +55,7 @@ export default function SearchBar() {
                     />
                 </div>
             }
-            {(windowWidth > 640 || activeIndex == 3) &&
+            {(!isMobile || activeIndex == 3) &&
                 <div className="rounded-full h-full w-full sm:w-1/4 block cursor-pointer">
                     <PeopleOption
                         people={people}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import "./asset/style.scss"
-import { useLocation, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { roomServ, viTriServ } from '../../api/api';
 import MapLocation from './MapLocation/MapLocation';
 import ListRoom from './ListRoom/ListRoom';
@@ -15,7 +15,6 @@ export default function Location() {
         roomServ.getAsLocation(locationId)
             .then((res) => {
                 const list = res.data.content
-                console.log("🚀 ~ file: Location.js:15 ~ .then ~ list:", list)
                 setRoomList(list)
             })
             .catch((err) => {

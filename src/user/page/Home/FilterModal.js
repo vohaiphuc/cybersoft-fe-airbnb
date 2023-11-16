@@ -1,9 +1,9 @@
 import { faSliders } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useWindowWidth } from '@react-hook/window-size';
 import { Button, Checkbox, ConfigProvider, Input, InputNumber, Modal, Slider } from 'antd';
 import _ from 'lodash';
 import React, { useEffect, useState } from 'react'
+import useDevice from '../../hook/useDevice';
 
 export default function FilterModal({ list, handleFilterRoom, resetModal }) {
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -21,7 +21,8 @@ export default function FilterModal({ list, handleFilterRoom, resetModal }) {
     const [banUi, setBanUi] = useState(false);
     const [hoBoi, setHoBoi] = useState(false);
 
-    const windowWidth = useWindowWidth()
+    const { isMobile } = useDevice()
+
     useEffect(() => {
         if (list) {
             setRangeGiaTien({ start: minGiaTien, end: maxGiaTien })
@@ -56,7 +57,6 @@ export default function FilterModal({ list, handleFilterRoom, resetModal }) {
         filter = (phongTam > 0) ? filter.filter(item => item.phongTam == phongTam) : filter
 
         // tien nghi
-
         filter = (wifi) ? filter.filter(item => item.wifi) : filter
         filter = (mayGiat) ? filter.filter(item => item.mayGiat) : filter
         filter = (dieuHoa) ? filter.filter(item => item.dieuHoa) : filter
@@ -66,7 +66,6 @@ export default function FilterModal({ list, handleFilterRoom, resetModal }) {
 
         setFitlerResult(filter)
     }
-
 
     const getGiaTien = () => {
         let giaTienList = list?.map(item => item.giaTien).filter(item => item > 0)
@@ -90,29 +89,28 @@ export default function FilterModal({ list, handleFilterRoom, resetModal }) {
     };
 
     const buttonPhong = (setPhongFn, phong) => {
-        const buttonList = windowWidth < 640 ? [1, 2, 3, 4, 5] : [1, 2, 3, 4, 5, 6, 7, 8]
-        return <ConfigProvider
-            theme={{
-                token: {
-                    colorPrimary: '#000000',
-                },
-            }}
-        >
-            <Button
-                type={phong == 0 ? 'primary' : 'default'}
-                ghost={phong == 0}
-                onClick={() => { setPhongFn(0) }}
-            >Bất kì
-            </Button>
-            {buttonList.map(item =>
+        const buttonList = isMobile ? [1, 2, 3, 4, 5] : [1, 2, 3, 4, 5, 6, 7, 8]
+        return (
+            <ConfigButtonTheme>
                 <Button
-                    type={phong == item ? 'primary' : 'default'}
-                    ghost={phong == item}
-                    key={item} onClick={() => { setPhongFn(item) }}>{item}</Button>
-            )}
-        </ConfigProvider>
+                    type={phong == 0 ? 'primary' : 'default'}
+                    ghost={phong == 0}
+                    onClick={() => { setPhongFn(0) }}
+                >
+                    Bất kì
+                </Button>
+                {buttonList.map(item =>
+                    <Button
+                        type={phong == item ? 'primary' : 'default'}
+                        ghost={phong == item}
+                        key={item} onClick={() => { setPhongFn(item) }}
+                    >
+                        {item}
+                    </Button>
+                )}
+            </ConfigButtonTheme>
+        )
     }
-
 
     return (
         <>
@@ -193,3 +191,15 @@ export default function FilterModal({ list, handleFilterRoom, resetModal }) {
         </>
     )
 }
+
+const ConfigButtonTheme = ({ children }) => (
+    <ConfigProvider
+        theme={{
+            token: {
+                colorPrimary: '#000000',
+            },
+        }}
+    >
+        {children}
+    </ConfigProvider>
+)
