@@ -1,15 +1,38 @@
 import { Select } from 'antd'
-import React from 'react'
+import React, { useState } from 'react'
 import { slugify } from '../utils'
 import useModalBg from '../../../Modal/useModalBg'
 import useActiveInput from './useActiveInput'
 import { useRef } from 'react'
 import { useEffect } from 'react'
+import { setLocationList } from '../../../../redux/locationSlide'
+import { useDispatch } from 'react-redux'
+import { viTriServ } from '../../../../api/api'
 
-export default function LocationOption({ locationList, setLocationId }) {
+export default function LocationOption({ setLocationId }) {
     const ref = useRef()
     const { isOpenModal } = useModalBg()
     const { activeIndex, setActiveIndex } = useActiveInput()
+    const [locationLt, setLocationLt] = useState(null);
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        viTriServ.get()
+            .then((res) => {
+                let list = res.data.content.map(item => {
+                    return {
+                        ...item,
+                        slugTenViTri: slugify(item.tenViTri),
+                    }
+                })
+                console.log("🚀 ~ file: Home.js:35 ~ locationList ~ locationList:", list)
+                setLocationLt(list)
+                dispatch(setLocationList(list))
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, [])
 
     const key = 0
     const active = (activeIndex == key && isOpenModal)
@@ -43,7 +66,7 @@ export default function LocationOption({ locationList, setLocationId }) {
                 suffixIcon={null} bordered={false} showSearch allowClear
                 optionFilterProp="label"
                 filterOption={handleFilter}
-                options={locationList?.map(l => (
+                options={locationLt?.map(l => (
                     {
                         value: l.id,
                         label: l.tenViTri.trim() + ", " + l.tinhThanh.trim(),

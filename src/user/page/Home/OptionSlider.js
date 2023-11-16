@@ -5,21 +5,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Carousel } from 'antd'
 import React, { useRef, useState } from 'react'
 import FilterModal from './FilterModal'
-import { useWindowWidth } from '@react-hook/window-size'
+import useDevice from '../../hook/useDevice'
 
 export default function OptionSlider({ list, handleFilterRoom }) {
     const [itemActive, setItemActive] = useState(0);
     const [sliderArrow, setSliderArrow] = useState(0);
     const [modalId, setModalId] = useState(null);
     const refCarousel = useRef()
-    const windowWidth = useWindowWidth()
-    let slidesToShow = 0
 
-    if (windowWidth <= 640) {
+    const { isMobile, isTablet, isDesktop } = useDevice()
+    let slidesToShow
+    if (isMobile) {
         slidesToShow = 3
-    } else if (windowWidth > 640 && windowWidth <= 1024) {
+    } else if (isTablet) {
         slidesToShow = 5
-    } else {
+    } else if (isDesktop) {
         slidesToShow = 12
     }
 
@@ -91,7 +91,6 @@ export default function OptionSlider({ list, handleFilterRoom }) {
     ]
     const maxSlide = carouselItems.length - slidesToShow
 
-
     const handleSlidePrev = () => {
         if (sliderArrow > 0) {
             refCarousel.current.prev()
@@ -110,7 +109,6 @@ export default function OptionSlider({ list, handleFilterRoom }) {
         setModalId(Math.random())
         handleFilterRoom(list)
     }
-
 
     return (
         <div className='space-x-2 md:space-x-5 slider-carousel flex items-center justify-between'>
