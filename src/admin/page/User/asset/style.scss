@@ -1,0 +1,46 @@
+:root {
+  --modal-bg: #04152d;
+  --white: #fff;
+}
+.ant-modal-content {
+  background-color: var(--modal-bg) !important;
+  border-radius: 8px;
+  .ant-modal-close {
+    background-color: red;
+  }
+  .ant-modal-header {
+    background-color: transparent;
+    margin-bottom: 20px;
+    .ant-modal-title {
+      font-size: 2rem;
+      color: var(--white);
+    }
+  }
+  .ant-modal-footer {
+    display: none;
+  }
+  .form-modal {
+    .form-content {
+      display: flex;
+      flex-direction: column;
+    }
+    label {
+      font-size: 16px;
+      color: var(--white);
+    }
+    input {
+      outline: none;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 10px;
+    }
+    .error {
+      border: 1px solid #ff4d4f;
+      border-width: 2px;
+    }
+    .error-message {
+      color: #ff4d4f;
+      font-weight: 600;
+    }
+  }
+}

@@ -3,7 +3,15 @@
  */
 
 export const userLocalStorage = {
-    set: () => { },
-    get: (id) => { },
-    remove: () => { },
-}
+  set: (adminLogin) => {
+    let dataJson = JSON.stringify(adminLogin);
+    localStorage.setItem("ADMIN", dataJson);
+  },
+  get: () => {
+    let dataJson = localStorage.getItem("ADMIN");
+    return JSON.parse(dataJson);
+  },
+  remove: () => {
+    localStorage.removeItem("ADMIN");
+  },
+};
