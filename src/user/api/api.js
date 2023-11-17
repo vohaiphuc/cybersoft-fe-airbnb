@@ -1,10 +1,6 @@
 import { dateFromIsoString } from "../page/Room/asset/utils";
 import { https } from "./config";
 
-export const userServ = {
-  login: (info) => https.post(`/auth/signin`, info),
-};
-
 export const roomServ = {
   get: () => https.get("/phong-thue"),
   getDetaiRoomData: ({ id }) => https.get(`/phong-thue/${id}`),
@@ -23,10 +19,15 @@ export const roomServ = {
       maNguoiDung,
     });
   },
-  getAsLocation: (locationId) => https.get(`/phong-thue/lay-phong-theo-vi-tri?maViTri=${locationId}`),
+  getAsLocation: (locationId) =>
+    https.get(`/phong-thue/lay-phong-theo-vi-tri?maViTri=${locationId}`),
 };
 
 export const viTriServ = {
   get: () => https.get("/vi-tri"),
   getDetail: (id) => https.get(`/vi-tri/${id}`),
+};
+
+export const updateProfile = {
+  put: async (id) => https.put(`/users/${id}`),
 };

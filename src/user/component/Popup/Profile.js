@@ -1,9 +1,9 @@
 import React from "react";
 import { Modal } from "antd";
-import Form from "../../page/Register/Form";
 import { useDispatch } from "react-redux";
 import { clearPopup } from "../../redux/popupSlice";
 import "../../page/Register/asset/style.scss";
+import UpdateForm from "../Profile/UpdateForm";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -12,13 +12,14 @@ const Profile = () => {
   };
   return (
     <Modal
+      centered
       className="form-register-width"
       open={true}
       onOk={handleClose}
       onCancel={handleClose}
       footer={null}
     >
-      <Form />
+      <UpdateForm />
     </Modal>
   );
 };

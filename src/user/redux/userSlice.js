@@ -43,6 +43,9 @@ export const loginUser = createAsyncThunk(
         userLocalStorage.set(response.data.content);
         notification.success({ message: "Đăng nhập thành công !" });
         dispatch(clearPopup({ popup: "" }));
+        setTimeout(() => {
+          window.location.reload();
+        }, 200);
         return response.data.content;
       }
     } catch (error) {
@@ -54,16 +57,17 @@ export const loginUser = createAsyncThunk(
 
 export const updateProfile = createAsyncThunk(
   "user/updateProfile",
-  async ({ profileData, user }, { dispatch }) => {
+  async ({ profileData, id }, { dispatch }) => {
     try {
-      const response = await https.put(`/api/users/`, profileData);
+      const response = await https.put(`/users/${id}`, profileData);
       if (response.status === 200) {
         const setDataUpdate = {
-          ...response.data.content,
-          accessToken: user.accessToken,
+          token: userLocalStorage.get()?.token,
+          user: response.data.content,
         };
         dispatch(setLogin(setDataUpdate));
         userLocalStorage.set(setDataUpdate);
+        dispatch(clearPopup({ popup: "" }));
         notification.success({ message: "Cập nhật tài khoản thành công" });
         return response.data.content;
       }
@@ -71,6 +75,35 @@ export const updateProfile = createAsyncThunk(
       notification.error({
         message:
           error.response.data.content || "Có lỗi xảy ra, vui lòng thử lại",
+      });
+      throw error;
+    }
+  }
+);
+
+export const updateAvatar = createAsyncThunk(
+  "user/updateAvatar",
+  async (formFile, { dispatch }) => {
+    try {
+      const bodyFormData = new FormData();
+      bodyFormData.append("formFile", formFile);
+
+      const response = await https.post("/users/upload-avatar", bodyFormData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response.status === 200) {
+        dispatch(setLogin(response.data.content));
+        userLocalStorage.set(response.data.content);
+        notification.success({ message: "Cập nhật tài khoản thành công" });
+        return response.data.content;
+      }
+    } catch (error) {
+      notification.error({
+        message:
+          error.response?.data.content || "Có lỗi xảy ra, vui lòng thử lại",
       });
       throw error;
     }
@@ -89,6 +122,9 @@ const userSlice = createSlice({
     },
     removeLogin: (state) => {
       state.user = null;
+    },
+    setComments: (state, action) => {
+      state.comments = action.payload;
     },
   },
   extraReducers: (builder) => {

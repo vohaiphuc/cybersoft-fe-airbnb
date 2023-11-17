@@ -7,9 +7,14 @@ import Calendar from "../Calendar";
 import { formattedDate } from "../asset/utils";
 import { roomServ } from "../../../api/api";
 import styles from "./Detail.module.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { setPopup } from "../../../redux/popupSlice";
+import { POPUP_NAME } from "../../../constants/popup";
 
 const Booking = ({ data }) => {
   const { giaTien, khach, id } = data || {};
+  const { user } = useSelector((state) => state?.userSlice?.user) || {};
+  const dispatch = useDispatch();
 
   const [guest, setGuest] = useState(0);
   const [toggleCalendar, setToggleCalendar] = useState(false);
@@ -22,7 +27,7 @@ const Booking = ({ data }) => {
   ]);
   const totalDays = useMemo(
     () => differenceInDays(dates?.[0]?.endDate, dates?.[0]?.startDate),
-    [dates?.[0]?.endDate, dates?.[0]?.startDate]
+    [dates]
   );
 
   const totalPrice = useMemo(() => giaTien * totalDays, [giaTien, totalDays]);
@@ -43,35 +48,31 @@ const Booking = ({ data }) => {
     setToggleCalendar(!toggleCalendar);
   };
 
-  //TODO: check user logged before execute handleBooking
-  const userLogged = true;
-  const userId = 4264;
   const handleBooking = async (e) => {
     e.preventDefault();
-    if (userLogged && guest) {
-      await roomServ
-        .postBookingRoom({
+    if (user?.id && guest) {
+      try {
+        const res = await roomServ.postBookingRoom({
           maPhong: id,
           ngayDen: dates?.[0]?.startDate,
           ngayDi: dates?.[0]?.endDate,
           soLuongKhach: guest,
-          maNguoiDung: userId,
-        })
-        .then((res) => {
-          if (res.status === 201) {
-            notification.success({
-              message: "Đặt phòng thành công",
-            });
-          }
-        })
-        .catch((error) => {
-          notification.error({
-            message: "Đặt phòng thất bại.",
-          });
-          throw error;
+          maNguoiDung: user?.id,
         });
+        if (res.status === 201) {
+          notification.success({
+            message: "Đặt phòng thành công",
+          });
+        }
+      } catch (error) {
+        notification.error({
+          message: "Đặt phòng thất bại.",
+        });
+        throw error;
+      }
     } else {
       //Handle push to login to booking room
+      dispatch(setPopup({ popup: POPUP_NAME.LOGIN }));
     }
   };
 

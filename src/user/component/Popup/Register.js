@@ -12,6 +12,7 @@ const Register = () => {
   };
   return (
     <Modal
+      centered
       className="form-register-width"
       open={true}
       onOk={handleClose}

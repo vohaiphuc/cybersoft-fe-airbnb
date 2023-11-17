@@ -5,6 +5,7 @@ import locationSlide from "./locationSlide";
 import modalSlice from "./modalSlice";
 import activeSearchbarSlice from "./activeSearchbarSlice";
 import skeletonSlice from "./skeletonSlice";
+import commentSlice from "./commentSlice";
 
 export const userReducer = {
   userSlice,
@@ -14,4 +15,5 @@ export const userReducer = {
   modalSlice,
   activeSearchbarSlice,
   skeletonSlice,
+  commentSlice,
 };

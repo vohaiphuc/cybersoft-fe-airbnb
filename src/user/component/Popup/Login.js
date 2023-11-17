@@ -11,7 +11,13 @@ const Login = () => {
   };
 
   return (
-    <Modal open={true} onOk={handleClose} onCancel={handleClose} footer={null}>
+    <Modal
+      centered
+      open={true}
+      onOk={handleClose}
+      onCancel={handleClose}
+      footer={null}
+    >
       <Form />
     </Modal>
   );

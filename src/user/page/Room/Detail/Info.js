@@ -1,16 +1,14 @@
 import React, { Fragment } from "react";
 import { StarFilled } from "@ant-design/icons";
 import LazyImage from "../Image";
-import styles from "./Detail.module.scss"
+import styles from "./Detail.module.scss";
 
 const Info = ({ data }) => {
   const { tenPhong, rating, khach, giuong, hinhAnh } = data || {};
   return (
     <Fragment>
-      <div className={styles.info}>
-        {tenPhong}
-      </div>
-      <div className={styles['info-detail']}>
+      <div className={styles.info}>{tenPhong}</div>
+      <div className={styles["info-detail"]}>
         <StarFilled />
         <span>{rating || 2 + " sao"}</span>
         {khach && (

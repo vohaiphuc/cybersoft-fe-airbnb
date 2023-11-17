@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPopup } from "../../redux/popupSlice";
 import { POPUP_NAME } from "../../constants/popup";
 import { userLocalStorage } from "../../api/localService";
+import { Link } from "react-router-dom";
 
 export default function NavBar() {
   const dispatch = useDispatch();
@@ -32,11 +33,7 @@ export default function NavBar() {
         className="text-black w-full h-full shadow-none border-none text-left hover:!border-none hover:!bg-transparent p-0 hover:!text-black"
         onClick={() => handleToggleAuth(type)}
       >
-        {type === "login"
-          ? "Đăng nhập"
-          : type === "register"
-          ? "Đăng ký"
-          : "Thông tin cá nhân"}
+        {type === "login" ? "Đăng nhập" : "Đăng ký"}
       </Button>
     );
   };
@@ -51,16 +48,6 @@ export default function NavBar() {
       </Button>
     );
   };
-  // const renderProfileButton = () => {
-  //   return (
-  //     <Button
-  //       className="text-black w-full h-full shadow-none border-none text-left hover:!border-none hover:!bg-transparent p-0 hover:!text-black"
-  //       onClick={handleToggleAuth()}
-  //     >
-  //       Thông tin cá nhân
-  //     </Button>
-  //   );
-  // };
 
   const items = [
     token
@@ -70,7 +57,7 @@ export default function NavBar() {
           key: "0",
         },
     token
-      ? { label: renderAuthButton(""), key: "1" }
+      ? { label: <Link to="/profile">Thông tin cá nhân</Link>, key: "2" }
       : {
           label: renderAuthButton("login"),
           key: "1",
@@ -111,8 +98,12 @@ export default function NavBar() {
       >
         <div className="profile space-x-3 flex items-center cursor-pointer">
           <FontAwesomeIcon icon={faBars} />
+          {token && <span>{user?.user?.name}</span>}
           <Avatar
-            src="https://t3.ftcdn.net/jpg/05/53/79/60/360_F_553796090_XHrE6R9jwmBJUMo9HKl41hyHJ5gqt9oz.jpg"
+            src={
+              user?.user?.avatar ||
+              "https://t3.ftcdn.net/jpg/05/53/79/60/360_F_553796090_XHrE6R9jwmBJUMo9HKl41hyHJ5gqt9oz.jpg"
+            }
             size={30}
           />
         </div>

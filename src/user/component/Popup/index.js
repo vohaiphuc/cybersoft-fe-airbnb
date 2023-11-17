@@ -14,7 +14,7 @@ const Popup = () => {
       return <Login />;
     case POPUP_NAME.REGISTER:
       return <Register />;
-    case POPUP_NAME.PROFILE:
+    case POPUP_NAME.EDIT_PROFILE:
       return <Profile />;
     default:
       return null;
