@@ -15,9 +15,9 @@ import Login from "../page/Login/Login";
 import Register from "../page/Register/Register";
 import PageNotFound from "../page/404/PageNotFound";
 import DefaultLayout from "../layout/DefaultLayout";
-import AccountLayout from "../layout/AccountLayout";
 import Profile from "../page/Profile";
 import PrivateRoute from "./guardRoute";
+import BookedRooms from "../page/BookedRooms";
 
 export const userRoute = {
   home: {
@@ -78,11 +78,22 @@ export const userRoute = {
   account: {
     path: "/profile",
     element: (
-      <AccountLayout>
+      <DefaultLayout>
         <PrivateRoute>
           <Profile />
         </PrivateRoute>
-      </AccountLayout>
+      </DefaultLayout>
+    ),
+  },
+
+  booked: {
+    path: "/booked-rooms",
+    element: (
+      <DefaultLayout>
+        <PrivateRoute>
+          <BookedRooms />
+        </PrivateRoute>
+      </DefaultLayout>
     ),
   },
 

@@ -1,6 +1,10 @@
 import { dateFromIsoString } from "../page/Room/asset/utils";
 import { https } from "./config";
 
+export const userServ = {
+  bookedRooms: ({ id }) => https.get(`/dat-phong/lay-theo-nguoi-dung/${id}`),
+};
+
 export const roomServ = {
   get: () => https.get("/phong-thue"),
   getDetaiRoomData: ({ id }) => https.get(`/phong-thue/${id}`),

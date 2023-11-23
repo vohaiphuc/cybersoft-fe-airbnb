@@ -63,6 +63,7 @@ const Booking = ({ data }) => {
           notification.success({
             message: "Đặt phòng thành công",
           });
+          setGuest(0);
         }
       } catch (error) {
         notification.error({

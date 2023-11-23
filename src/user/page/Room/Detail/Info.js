@@ -24,34 +24,12 @@ const Info = ({ data }) => {
       </div>
 
       <div className={styles.images}>
-        <div className={styles.images__left}>
-          <div className="w-full h-full p-1 force-image">
-            <LazyImage
-              alt={"gallery" + tenPhong}
-              className={styles.img}
-              src={hinhAnh}
-            />
-          </div>
-        </div>
-        <div className={styles.images__right}>
-          <div className="w-full p-1 force-image">
-            <LazyImage
-              alt={"gallery" + tenPhong}
-              className={styles.img}
-              src={hinhAnh}
-            />
-          </div>
-          {[0, 1].map((item) => {
-            return (
-              <div className="w-1/2 p-1 force-image" key={item}>
-                <LazyImage
-                  alt={"gallery" + tenPhong}
-                  className={styles.img}
-                  src={hinhAnh}
-                />
-              </div>
-            );
-          })}
+        <div className="w-full h-full p-1 force-image">
+          <LazyImage
+            alt={"gallery" + tenPhong}
+            className={styles.img}
+            src={hinhAnh}
+          />
         </div>
       </div>
     </Fragment>
