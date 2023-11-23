@@ -68,30 +68,27 @@ https.interceptors.request.use(
   }
 );
 
-https.interceptors.response.use(
-  function (response) {
-    const url = response.config.url;
-    switch (url) {
-      case "/vi-tri":
-        setTimeout(() => {
-          store.dispatch(setSkeletonLocation(false));
-          console.log("vitri");
-        }, 1000);
-        break;
+https.interceptors.response.use(function (response) {
+  const { url } = response.config
+  switch (url) {
+    case '/vi-tri':
+      setTimeout(() => {
+        store.dispatch(setSkeletonLocation(false))
+      }, 1000);
+      break;
 
-      case "/phong-thue":
-        setTimeout(() => {
-          console.log("phong-thue");
-          store.dispatch(setSkeletonRoom(false));
-        }, 1000);
-        break;
+    case '/phong-thue':
+      setTimeout(() => {
+        store.dispatch(setSkeletonRoom(false))
+      }, 1000);
+      break;
 
-      default:
-        break;
-    }
+    default:
+      break;
+  }
 
-    return response;
-  },
+  return response;
+},
   function (error) {
     store.dispatch(setSkeletonLocation(false));
     store.dispatch(setSkeletonRoom(false));
