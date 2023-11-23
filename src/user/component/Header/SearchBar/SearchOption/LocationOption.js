@@ -1,44 +1,22 @@
 import { Select } from 'antd'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { slugify } from '../utils'
 import useModalBg from '../../../Modal/useModalBg'
 import useActiveInput from './useActiveInput'
 import { useRef } from 'react'
-import { useEffect } from 'react'
-import { setLocationList } from '../../../../redux/locationSlide'
-import { useDispatch } from 'react-redux'
-import { viTriServ } from '../../../../api/api'
 
-export default function LocationOption({ setLocationId }) {
+export default function LocationOption({ setLocationId, locationLt }) {
     const ref = useRef()
     const { isOpenModal } = useModalBg()
     const { activeIndex, setActiveIndex } = useActiveInput()
-    const [locationLt, setLocationLt] = useState(null);
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        viTriServ.get()
-            .then((res) => {
-                let list = res.data.content.map(item => {
-                    return {
-                        ...item,
-                        slugTenViTri: slugify(item.tenViTri),
-                    }
-                })
-                setLocationLt(list)
-                dispatch(setLocationList(list))
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, [])
-
     const key = 0
     const active = (activeIndex == key && isOpenModal)
 
-    if (active && ref.current) {
-        ref.current.focus()
-    }
+    useEffect(() => {
+        if (active && ref.current) {
+            ref.current.focus()
+        }
+    }, [active])
 
     const handleFilter = (inputValue, option) => {
         let label = slugify(option.label.toLowerCase())

@@ -32,18 +32,16 @@ https.interceptors.request.use(function (config) {
 });
 
 https.interceptors.response.use(function (response) {
-    const url = response.config.url
+    const { url } = response.config
     switch (url) {
         case '/vi-tri':
             setTimeout(() => {
                 store.dispatch(setSkeletonLocation(false))
-                console.log("vitri");
             }, 1000);
             break;
 
         case '/phong-thue':
             setTimeout(() => {
-                console.log("phong-thue");
                 store.dispatch(setSkeletonRoom(false))
             }, 1000);
             break;

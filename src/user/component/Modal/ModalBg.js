@@ -20,15 +20,17 @@ export default function ModalBg() {
             dispatch(setActiveIndex(null))
         }
 
-        document.addEventListener("click", handleClick)
-        document.addEventListener("scroll", handleCloseModal)
+        if (isOpenModal) {
+            document.addEventListener("click", handleClick)
+            document.addEventListener("scroll", handleCloseModal)
+        }
 
         return () => {
             document.removeEventListener("click", handleClick)
             document.removeEventListener("scroll", handleCloseModal)
         }
 
-    }, [])
+    }, [isOpenModal])
 
 
     return isOpenModal && (

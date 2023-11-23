@@ -3,8 +3,6 @@ import React from 'react'
 import DateInput from './DateInput';
 import useModalBg from '../../../Modal/useModalBg';
 import useActiveInput from './useActiveInput';
-import { useEffect } from 'react';
-import { useState } from 'react';
 
 const { RangePicker } = DatePicker
 const startDate = 'startDate'
