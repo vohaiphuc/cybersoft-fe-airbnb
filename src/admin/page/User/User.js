@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "antd";
+import { Button, message } from "antd";
 import { userServ } from "../../api/api";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import MUIDataTable from "mui-datatables";
@@ -11,7 +11,7 @@ export default function User() {
   let [isOpen, setIsOpen] = useState(false);
   const [listUsers, setListUsers] = useState([]);
   const [editUser, setEditUser] = useState({});
-  const getUser = () => {
+  const getData = () => {
     userServ
       .getList()
       .then((res) => {
@@ -23,7 +23,7 @@ export default function User() {
   };
 
   useEffect(() => {
-    getUser();
+    getData();
   }, []);
   const data = listUsers.map((user, index) => ({
     id: user.id,
@@ -113,25 +113,33 @@ export default function User() {
         setListUsers((prevListUsers) =>
           prevListUsers.filter((user) => user.id !== userId)
         );
-        getUser();
+        message.success("Xóa thành công");
+        getData();
       })
       .catch((err) => {
         console.log(err);
       });
   };
   const handleEditUser = (userId) => {
-    const idEdit = listUsers.find((user) => user.id === userId);
-    setEditUser(idEdit);
-    setIsOpen(true);
+    userServ
+      .getDetailUser(userId)
+      .then((res) => {
+        setEditUser(res.data.content);
+        setIsOpen(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
+  console.log(editUser);
   return (
     <React.Fragment>
-      <AddUser getUser={getUser} />
+      <AddUser getData={getData} />
       <EditUser
         setIsOpen={setIsOpen}
         isOpen={isOpen}
         editUser={editUser}
-        getUser={getUser}
+        getData={getData}
       />
       <MUIDataTable
         title={"Quản lý danh sách người dùng"}

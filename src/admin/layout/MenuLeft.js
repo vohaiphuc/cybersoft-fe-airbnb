@@ -11,13 +11,22 @@ export default function MenuLeft() {
       items={[
         {
           key: "1",
-          icon: <UserOutlined />,
           label: <Link to="/admin/user">User</Link>,
         },
         {
           key: "2",
-          icon: <VideoCameraOutlined />,
+
           label: <Link to="/admin/room">Quản lý phòng</Link>,
+        },
+        {
+          key: "3",
+
+          label: <Link to="/admin/location">Quản lý vị trí</Link>,
+        },
+        {
+          key: "4",
+
+          label: <Link to="/admin/booking">Quản lý đặt phòng</Link>,
         },
       ]}
     />

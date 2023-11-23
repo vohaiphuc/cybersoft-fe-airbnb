@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./asset/style.scss";
 import MUIDataTable from "mui-datatables";
-import { Button, Popover } from "antd";
+import { Button, Popover, message } from "antd";
 import { roomServ } from "../../api/api";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import AddRoom from "./AddRoom";
+import EditRoom from "./EditRoom";
 export default function Room() {
+  const [isOpen, setIsOpen] = useState(false);
   const [listRooms, setListRooms] = useState([]);
+  const [editData, setEditData] = useState({});
   const [popoverStates, setPopoverStates] = useState(
     listRooms.map(() => false)
   );
@@ -48,7 +51,6 @@ export default function Room() {
     moTa: room.moTa,
     giaTien: room.giaTien,
   }));
-  console.log(listRooms);
   const columns = [
     {
       name: "stt",
@@ -174,7 +176,7 @@ export default function Room() {
                 type="primary"
                 danger
                 icon={<EditOutlined />}
-                className="mr-2"
+                className="mr-2 mb-3"
                 onClick={() => handleEditRoom(roomId)}
               ></Button>
               <Button
@@ -189,11 +191,41 @@ export default function Room() {
       },
     },
   ];
-  const handleEditRoom = () => {};
-  const handleDeleteRoom = () => {};
+  const handleEditRoom = (roomId) => {
+    roomServ
+      .getDetailRoom(roomId)
+      .then((res) => {
+        setEditData(res.data.content);
+        setIsOpen(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const handleDeleteRoom = (roomId) => {
+    roomServ
+      .deleteRoom(roomId)
+      .then(() => {
+        setListRooms((prevListRooms) =>
+          prevListRooms.filter((room) => room.id !== roomId)
+        );
+        message.success("Xóa thành công");
+        getData();
+      })
+      .catch((err) => {
+        message.error("Không có quyền xóa");
+        console.log(err);
+      });
+  };
   return (
     <div>
       <AddRoom getData={getData} />
+      <EditRoom
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        editData={editData}
+        getData={getData}
+      />
       <MUIDataTable
         title={"Quản lý danh sách phòng"}
         data={data}

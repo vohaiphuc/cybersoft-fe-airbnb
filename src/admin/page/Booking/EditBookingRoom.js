@@ -2,36 +2,35 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { userServ } from "../../api/api";
+import { bookingRoomServ } from "../../api/api";
 import * as yup from "yup";
-import { message } from "antd";
+import { DatePicker } from "antd";
 const validationSchema = yup.object().shape({
   id: yup.number().required("Vui lòng nhập id"),
-  name: yup.string().required("Vui lòng nhập tên tài khoản"),
-  email: yup
-    .string()
-    .email("Định dạng email không đúng")
-    .required("Vui lòng nhập email"),
-  password: yup.string().required("Vui lòng nhập mật khẩu"),
-  phone: yup.string().required("Vui lòng nhập số điện thoại"),
-  birthday: yup.string().required("Vui lòng nhập ngày sinh nhật"),
-  gender: yup.boolean().required("Vui lòng chọn giới tính"),
-  role: yup.string().required("Vui lòng nhập vai trò"),
+  maPhong: yup.string().required("Vui lòng nhập mã phòng"),
+  ngayDen: yup.string().required("Vui lòng nhập ngày đến"),
+  ngayDi: yup.string().required("Vui lòng nhập ngày đi "),
+  soLuongKhach: yup.string().required("Vui lòng nhập số lượng khách"),
+  maNguoiDung: yup.string().required("Vui lòng nhập mã người dùng"),
 });
-export default function EditUser({ setIsOpen, isOpen, editUser, getData }) {
+export default function EditBookingRoom({
+  setIsOpen,
+  isOpen,
+  editData,
+  getData,
+}) {
   const methods = useForm({
     defaultValues: {
-      id: 0,
-      name: "",
-      email: "",
-      phone: "",
-      birthday: "",
-      gender: true,
-      role: "",
+      id: null,
+      maPhong: "",
+      ngayDen: "",
+      ngayDi: "",
+      soLuongKhach: "",
+      maNguoiDung: "",
     },
     resolver: yupResolver(validationSchema),
   });
-  const { id } = editUser;
+
   const {
     setValue,
     handleSubmit,
@@ -42,33 +41,36 @@ export default function EditUser({ setIsOpen, isOpen, editUser, getData }) {
   function closeModal() {
     setIsOpen(false);
   }
-
-  useEffect(() => {
-    if (editUser) {
-      reset({
-        id: editUser.id,
-        name: editUser.name,
-        email: editUser.email,
-        phone: editUser.phone,
-        birthday: editUser.birthday,
-        gender: editUser.gender,
-        role: editUser.role,
-      });
-    }
-  }, [editUser, reset]);
   const onSubmit = (values) => {
-    userServ
-      .editUser(id, values)
+    const { id, ...roomData } = values;
+    bookingRoomServ
+      .editBookingRoom(id, roomData)
       .then((res) => {
-        message.success("Edit user success fully");
         setIsOpen(false);
         getData();
       })
       .catch((err) => {
-        message.error("Không có quyền edit user");
-        setIsOpen(false);
+        console.log(err);
       });
   };
+  const handleDateStart = (dateString) => {
+    setValue("ngayDen", dateString);
+  };
+  const handleDateEnd = (dateString) => {
+    setValue("ngayDi", dateString);
+  };
+  useEffect(() => {
+    if (editData) {
+      reset({
+        id: editData.id,
+        maPhong: editData.maPhong,
+        ngayDen: editData.ngayDen,
+        ngayDi: editData.ngayDi,
+        soLuongKhach: editData.soLuongKhach,
+        maNguoiDung: editData.maNguoiDung,
+      });
+    }
+  }, [editData, reset]);
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -101,13 +103,13 @@ export default function EditUser({ setIsOpen, isOpen, editUser, getData }) {
                     as="h3"
                     className="text-2xl font-medium leading-6 text-white mb-6 text-center"
                   >
-                    Edit User
+                    Edit Booking Room
                   </Dialog.Title>
                   <div className="mt-2">
                     <form onSubmit={handleSubmit(onSubmit)}>
                       <div class="relative z-0 w-full mb-6 group">
                         <input
-                          type="text"
+                          type="number"
                           name="id"
                           class={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer`}
                           placeholder=" "
@@ -124,105 +126,100 @@ export default function EditUser({ setIsOpen, isOpen, editUser, getData }) {
                       <div class="relative z-0 w-full mb-6 group">
                         <input
                           type="text"
-                          name="name"
+                          name="maPhong"
                           class={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer`}
                           placeholder=" "
-                          onChange={(e) => setValue("name", e.target.value)}
-                          {...register("name")}
+                          onChange={(e) => setValue("maPhong", e.target.value)}
+                          {...register("maPhong")}
                         />
-                        {errors.name && (
-                          <p className="text-red-500">{errors.name.message}</p>
-                        )}
-                        <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                          Username
-                        </label>
-                      </div>
-                      <div class="relative z-0 w-full mb-6 group">
-                        <input
-                          type="email"
-                          name="email"
-                          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                          placeholder=" "
-                          onChange={(e) => setValue("email", e.target.value)}
-                          {...register("email")}
-                        />
-                        {errors.email && (
-                          <p className="text-red-500">{errors.email.message}</p>
-                        )}
-                        <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                          Email
-                        </label>
-                      </div>
-                      <div class="relative z-0 w-full mb-6 group">
-                        <input
-                          type="text"
-                          name="phone"
-                          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                          placeholder=" "
-                          onChange={(e) => setValue("phone", e.target.value)}
-                          {...register("phone")}
-                        />
-                        {errors.phone && (
-                          <p className="text-red-500">{errors.phone.message}</p>
-                        )}
-                        <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                          Phone
-                        </label>
-                      </div>
-                      <div class="relative z-0 w-full mb-6 group">
-                        <input
-                          type="text"
-                          name="birthday"
-                          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                          placeholder=" "
-                          onChange={(e) => setValue("birthday", e.target.value)}
-                          {...register("birthday")}
-                        />
-                        {errors.birthday && (
+                        {errors.maPhong && (
                           <p className="text-red-500">
-                            {errors.birthday.message}
+                            {errors.maPhong.message}
                           </p>
                         )}
                         <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                          Birthday
+                          Mã phòng
+                        </label>
+                      </div>
+                      <div class="relative z-0 w-full mb-6 group">
+                        <div className="flex w-full flex-col">
+                          <DatePicker
+                            name="ngayDen"
+                            onChange={(date, dateString) =>
+                              handleDateStart(dateString)
+                            }
+                            className="w-full mt-5"
+                          />
+                          {errors.ngayDen && (
+                            <p className="text-red-500">
+                              {errors.ngayDen.message}
+                            </p>
+                          )}
+                        </div>
+                        <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                          Ngày đến
+                        </label>
+                      </div>
+                      <div class="relative z-0 w-full mb-6 group">
+                        <div className="flex w-full flex-col">
+                          <DatePicker
+                            name="ngayDi"
+                            onChange={(date, dateString) =>
+                              handleDateEnd(dateString)
+                            }
+                            className="w-full mt-5"
+                          />
+                          {errors.ngayDi && (
+                            <p className="text-red-500">
+                              {errors.ngayDi.message}
+                            </p>
+                          )}
+                        </div>
+                        <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                          Ngày đi
                         </label>
                       </div>
                       <div class="relative z-0 w-full mb-6 group">
                         <input
                           type="text"
-                          name="gender"
+                          name="soLuongKhach"
                           class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                           placeholder=" "
-                          onChange={(e) => setValue("gender", e.target.value)}
-                          {...register("gender")}
+                          onChange={(e) =>
+                            setValue("soLuongKhach", e.target.value)
+                          }
+                          {...register("soLuongKhach")}
                         />
-                        {errors.gender && (
+                        {errors.soLuongKhach && (
                           <p className="text-red-500">
-                            {errors.gender.message}
+                            {errors.soLuongKhach.message}
                           </p>
                         )}
                         <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                          Gender
+                          Số lượng khách
                         </label>
                       </div>
                       <div class="relative z-0 w-full mb-6 group">
                         <input
                           type="text"
-                          name="role"
+                          name="maNguoiDung"
                           class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                           placeholder=" "
-                          onChange={(e) => setValue("role", e.target.value)}
-                          {...register("role")}
+                          onChange={(e) =>
+                            setValue("maNguoiDung", e.target.value)
+                          }
+                          {...register("maNguoiDung")}
                         />
-                        {errors.role && (
-                          <p className="text-red-500">{errors.role.message}</p>
+                        {errors.maNguoiDung && (
+                          <p className="text-red-500">
+                            {errors.maNguoiDung.message}
+                          </p>
                         )}
                         <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                          Role
+                          Mã người dùng
                         </label>
                       </div>
                       <button
-                        onClick={() => onSubmit()}
                         type="submit"
                         class="mr-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                       >

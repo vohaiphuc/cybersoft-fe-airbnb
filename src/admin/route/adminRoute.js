@@ -16,18 +16,35 @@ import Room from "../page/Room/Room";
 import User from "../page/User/User";
 import PageNotFound from "../page/404/PageNotFound";
 import MainLayout from "../layout";
+import PrivateRoute from "../layout/PrivateRoute";
 
 export const adminRoute = {
   home: {
     path: "/admin",
     element: (
+      <PrivateRoute>
+        <MainLayout>
+          <Home />
+        </MainLayout>
+      </PrivateRoute>
+    ),
+  },
+  booking: {
+    path: "/admin/booking",
+    element: (
       <MainLayout>
-        <Home />
+        <Booking />
       </MainLayout>
     ),
   },
-  booking: { path: "/admin/booking", element: <Booking /> },
-  location: { path: "/admin/location", element: <Location /> },
+  location: {
+    path: "/admin/location",
+    element: (
+      <MainLayout>
+        <Location />
+      </MainLayout>
+    ),
+  },
   login: { path: "/admin/login", element: <Login /> },
   room: {
     path: "/admin/room",

@@ -1,9 +1,10 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { roomServ } from "../../api/api";
 import * as yup from "yup";
+import { message } from "antd";
 const validationSchema = yup.object().shape({
   id: yup.number().required("Vui lòng nhập id"),
   tenPhong: yup.string().required("Vui lòng nhập tên phòng"),
@@ -25,8 +26,7 @@ const validationSchema = yup.object().shape({
   maViTri: yup.number().required("Vui lòng nhập mã vị trí"),
   hinhAnh: yup.string().required("Vui lòng nhập hình ảnh"),
 });
-export default function AddRoom({ getData }) {
-  let [isOpen, setIsOpen] = useState(false);
+export default function EditRoom({ getData, isOpen, editData, setIsOpen }) {
   const methods = useForm({
     defaultValues: {
       id: 0,
@@ -57,6 +57,7 @@ export default function AddRoom({ getData }) {
     handleSubmit,
     formState: { errors },
     register,
+    reset,
   } = methods;
   function closeModal() {
     setIsOpen(false);
@@ -67,26 +68,45 @@ export default function AddRoom({ getData }) {
   }
   const onSubmit = (values) => {
     roomServ
-      .addRoom(values)
+      .editRoom(values)
       .then(() => {
+        message.success("Edit room success fully");
+        setIsOpen(false);
         getData();
       })
       .catch((err) => {
+        message.error("Không có quyền edit room");
         console.log(err);
       });
     setIsOpen(false);
   };
+  useEffect(() => {
+    if (editData) {
+      reset({
+        id: editData.id,
+        tenPhong: editData.tenPhong,
+        khach: editData.khach,
+        phongNgu: editData.phongNgu,
+        giuong: editData.giuong,
+        phongTam: editData.phongTam,
+        moTa: editData.moTa,
+        giaTien: editData.giaTien,
+        mayGiat: editData.mayGiat,
+        banLa: editData.banLa,
+        tivi: editData.tivi,
+        dieuHoa: editData.dieuHoa,
+        wifi: editData.wifi,
+        bep: editData.bep,
+        doXe: editData.doXe,
+        hoBoi: editData.hoBoi,
+        banUi: editData.banUi,
+        maViTri: editData.maViTri,
+        hinhAnh: editData.hinhAnh,
+      });
+    }
+  }, [editData, reset]);
   return (
     <>
-      <div className="items-center justify-center mb-5">
-        <button
-          type="button"
-          onClick={openModal}
-          className="rounded-md bg-red-400 px-4 py-3 text-sm font-medium text-white hover:bg-red-500"
-        >
-          Thêm phòng
-        </button>
-      </div>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
@@ -117,7 +137,7 @@ export default function AddRoom({ getData }) {
                     as="h3"
                     className="text-2xl font-medium leading-6 text-white mb-6 text-center"
                   >
-                    Add Room
+                    Edit Room
                   </Dialog.Title>
                   <div className="mt-2">
                     <form onSubmit={handleSubmit(onSubmit)}>
@@ -493,13 +513,13 @@ export default function AddRoom({ getData }) {
                       </div>
                       <button
                         type="submit"
-                        class="mr-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        class=" mr-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                       >
-                        Thêm phòng
+                        Cập nhật
                       </button>
                       <button
                         type="button"
-                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                        className=" inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                         onClick={closeModal}
                       >
                         Đóng

@@ -4,17 +4,21 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { userServ } from "../../api/api";
 import * as yup from "yup";
+import { message } from "antd";
 const validationSchema = yup.object().shape({
-  id: yup.number().required("Id is required"),
-  name: yup.string().required("Name is required"),
-  email: yup.string().email("Invalid email").required("Email is required"),
-  password: yup.string().required("Password is required"),
-  phone: yup.string().required("Phone is required"),
-  birthday: yup.string().required("Birthday is required"),
-  gender: yup.boolean().required("Gender is required"),
-  role: yup.string().required("Role is required"),
+  id: yup.number().required("Vui lòng nhập id"),
+  name: yup.string().required("Vui lòng nhập tên tài khoản"),
+  email: yup
+    .string()
+    .email("Định dạng email không đúng")
+    .required("Vui lòng nhập email"),
+  password: yup.string().required("Vui lòng nhập mật khẩu"),
+  phone: yup.string().required("Vui lòng nhập số điện thoại"),
+  birthday: yup.string().required("Vui lòng nhập ngày sinh nhật"),
+  gender: yup.boolean().required("Vui lòng chọn giới tính"),
+  role: yup.string().required("Vui lòng nhập vai trò"),
 });
-export default function AddUser({ getUser }) {
+export default function AddUser({ getData }) {
   let [isOpen, setIsOpen] = useState(false);
   const methods = useForm({
     defaultValues: {
@@ -48,10 +52,12 @@ export default function AddUser({ getUser }) {
     userServ
       .addUser(values)
       .then(() => {
-        getUser();
+        message.success("Add user success fully");
+        getData();
       })
       .catch((err) => {
         console.log(err);
+        message.error("Không có quyền thêm user");
       });
     setIsOpen(false);
   };
@@ -236,16 +242,16 @@ export default function AddUser({ getUser }) {
                       </div>
                       <button
                         type="submit"
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        class="mr-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                       >
-                        Submit
+                        Thêm quản trị
                       </button>
                       <button
                         type="button"
                         className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                         onClick={closeModal}
                       >
-                        Got it, thanks!
+                        Đóng
                       </button>
                     </form>
                   </div>
