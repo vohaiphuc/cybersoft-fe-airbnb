@@ -131,7 +131,6 @@ export default function User() {
         console.log(err);
       });
   };
-  console.log(editUser);
   return (
     <React.Fragment>
       <AddUser getData={getData} />

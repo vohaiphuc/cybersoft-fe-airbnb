@@ -62,13 +62,10 @@ export default function EditRoom({ getData, isOpen, editData, setIsOpen }) {
   function closeModal() {
     setIsOpen(false);
   }
-
-  function openModal() {
-    setIsOpen(true);
-  }
+  const { id } = editData;
   const onSubmit = (values) => {
     roomServ
-      .editRoom(values)
+      .editRoom(id, values)
       .then(() => {
         message.success("Edit room success fully");
         setIsOpen(false);

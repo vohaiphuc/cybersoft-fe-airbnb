@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { bookingRoomServ } from "../../api/api";
 import * as yup from "yup";
-import { DatePicker } from "antd";
+import { DatePicker, message } from "antd";
 const validationSchema = yup.object().shape({
   id: yup.number().required("Vui lòng nhập id"),
   maPhong: yup.string().required("Vui lòng nhập mã phòng"),
@@ -47,9 +47,12 @@ export default function EditBookingRoom({
       .editBookingRoom(id, roomData)
       .then((res) => {
         setIsOpen(false);
+        message.success("Edit booking room success fully");
         getData();
       })
       .catch((err) => {
+        message.error("Không có quyền edit");
+        setIsOpen(false);
         console.log(err);
       });
   };

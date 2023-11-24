@@ -46,7 +46,7 @@ export const locationServ = {
   deleteLocation: (id) => {
     return https.delete(`/vi-tri/${id}`);
   },
-  getLocationId: (id) => {
+  getDetailLocation: (id) => {
     return https.get(`/vi-tri/${id}`);
   },
   editLocation: (id, locationData) => {

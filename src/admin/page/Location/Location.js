@@ -109,7 +109,7 @@ export default function Location() {
   ];
   const handleEditLocation = (locationId) => {
     locationServ
-      .getLocationId(locationId)
+      .getDetailLocation(locationId)
       .then((res) => {
         setEditData(res.data.content);
         setIsOpen(true);

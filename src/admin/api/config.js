@@ -32,7 +32,6 @@ https.interceptors.response.use(
           store.dispatch(setLoadingOff());
         }, 1000);
         break;
-
       case "/phong-thue":
         setTimeout(() => {
           store.dispatch(setLoadingOff());

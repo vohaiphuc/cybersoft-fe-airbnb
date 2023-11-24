@@ -7,7 +7,7 @@ import * as yup from "yup";
 import { message } from "antd";
 const validationSchema = yup.object().shape({
   id: yup.number().required("Vui lòng nhập id"),
-  tenVitri: yup.string().required("Vui lòng nhập vị trí"),
+  tenViTri: yup.string().required("Vui lòng nhập vị trí"),
   tinhThanh: yup.string().required("Vui lòng nhập tỉnh thành"),
   quocGia: yup.string().required("Vui lòng nhập quốc gia"),
   hinhAnh: yup.string().required("Vui lòng nhập hình ảnh"),
@@ -15,7 +15,7 @@ const validationSchema = yup.object().shape({
 export default function EditLocation({ setIsOpen, isOpen, editData, getData }) {
   const methods = useForm({
     defaultValues: {
-      id: null,
+      id: 0,
       tenViTri: "",
       tinhThanh: "",
       quocGia: "",
@@ -34,10 +34,12 @@ export default function EditLocation({ setIsOpen, isOpen, editData, getData }) {
   function closeModal() {
     setIsOpen(false);
   }
+  const { id } = editData;
   const onSubmit = (values) => {
+    console.log(values);
     locationServ
-      .editLocation(values)
-      .then((res) => {
+      .editLocation(id, values)
+      .then(() => {
         message.success("Edit location success fully");
         setIsOpen(false);
         getData();
@@ -189,7 +191,7 @@ export default function EditLocation({ setIsOpen, isOpen, editData, getData }) {
                         type="submit"
                         class="mr-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                       >
-                        Thêm vị trí
+                        Cập nhật
                       </button>
                       <button
                         type="button"

@@ -24,10 +24,10 @@ export default function Headers() {
         background: colorBgContainer,
         display: "flex",
         alignItems: "center",
-        justifyContent: "space-between",
+        justifyContent: "end",
       }}
     >
-      <Button
+      {/* <Button
         type="text"
         icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
         onClick={() => setCollapsed(!collapsed)}
@@ -36,7 +36,7 @@ export default function Headers() {
           width: 64,
           height: 64,
         }}
-      />
+      /> */}
       {user ? (
         <div>
           <Button type="primary" danger className="mr-5">
