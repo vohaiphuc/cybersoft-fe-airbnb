@@ -3,11 +3,13 @@ import { userLocalStorage } from "../api/localService";
 import { https } from "../api/config";
 import { clearPopup } from "./popupSlice";
 import { notification } from "antd";
+import { userServ } from "../api/api";
 
 const initialState = {
   user: userLocalStorage.get(),
   infoUser: {},
   loading: false,
+  bookedRooms: [],
 };
 
 export const registerUser = createAsyncThunk(
@@ -110,6 +112,19 @@ export const updateAvatar = createAsyncThunk(
   }
 );
 
+export const getListBookedRooms = createAsyncThunk(
+  "user/getListBookedRooms",
+  async ({ id }, { rejectWithValue }) => {
+    try {
+      const response = await userServ.bookedRooms({ id });
+      console.log(response);
+      return response.data.content;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "userSlice",
   initialState,
@@ -158,6 +173,12 @@ const userSlice = createSlice({
       })
       .addCase(updateProfile.rejected, (state) => {
         state.loading = false;
+      })
+      // Get list bookedRooms by userId
+      .addCase(getListBookedRooms.fulfilled, (state, action) => {
+        state.loading = false;
+        state.bookedRooms = action.payload;
+        state.error = null;
       });
   },
 });

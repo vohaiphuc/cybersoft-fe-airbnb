@@ -9,12 +9,6 @@
 }
 .images {
   @apply flex flex-wrap py-5;
-  &__left {
-    @apply flex md:w-1/2 flex-wrap;
-  }
-  &__right {
-    @apply hidden w-1/2 flex-wrap md:flex;
-  }
   .img {
     @apply block h-full w-full rounded-lg object-cover object-center;
   }

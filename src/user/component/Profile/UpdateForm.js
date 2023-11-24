@@ -52,7 +52,7 @@ const UpdateForm = () => {
         name: name,
         email: email,
         phone: phone,
-        gender: gender ? "Nam" : "Nữ",
+        gender: gender,
       }}
       onFinish={onFinish}
       autoComplete="off"

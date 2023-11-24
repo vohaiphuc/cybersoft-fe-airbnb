@@ -51,7 +51,7 @@ export default function NavBar() {
 
   const items = [
     token
-      ? { label: "Chuyến đi", key: "0" }
+      ? { label: <Link to="/booked-rooms">Chuyến đi</Link>, key: "0" }
       : {
           label: renderAuthButton("register"),
           key: "0",
