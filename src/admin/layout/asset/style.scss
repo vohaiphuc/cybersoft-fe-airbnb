@@ -1,0 +1,11 @@
+.layout {
+  height: auto;
+  .logo {
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+    img {
+      width: 100px;
+    }
+  }
+}

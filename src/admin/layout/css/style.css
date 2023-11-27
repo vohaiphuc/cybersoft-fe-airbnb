@@ -1,0 +1,11 @@
+.layout {
+  height: auto;
+}
+.layout .logo {
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+}
+.layout .logo img {
+  width: 100px;
+}/*# sourceMappingURL=style.css.map */

@@ -14,12 +14,12 @@ function App() {
 
   return (
     <>
-      <ModalBg />
       <BrowserRouter>
         <Routes>
           {createRoutes(userRoute)}
           {createRoutes(adminRoute)}
         </Routes>
+        <ModalBg />
         <Popup />
         <MenuMobile />
       </BrowserRouter>
