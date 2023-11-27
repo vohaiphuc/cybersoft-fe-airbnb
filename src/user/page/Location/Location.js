@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import "./asset/style.scss"
 import { useParams } from 'react-router-dom'
 import { roomServ, viTriServ } from '../../api/api';
-import MapLocation from './MapLocation/MapLocation';
 import ListRoom from './ListRoom/ListRoom';
+import MapLocation from './MapLocation/MapLocation';
 
 export default function Location() {
 

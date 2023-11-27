@@ -6,9 +6,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPopup } from "../../redux/popupSlice";
 import { POPUP_NAME } from "../../constants/popup";
 import { userLocalStorage } from "../../api/localService";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { userRoute } from "../../route/userRoute";
 
 export default function NavBar() {
+  const navigate = useNavigate()
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.userSlice) || {};
   const { token } = user || {};
@@ -24,7 +26,8 @@ export default function NavBar() {
       dispatch(setPopup({ popup: POPUP_NAME.REGISTER }));
       return;
     }
-    dispatch(setPopup({ popup: POPUP_NAME.PROFILE }));
+    // dispatch(setPopup({ popup: POPUP_NAME.PROFILE }));
+    navigate(userRoute.account.path)
   };
 
   const renderAuthButton = (type) => {
@@ -33,7 +36,11 @@ export default function NavBar() {
         className="text-black w-full h-full shadow-none border-none text-left hover:!border-none hover:!bg-transparent p-0 hover:!text-black"
         onClick={() => handleToggleAuth(type)}
       >
-        {type === "login" ? "Đăng nhập" : "Đăng ký"}
+        {type === "login"
+          ? "Đăng nhập"
+          : type === "register"
+            ? "Đăng ký"
+            : "Thông tin cá nhân"}
       </Button>
     );
   };
@@ -48,20 +55,30 @@ export default function NavBar() {
       </Button>
     );
   };
+  // const renderProfileButton = () => {
+  //   return (
+  //     <Button
+  //       className="text-black w-full h-full shadow-none border-none text-left hover:!border-none hover:!bg-transparent p-0 hover:!text-black"
+  //       onClick={handleToggleAuth()}
+  //     >
+  //       Thông tin cá nhân
+  //     </Button>
+  //   );
+  // };
 
   const items = [
     token
-      ? { label: <Link to="/booked-rooms">Chuyến đi</Link>, key: "0" }
+      ? { label: "Chuyến đi", key: "0" }
       : {
-          label: renderAuthButton("register"),
-          key: "0",
-        },
+        label: renderAuthButton("register"),
+        key: "0",
+      },
     token
-      ? { label: <Link to="/profile">Thông tin cá nhân</Link>, key: "2" }
+      ? { label: renderAuthButton(""), key: "1" }
       : {
-          label: renderAuthButton("login"),
-          key: "1",
-        },
+        label: renderAuthButton("login"),
+        key: "1",
+      },
     {
       type: "divider",
     },
@@ -98,12 +115,8 @@ export default function NavBar() {
       >
         <div className="profile space-x-3 flex items-center cursor-pointer">
           <FontAwesomeIcon icon={faBars} />
-          {token && <span>{user?.user?.name}</span>}
           <Avatar
-            src={
-              user?.user?.avatar ||
-              "https://t3.ftcdn.net/jpg/05/53/79/60/360_F_553796090_XHrE6R9jwmBJUMo9HKl41hyHJ5gqt9oz.jpg"
-            }
+            src="https://t3.ftcdn.net/jpg/05/53/79/60/360_F_553796090_XHrE6R9jwmBJUMo9HKl41hyHJ5gqt9oz.jpg"
             size={30}
           />
         </div>

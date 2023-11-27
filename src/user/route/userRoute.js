@@ -49,12 +49,13 @@ export const userRoute = {
   },
 
   location: {
-    path: "/location/:city",
+    path: "/location/:id",
     element: (
       <DefaultLayout>
         <Location />
       </DefaultLayout>
     ),
+    id: (id) => `/location/${id}`
   },
 
   login: {
