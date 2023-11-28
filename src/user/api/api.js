@@ -35,3 +35,9 @@ export const viTriServ = {
 export const updateProfile = {
   put: async (id) => https.put(`/users/${id}`),
 };
+
+export const bookingRoomServ = {
+  getList: () => {
+    return https.get("/dat-phong");
+  }
+}

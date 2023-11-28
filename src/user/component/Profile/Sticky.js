@@ -4,7 +4,7 @@ import UploadAvatar from "./UploadAvatar";
 
 const StickyInfo = () => {
   return (
-    <div className="w-full sticky top-32 border rounded-lg p-5">
+    <div className="w-full sticky top-28 border rounded-lg p-5">
       <UploadAvatar />
       <div className="mt-2">
         <div className="flex items-center">
