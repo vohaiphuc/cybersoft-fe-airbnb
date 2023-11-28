@@ -30,7 +30,7 @@ const Info = () => {
     },
   ];
   return (
-    <div className="px-0 lg:px-10">
+    <div>
       {PROFILE_LIST.map((renderItem) => {
         return (
           <div

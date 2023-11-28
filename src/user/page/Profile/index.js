@@ -32,18 +32,21 @@ export default function Profile() {
         </div>
         <div className="w-full md:w-2/3">
           <div className="md:py-0 py-4 px-0 lg:px-10">
-            <Button
-              onClick={handleOpenPopupUpdate}
-              type="outline"
-              className="border-red-500 hover:bg-red-400 transition hover:text-white space-x-2"
-            >
-              <FontAwesomeIcon icon={faEdit} />
-              Chỉnh sửa thông tin
-            </Button>
+            <div className="flex items-center justify-between">
+              <p className='text-2xl font-semibold'>Hồ sơ</p>
+              <Button
+                onClick={handleOpenPopupUpdate}
+                type="outline"
+                className="border-red-500 hover:bg-red-400 transition hover:text-white space-x-2"
+              >
+                <FontAwesomeIcon icon={faEdit} />
+                Chỉnh sửa
+              </Button>
+            </div>
+            <Info />
+            <TicketHistory user={user} />
           </div>
-          <Info />
         </div>
-        <TicketHistory user={user} />
       </div>
     </div>
   );
