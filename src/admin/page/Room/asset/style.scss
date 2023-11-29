@@ -1,3 +1,10 @@
 .button:hover + p {
   visibility: visible;
 }
+.ant-checkbox-inner {
+  width: 25px !important;
+  height: 25px !important;
+  &::after {
+    inset-inline-start: 31.5% !important;
+  }
+}

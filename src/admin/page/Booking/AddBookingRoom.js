@@ -50,12 +50,11 @@ export default function AddBookingRoom({ getData }) {
     bookingRoomServ
       .addBookingRoom(values)
       .then((res) => {
-        console.log(res.data.content);
         getData();
-        message.success("Add booking room success fully");
+        message.success("Thêm đặt phòng thành công");
       })
       .catch((err) => {
-        console.log(err);
+        message.error("Thêm đặt phòng thất bại");
       });
     setIsOpen(false);
   };
@@ -100,15 +99,16 @@ export default function AddBookingRoom({ getData }) {
                     as="h3"
                     className="text-2xl font-medium leading-6 text-white mb-6 text-center"
                   >
-                    Add BookingRoom
+                    Thêm đặt phòng
                   </Dialog.Title>
                   <div className="mt-2">
                     <form onSubmit={handleSubmit(onSubmit)}>
-                      <div class="relative z-0 w-full mb-6 group mr-3">
+                      <div className="relative z-0 w-full mb-6 group mr-3">
                         <input
+                          disabled
                           type="number"
                           name="id"
-                          class={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer`}
+                          className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer`}
                           placeholder=" "
                           onChange={(e) => setValue("id", e.target.value)}
                           {...register("id")}
@@ -116,15 +116,15 @@ export default function AddBookingRoom({ getData }) {
                         {errors.id && (
                           <p className="text-red-500">{errors.id.message}</p>
                         )}
-                        <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                        <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                           Id
                         </label>
                       </div>
-                      <div class="relative z-0 w-full mb-6 group">
+                      <div className="relative z-0 w-full mb-6 group">
                         <input
                           type="text"
                           name="maPhong"
-                          class={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer`}
+                          className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer`}
                           placeholder=" "
                           onChange={(e) => setValue("maPhong", e.target.value)}
                           {...register("maPhong")}
@@ -134,53 +134,57 @@ export default function AddBookingRoom({ getData }) {
                             {errors.maPhong.message}
                           </p>
                         )}
-                        <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                        <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                           Mã phòng
                         </label>
                       </div>
-                      <div class="relative z-0 w-full mb-6 group ">
-                        <div className="flex w-full flex-col">
-                          <DatePicker
-                            name="ngayDen"
-                            onChange={(date, dateString) =>
-                              handleDateStart(dateString)
-                            }
-                            className="w-full mt-5"
-                          />
-                          {errors.ngayDen && (
-                            <p className="text-red-500">
-                              {errors.ngayDen.message}
-                            </p>
-                          )}
+                      <div className="flex w-full relative">
+                        <div className=" z-0 w-full mb-6 group flex">
+                          <div className="flex w-full flex-col mr-3 ">
+                            <DatePicker
+                              placeholder="DD/MM/YYYY"
+                              name="ngayDen"
+                              onChange={(date, dateString) =>
+                                handleDateStart(dateString)
+                              }
+                              className="w-full mt-5"
+                            />
+                            {errors.ngayDen && (
+                              <p className="text-red-500">
+                                {errors.ngayDen.message}
+                              </p>
+                            )}
+                          </div>
+                          <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                            Ngày đến
+                          </label>
                         </div>
-                        <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                          Ngày đến
-                        </label>
-                      </div>
-                      <div class="relative z-0 w-full mb-6 group">
-                        <div className="flex w-full flex-col">
-                          <DatePicker
-                            name="ngayDi"
-                            onChange={(date, dateString) =>
-                              handleDateEnd(dateString)
-                            }
-                            className="w-full mt-5"
-                          />
-                          {errors.ngayDi && (
-                            <p className="text-red-500">
-                              {errors.ngayDi.message}
-                            </p>
-                          )}
+                        <div className=" z-0 w-full mb-6 group flex">
+                          <div className="flex w-full flex-col">
+                            <DatePicker
+                              placeholder="DD/MM/YYYY"
+                              name="ngayDi"
+                              onChange={(date, dateString) =>
+                                handleDateEnd(dateString)
+                              }
+                              className="w-full mt-5"
+                            />
+                            {errors.ngayDi && (
+                              <p className="text-red-500">
+                                {errors.ngayDi.message}
+                              </p>
+                            )}
+                          </div>
+                          <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                            Ngày đi
+                          </label>
                         </div>
-                        <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                          Ngày đi
-                        </label>
                       </div>
-                      <div class="relative z-0 w-full mb-6 group">
+                      <div className="relative z-0 w-full mb-6 group">
                         <input
-                          type="text"
+                          type="number"
                           name="soLuongKhach"
-                          class={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer`}
+                          className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer`}
                           placeholder=" "
                           onChange={(e) =>
                             setValue("soLuongKhach", e.target.value)
@@ -192,15 +196,15 @@ export default function AddBookingRoom({ getData }) {
                             {errors.soLuongKhach.message}
                           </p>
                         )}
-                        <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                        <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                           Số lượng khách
                         </label>
                       </div>
-                      <div class="relative z-0 w-full mb-6 group">
+                      <div className="relative z-0 w-full mb-6 group">
                         <input
-                          type="text"
+                          type="number"
                           name="maNguoiDung"
-                          class={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer`}
+                          className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer`}
                           placeholder=" "
                           onChange={(e) =>
                             setValue("maNguoiDung", e.target.value)
@@ -212,13 +216,13 @@ export default function AddBookingRoom({ getData }) {
                             {errors.maNguoiDung.message}
                           </p>
                         )}
-                        <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                        <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                           Mã người dùng
                         </label>
                       </div>
                       <button
                         type="submit"
-                        class="mr-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        className="mr-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                       >
                         Thêm đặt phòng
                       </button>

@@ -80,7 +80,7 @@ export default function Location() {
     },
     {
       name: "action",
-      label: "Action",
+      label: "Hành động",
       options: {
         filter: true,
         sort: false,

@@ -45,7 +45,7 @@ export default function User() {
     },
     {
       name: "name",
-      label: "Name",
+      label: "Tên tài khoản",
       options: {
         filter: true,
         sort: false,
@@ -61,7 +61,7 @@ export default function User() {
     },
     {
       name: "birthday",
-      label: "Birthday",
+      label: "Ngày sinh nhật",
       options: {
         filter: true,
         sort: false,
@@ -69,7 +69,7 @@ export default function User() {
     },
     {
       name: "role",
-      label: "Role",
+      label: "Vai trò",
       options: {
         filter: true,
         sort: false,
@@ -78,7 +78,7 @@ export default function User() {
 
     {
       name: "action",
-      label: "Action",
+      label: "Hành động",
       options: {
         filter: true,
         sort: false,

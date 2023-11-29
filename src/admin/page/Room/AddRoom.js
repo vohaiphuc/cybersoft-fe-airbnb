@@ -3,7 +3,10 @@ import { Fragment, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { roomServ } from "../../api/api";
+import "./asset/style.scss";
+import { Checkbox, message } from "antd";
 import * as yup from "yup";
+
 const validationSchema = yup.object().shape({
   id: yup.number().required("Vui lòng nhập id"),
   tenPhong: yup.string().required("Vui lòng nhập tên phòng"),
@@ -37,15 +40,15 @@ export default function AddRoom({ getData }) {
       phongTam: null,
       moTa: "",
       giaTien: null,
-      mayGiat: true,
-      banLa: true,
-      tivi: true,
-      dieuHoa: true,
-      wifi: true,
-      bep: true,
-      doXe: true,
-      hoBoi: true,
-      banUi: true,
+      mayGiat: false,
+      banLa: false,
+      tivi: false,
+      dieuHoa: false,
+      wifi: false,
+      bep: false,
+      doXe: false,
+      hoBoi: false,
+      banUi: false,
       maViTri: 0,
       hinhAnh: "",
     },
@@ -66,15 +69,33 @@ export default function AddRoom({ getData }) {
     setIsOpen(true);
   }
   const onSubmit = (values) => {
+    const updatedValues = {
+      ...values,
+      mayGiat: values.mayGiat !== "" ? values.mayGiat : false,
+      banLa: values.banLa !== "" ? values.banLa : false,
+      tivi: values.tivi !== "" ? values.tivi : false,
+      dieuHoa: values.dieuHoa !== "" ? values.dieuHoa : false,
+      wifi: values.wifi !== "" ? values.wifi : false,
+      bep: values.bep !== "" ? values.bep : false,
+      doXe: values.doXe !== "" ? values.bep : false,
+      hoBoi: values.hoBoi !== "" ? values.hoBoi : false,
+      banUi: values.banUi !== "" ? values.banUi : false,
+    };
+    console.log(updatedValues);
     roomServ
-      .addRoom(values)
+      .addRoom(updatedValues)
       .then(() => {
+        message.success("Thêm phòng thành công");
         getData();
       })
       .catch((err) => {
+        message.error("Thêm phòng thất bại");
         console.log(err);
       });
     setIsOpen(false);
+  };
+  const onChange = (e, fieldName) => {
+    setValue(fieldName, e.target.checked);
   };
   return (
     <>
@@ -117,16 +138,17 @@ export default function AddRoom({ getData }) {
                     as="h3"
                     className="text-2xl font-medium leading-6 text-white mb-6 text-center"
                   >
-                    Add Room
+                    Thêm phòng
                   </Dialog.Title>
                   <div className="mt-2">
                     <form onSubmit={handleSubmit(onSubmit)}>
                       <div className="flex justify-between">
-                        <div class="relative z-0 w-full mb-6 group mr-3">
+                        <div className="relative z-0 w-full mb-6 group mr-3">
                           <input
+                            disabled
                             type="text"
                             name="id"
-                            class={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer`}
+                            className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer`}
                             placeholder=" "
                             onChange={(e) => setValue("id", e.target.value)}
                             {...register("id")}
@@ -134,15 +156,15 @@ export default function AddRoom({ getData }) {
                           {errors.id && (
                             <p className="text-red-500">{errors.id.message}</p>
                           )}
-                          <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                          <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                             Id
                           </label>
                         </div>
-                        <div class="relative z-0 w-full mb-6 group">
+                        <div className="relative z-0 w-full mb-6 group">
                           <input
                             type="text"
                             name="tenPhong"
-                            class={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer`}
+                            className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer`}
                             placeholder=" "
                             onChange={(e) =>
                               setValue("tenPhong", e.target.value)
@@ -154,17 +176,17 @@ export default function AddRoom({ getData }) {
                               {errors.tenPhong.message}
                             </p>
                           )}
-                          <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                          <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                             Tên Phòng
                           </label>
                         </div>
                       </div>
                       <div className="flex justify-between">
-                        <div class="relative z-0 w-full mb-6 group mr-3">
+                        <div className="relative z-0 w-full mb-6 group mr-3">
                           <input
                             type="number"
                             name="khach"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                             placeholder=" "
                             onChange={(e) => setValue("khach", e.target.value)}
                             {...register("khach")}
@@ -174,15 +196,15 @@ export default function AddRoom({ getData }) {
                               {errors.khach.message}
                             </p>
                           )}
-                          <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                          <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                             Khách
                           </label>
                         </div>
-                        <div class="relative z-0 w-full mb-6 group">
+                        <div className="relative z-0 w-full mb-6 group">
                           <input
                             type="number"
                             name="phongNgu"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                             placeholder=" "
                             onChange={(e) =>
                               setValue("phongNgu", e.target.value)
@@ -194,17 +216,17 @@ export default function AddRoom({ getData }) {
                               {errors.phongNgu.message}
                             </p>
                           )}
-                          <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                          <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                             Phòng Ngủ
                           </label>
                         </div>
                       </div>
                       <div className="flex justify-between">
-                        <div class="relative z-0 w-full mb-6 group mr-3">
+                        <div className="relative z-0 w-full mb-6 group mr-3">
                           <input
                             type="number"
                             name="giuong"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                             placeholder=" "
                             onChange={(e) => setValue("giuong", e.target.value)}
                             {...register("giuong")}
@@ -214,15 +236,15 @@ export default function AddRoom({ getData }) {
                               {errors.giuong.message}
                             </p>
                           )}
-                          <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                          <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                             Giường
                           </label>
                         </div>
-                        <div class="relative z-0 w-full mb-6 group">
+                        <div className="relative z-0 w-full mb-6 group">
                           <input
                             type="number"
                             name="phongTam"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                             placeholder=" "
                             onChange={(e) =>
                               setValue("phongTam", e.target.value)
@@ -234,17 +256,17 @@ export default function AddRoom({ getData }) {
                               {errors.phongTam.message}
                             </p>
                           )}
-                          <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                          <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                             Phòng Tắm
                           </label>
                         </div>
                       </div>
                       <div className="flex justify-between">
-                        <div class="relative z-0 w-full mb-6 group mr-3">
+                        <div className="relative z-0 w-full mb-6 group mr-3">
                           <input
                             type="text"
                             name="moTa"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                             placeholder=" "
                             onChange={(e) => setValue("moTa", e.target.value)}
                             {...register("moTa")}
@@ -254,15 +276,15 @@ export default function AddRoom({ getData }) {
                               {errors.moTa.message}
                             </p>
                           )}
-                          <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                          <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                             Mô tả
                           </label>
                         </div>
-                        <div class="relative z-0 w-full mb-6 group">
+                        <div className="relative z-0 w-full mb-6 group">
                           <input
                             type="number"
                             name="giaTien"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                             placeholder=" "
                             onChange={(e) =>
                               setValue("giaTien", e.target.value)
@@ -274,189 +296,147 @@ export default function AddRoom({ getData }) {
                               {errors.giaTien.message}
                             </p>
                           )}
-                          <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                          <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                             Giá tiền
                           </label>
                         </div>
                       </div>
-                      <div className="flex justify-between">
-                        <div class="relative z-0 w-full mb-6 group mr-3">
-                          <input
-                            type="text"
+                      <div className="flex justify-around items-center">
+                        <div className="relative z-0 w-full mb-6 group mr-3">
+                          <Checkbox
                             name="mayGiat"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                            placeholder=" "
-                            onChange={(e) =>
-                              setValue("mayGiat", e.target.value)
-                            }
-                            {...register("mayGiat")}
-                          />
+                            onChange={(e) => onChange(e, "mayGiat")}
+                            className="text-white"
+                          >
+                            Máy giặt
+                          </Checkbox>
                           {errors.mayGiat && (
                             <p className="text-red-500">
                               {errors.mayGiat.message}
                             </p>
                           )}
-                          <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            Máy giặt
-                          </label>
                         </div>
-                        <div class="relative z-0 w-full mb-6 group">
-                          <input
-                            type="text"
+                        <div className="relative z-0 w-full mb-6 group mr-3">
+                          <Checkbox
                             name="banLa"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                            placeholder=" "
-                            onChange={(e) => setValue("banLa", e.target.value)}
-                            {...register("banLa")}
-                          />
+                            onChange={(e) => onChange(e, "banLa")}
+                            className="text-white"
+                          >
+                            Bàn là
+                          </Checkbox>
                           {errors.banLa && (
                             <p className="text-red-500">
                               {errors.banLa.message}
                             </p>
                           )}
-                          <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            Ban la
-                          </label>
                         </div>
-                      </div>
-                      <div className="flex justify-between">
-                        <div class="relative z-0 w-full mb-6 group mr-3">
-                          <input
-                            type="text"
+                        <div className="relative z-0 w-full mb-6 group mr-3">
+                          <Checkbox
                             name="tivi"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                            placeholder=" "
-                            onChange={(e) => setValue("tivi", e.target.value)}
-                            {...register("tivi")}
-                          />
+                            onChange={(e) => onChange(e, "tivi")}
+                            className="text-white"
+                          >
+                            Tivi
+                          </Checkbox>
                           {errors.tivi && (
                             <p className="text-red-500">
                               {errors.tivi.message}
                             </p>
                           )}
-                          <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            Ti vi
-                          </label>
                         </div>
-                        <div class="relative z-0 w-full mb-6 group">
-                          <input
-                            type="text"
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <div className="relative z-0 w-full mb-6 group mr-3">
+                          <Checkbox
                             name="dieuHoa"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                            placeholder=" "
-                            onChange={(e) =>
-                              setValue("dieuHoa", e.target.value)
-                            }
-                            {...register("dieuHoa")}
-                          />
+                            onChange={(e) => onChange(e, "dieuHoa")}
+                            className="text-white"
+                          >
+                            Điều hòa
+                          </Checkbox>
                           {errors.dieuHoa && (
                             <p className="text-red-500">
                               {errors.dieuHoa.message}
                             </p>
                           )}
-                          <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            Điều hòa
-                          </label>
                         </div>
-                      </div>
-                      <div className="flex justify-between">
-                        <div class="relative z-0 w-full mb-6 group mr-3">
-                          <input
-                            type="text"
+                        <div className="relative z-0 w-full mb-6 group mr-3">
+                          <Checkbox
                             name="wifi"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                            placeholder=" "
-                            onChange={(e) => setValue("wifi", e.target.value)}
-                            {...register("wifi")}
-                          />
+                            onChange={(e) => onChange(e, "wifi")}
+                            className="text-white"
+                          >
+                            Wifi
+                          </Checkbox>
                           {errors.wifi && (
                             <p className="text-red-500">
                               {errors.wifi.message}
                             </p>
                           )}
-                          <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            Wifi
-                          </label>
                         </div>
-                        <div class="relative z-0 w-full mb-6 group">
-                          <input
-                            type="text"
+                        <div className="relative z-0 w-full mb-6 group mr-3">
+                          <Checkbox
                             name="bep"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                            placeholder=" "
-                            onChange={(e) => setValue("bep", e.target.value)}
-                            {...register("bep")}
-                          />
+                            onChange={(e) => onChange(e, "bep")}
+                            className="text-white"
+                          >
+                            Bếp
+                          </Checkbox>
                           {errors.bep && (
                             <p className="text-red-500">{errors.bep.message}</p>
                           )}
-                          <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            Bếp
-                          </label>
                         </div>
                       </div>
-                      <div className="flex justify-between">
-                        <div class="relative z-0 w-full mb-6 group mr-3">
-                          <input
-                            type="text"
+                      <div className="flex justify-between items-center">
+                        <div className="relative z-0 w-full mb-6 group mr-3">
+                          <Checkbox
                             name="doXe"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                            placeholder=" "
-                            onChange={(e) => setValue("doXe", e.target.value)}
-                            {...register("doXe")}
-                          />
+                            onChange={(e) => onChange(e, "doXe")}
+                            className="text-white"
+                          >
+                            Đỗ xe
+                          </Checkbox>
                           {errors.doXe && (
                             <p className="text-red-500">
                               {errors.doXe.message}
                             </p>
                           )}
-                          <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            Đỗ xe
-                          </label>
                         </div>
-                        <div class="relative z-0 w-full mb-6 group">
-                          <input
-                            type="text"
+                        <div className="relative z-0 w-full mb-6 group mr-3">
+                          <Checkbox
                             name="hoBoi"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                            placeholder=" "
-                            onChange={(e) => setValue("hoBoi", e.target.value)}
-                            {...register("hoBoi")}
-                          />
+                            onChange={(e) => onChange(e, "hoBoi")}
+                            className="text-white"
+                          >
+                            Hồ bơi
+                          </Checkbox>
                           {errors.hoBoi && (
                             <p className="text-red-500">
                               {errors.hoBoi.message}
                             </p>
                           )}
-                          <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            Hồ bơi
-                          </label>
                         </div>
-                      </div>
-                      <div className="flex justify-between">
-                        <div class="relative z-0 w-full mb-6 group mr-3">
-                          <input
-                            type="text"
+                        <div className="relative z-0 w-full mb-6 group mr-3">
+                          <Checkbox
                             name="banUi"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                            placeholder=" "
-                            onChange={(e) => setValue("banUi", e.target.value)}
-                            {...register("banUi")}
-                          />
+                            onChange={(e) => onChange(e, "banUi")}
+                            className="text-white"
+                          >
+                            Bàn ủi
+                          </Checkbox>
                           {errors.banUi && (
                             <p className="text-red-500">
                               {errors.banUi.message}
                             </p>
                           )}
-                          <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            Bàn ủi
-                          </label>
                         </div>
-                        <div class="relative z-0 w-full mb-6 group">
+                      </div>
+                      <div className="flex justify-between">
+                        <div className="relative z-0 w-full mb-6 group">
                           <input
                             type="number"
                             name="maViTri"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                             placeholder=" "
                             onChange={(e) =>
                               setValue("maViTri", e.target.value)
@@ -468,16 +448,16 @@ export default function AddRoom({ getData }) {
                               {errors.maViTri.message}
                             </p>
                           )}
-                          <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                          <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                             Mã vị trí
                           </label>
                         </div>
                       </div>
-                      <div class="relative z-0 w-full mb-6 group">
+                      <div className="relative z-0 w-full mb-6 group">
                         <input
                           type="text"
                           name="hinhAnh"
-                          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                           placeholder=" "
                           onChange={(e) => setValue("hinhAnh", e.target.value)}
                           {...register("hinhAnh")}
@@ -487,13 +467,13 @@ export default function AddRoom({ getData }) {
                             {errors.hinhAnh.message}
                           </p>
                         )}
-                        <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                        <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                           Hình ảnh
                         </label>
                       </div>
                       <button
                         type="submit"
-                        class="mr-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        className="mr-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                       >
                         Thêm phòng
                       </button>

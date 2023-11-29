@@ -58,7 +58,6 @@ export const bookingRoomServ = {
     return https.get("/dat-phong");
   },
   addBookingRoom: (bookingRoomData) => {
-    console.log(bookingRoomData);
     return https.post("/dat-phong", bookingRoomData);
   },
   deleteBookingRoom: (id) => {

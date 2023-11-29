@@ -22,7 +22,7 @@ const MainLayout = ({ children }) => {
         <MenuLeft />
       </Sider>
       <Layout>
-        <Headers />
+        <Headers setCollapsed={setCollapsed} collapsed={collapsed} />
         <Content
           style={{
             margin: "24px 16px",

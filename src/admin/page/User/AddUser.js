@@ -4,9 +4,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { userServ } from "../../api/api";
 import * as yup from "yup";
-import { message } from "antd";
+import moment from "moment";
+import { message, DatePicker, Select } from "antd";
 const validationSchema = yup.object().shape({
-  id: yup.number().required("Vui lòng nhập id"),
   name: yup.string().required("Vui lòng nhập tên tài khoản"),
   email: yup
     .string()
@@ -14,21 +14,23 @@ const validationSchema = yup.object().shape({
     .required("Vui lòng nhập email"),
   password: yup.string().required("Vui lòng nhập mật khẩu"),
   phone: yup.string().required("Vui lòng nhập số điện thoại"),
-  birthday: yup.string().required("Vui lòng nhập ngày sinh nhật"),
-  gender: yup.boolean().required("Vui lòng chọn giới tính"),
+  birthday: yup
+    .string("Vui lòng nhập ngày sinh nhật dưới dạng ngày tháng")
+    .required("Vui lòng nhập ngày sinh nhật"),
+  gender: yup.string().required("Vui lòng chọn giới tính"),
   role: yup.string().required("Vui lòng nhập vai trò"),
 });
 export default function AddUser({ getData }) {
   let [isOpen, setIsOpen] = useState(false);
   const methods = useForm({
     defaultValues: {
-      id: null,
+      id: 0,
       name: "",
       email: "",
       password: "",
       phone: "",
-      birthday: "",
-      gender: true,
+      birthday: null,
+      gender: "",
       role: "",
     },
     resolver: yupResolver(validationSchema),
@@ -48,18 +50,31 @@ export default function AddUser({ getData }) {
     setIsOpen(true);
   }
   const onSubmit = (values) => {
-    console.log(values);
+    const formattedValues = {
+      ...values,
+      gender: values.gender === "Nam" ? true : false,
+      birthday: moment(values.birthday).format("DD/MM/YYYY"),
+    };
     userServ
-      .addUser(values)
+      .addUser(formattedValues)
       .then(() => {
-        message.success("Add user success fully");
+        message.success("Thêm người dùng thành công");
         getData();
       })
       .catch((err) => {
         console.log(err);
-        message.error("Không có quyền thêm user");
+        message.error("Không có quyền thêm người dùng");
       });
     setIsOpen(false);
+  };
+  const handleBirthday = (dateString) => {
+    setValue("birthday", dateString);
+  };
+  const handleGender = (gender) => {
+    setValue("gender", gender);
+  };
+  const handleRole = (role) => {
+    setValue("role", role);
   };
   return (
     <>
@@ -102,15 +117,16 @@ export default function AddUser({ getData }) {
                     as="h3"
                     className="text-2xl font-medium leading-6 text-white mb-6 text-center"
                   >
-                    Add User
+                    Thêm người dùng
                   </Dialog.Title>
                   <div className="mt-2">
                     <form onSubmit={handleSubmit(onSubmit)}>
-                      <div class="relative z-0 w-full mb-6 group">
+                      <div className="relative z-0 w-full mb-6 group">
                         <input
+                          disabled
                           type="text"
                           name="id"
-                          class={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer`}
+                          className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer`}
                           placeholder=" "
                           onChange={(e) => setValue("id", e.target.value)}
                           {...register("id")}
@@ -118,15 +134,15 @@ export default function AddUser({ getData }) {
                         {errors.id && (
                           <p className="text-red-500">{errors.id.message}</p>
                         )}
-                        <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                        <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                           Id
                         </label>
                       </div>
-                      <div class="relative z-0 w-full mb-6 group">
+                      <div className="relative z-0 w-full mb-6 group">
                         <input
                           type="text"
                           name="name"
-                          class={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer`}
+                          className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer`}
                           placeholder=" "
                           onChange={(e) => setValue("name", e.target.value)}
                           {...register("name")}
@@ -134,15 +150,15 @@ export default function AddUser({ getData }) {
                         {errors.name && (
                           <p className="text-red-500">{errors.name.message}</p>
                         )}
-                        <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                          Username
+                        <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                          Tên tài khoản
                         </label>
                       </div>
-                      <div class="relative z-0 w-full mb-6 group">
+                      <div className="relative z-0 w-full mb-6 group">
                         <input
                           type="email"
                           name="email"
-                          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                           placeholder=" "
                           onChange={(e) => setValue("email", e.target.value)}
                           {...register("email")}
@@ -150,15 +166,15 @@ export default function AddUser({ getData }) {
                         {errors.email && (
                           <p className="text-red-500">{errors.email.message}</p>
                         )}
-                        <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                        <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                           Email
                         </label>
                       </div>
-                      <div class="relative z-0 w-full mb-6 group">
+                      <div className="relative z-0 w-full mb-6 group">
                         <input
                           type="password"
                           name="password"
-                          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                           placeholder=" "
                           onChange={(e) => setValue("password", e.target.value)}
                           {...register("password")}
@@ -168,15 +184,15 @@ export default function AddUser({ getData }) {
                             {errors.password.message}
                           </p>
                         )}
-                        <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                          Password
+                        <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                          Mật khẩu
                         </label>
                       </div>
-                      <div class="relative z-0 w-full mb-6 group">
+                      <div className="relative z-0 w-full mb-6 group">
                         <input
                           type="text"
                           name="phone"
-                          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                           placeholder=" "
                           onChange={(e) => setValue("phone", e.target.value)}
                           {...register("phone")}
@@ -184,67 +200,87 @@ export default function AddUser({ getData }) {
                         {errors.phone && (
                           <p className="text-red-500">{errors.phone.message}</p>
                         )}
-                        <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                          Phone
+                        <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                          Số điện thoại
                         </label>
                       </div>
-                      <div class="relative z-0 w-full mb-6 group">
-                        <input
-                          type="text"
-                          name="birthday"
-                          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                          placeholder=" "
-                          onChange={(e) => setValue("birthday", e.target.value)}
-                          {...register("birthday")}
-                        />
-                        {errors.birthday && (
-                          <p className="text-red-500">
-                            {errors.birthday.message}
-                          </p>
-                        )}
-                        <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                          Birthday
-                        </label>
+                      <div className="relative z-0 w-full mb-6 group flex justify-between items-center">
+                        <div className="flex w-1/2 flex-col mr-6">
+                          <DatePicker
+                            name="birthday"
+                            placeholder="DD/MM/YYYY"
+                            onChange={(date, dateString) =>
+                              handleBirthday(dateString)
+                            }
+                            className="w-full mt-5"
+                          />
+                          {errors.birthday && (
+                            <p className="text-red-500">
+                              {errors.birthday.message}
+                            </p>
+                          )}
+                          <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                            Ngày sinh nhật
+                          </label>
+                        </div>
+                        <div className="flex w-1/2 flex-col ">
+                          <Select
+                            className="w-full mt-5"
+                            placeholder="Chọn giới tính"
+                            name="gender"
+                            onChange={handleGender}
+                            allowClear
+                            options={[
+                              {
+                                value: "Nam",
+                                label: "Nam",
+                              },
+                              {
+                                value: "Nữ",
+                                label: "Nữ",
+                              },
+                            ]}
+                          />
+                          {errors.gender && (
+                            <p className="text-red-500">
+                              {errors.gender.message}
+                            </p>
+                          )}
+                          <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                            Giới tính
+                          </label>
+                        </div>
                       </div>
-                      <div class="relative z-0 w-full mb-6 group">
-                        <input
-                          type="text"
-                          name="gender"
-                          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                          placeholder=" "
-                          onChange={(e) => setValue("gender", e.target.value)}
-                          {...register("gender")}
-                        />
-                        {errors.gender && (
-                          <p className="text-red-500">
-                            {errors.gender.message}
-                          </p>
-                        )}
-                        <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                          Gender
-                        </label>
-                      </div>
-                      <div class="relative z-0 w-full mb-6 group">
-                        <input
-                          type="text"
+                      <div className="relative z-0 w-1/3 mb-6 group ">
+                        <Select
+                          className="w-full mt-5"
+                          placeholder="Vai trò"
                           name="role"
-                          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                          placeholder=" "
-                          onChange={(e) => setValue("role", e.target.value)}
-                          {...register("role")}
+                          onChange={handleRole}
+                          allowClear
+                          options={[
+                            {
+                              value: "ADMIN",
+                              label: "ADMIN",
+                            },
+                            {
+                              value: "USER",
+                              label: "USER",
+                            },
+                          ]}
                         />
                         {errors.role && (
                           <p className="text-red-500">{errors.role.message}</p>
                         )}
-                        <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                          Role
+                        <label className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                          Vai trò
                         </label>
                       </div>
                       <button
                         type="submit"
-                        class="mr-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        className="mr-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                       >
-                        Thêm quản trị
+                        Thêm
                       </button>
                       <button
                         type="button"

@@ -68,7 +68,7 @@ export default function Room() {
         sort: false,
         customBodyRender: (value, tableMeta) => {
           const imgUrl = value;
-          return <img src={imgUrl} width="100" height="100" />;
+          return <img src={imgUrl} width="100" height="100" alt="" />;
         },
       },
     },
@@ -123,32 +123,34 @@ export default function Room() {
           const index = tableMeta.rowIndex;
           const room = listRooms[index];
           return (
-            <div>
-              <Popover
-                content={
-                  <div>
-                    <p style={{ width: "200px" }}>{room.moTa}</p>
-                    <Button
-                      type="primary"
-                      danger
-                      onClick={() => hidePopover(index)}
-                    >
-                      Đóng
-                    </Button>
-                  </div>
-                }
-                trigger="click"
-                visible={popoverStates[index]}
-                placement="bottomRight"
-                onVisibleChange={(visible) => {
-                  if (!visible) hidePopover(index);
-                }}
+            <Popover
+              content={
+                <div>
+                  <p style={{ width: "200px" }}>{room.moTa}</p>
+                  <Button
+                    type="primary"
+                    danger
+                    onClick={() => hidePopover(index)}
+                  >
+                    Đóng
+                  </Button>
+                </div>
+              }
+              trigger="click"
+              open={popoverStates[index]}
+              placement="bottomRight"
+              onOpenChange={(open) => {
+                if (!open) hidePopover(index);
+              }}
+            >
+              <Button
+                type="link"
+                onClick={() => handleOpenPopover(index)}
+                className="-ml-4"
               >
-                <Button type="link" onClick={() => handleOpenPopover(index)}>
-                  Xem chi tiết
-                </Button>
-              </Popover>
-            </div>
+                Xem chi tiết
+              </Button>
+            </Popover>
           );
         },
       },
@@ -164,7 +166,7 @@ export default function Room() {
 
     {
       name: "action",
-      label: "Action",
+      label: "Hành động",
       options: {
         filter: true,
         sort: false,
@@ -214,7 +216,6 @@ export default function Room() {
       })
       .catch((err) => {
         message.error("Không có quyền xóa");
-        console.log(err);
       });
   };
   return (

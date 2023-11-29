@@ -5,13 +5,11 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { userLocalStorage } from "../api/localService";
 const { Header } = Layout;
-export default function Headers() {
+export default function Headers({ setCollapsed, collapsed }) {
   const { user } = useSelector((state) => state.adminSlice);
-  console.log(user);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
-  const [collapsed, setCollapsed] = useState(false);
   const handleLogout = () => {
     userLocalStorage.remove();
     window.location.href = "/admin";
@@ -24,10 +22,10 @@ export default function Headers() {
         background: colorBgContainer,
         display: "flex",
         alignItems: "center",
-        justifyContent: "end",
+        justifyContent: "space-between",
       }}
     >
-      {/* <Button
+      <Button
         type="text"
         icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
         onClick={() => setCollapsed(!collapsed)}
@@ -36,19 +34,19 @@ export default function Headers() {
           width: 64,
           height: 64,
         }}
-      /> */}
+      />
       {user ? (
         <div>
-          <Button type="primary" danger className="mr-5">
+          <Button type="text" danger className="mr-2">
             {user.user.name}
           </Button>
           <Button type="primary" danger onClick={() => handleLogout()}>
-            Logout
+            Đăng xuất
           </Button>
         </div>
       ) : (
         <Button type="primary" danger>
-          <Link to="/admin/login">Login</Link>
+          <Link to="/admin/login">Đăng nhập</Link>
         </Button>
       )}
     </Header>

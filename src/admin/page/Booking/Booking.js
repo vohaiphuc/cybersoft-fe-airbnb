@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import "./asset/style.scss";
 import MUIDataTable from "mui-datatables";
 import { Button, message } from "antd";
-import { bookingRoomServ, locationServ } from "../../api/api";
+import { bookingRoomServ } from "../../api/api";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import EditBookingRoom from "./EditBookingRoom";
 import AddBookingRoom from "./AddBookingRoom";
+import moment from "moment";
 export default function Booking() {
   let [isOpen, setIsOpen] = useState(false);
   const [editData, setEditData] = useState({});
@@ -16,23 +17,23 @@ export default function Booking() {
       .then((res) => {
         setListBookingRoom(res.data.content);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
   useEffect(() => {
     getData();
   }, []);
-  const data = listBookingRoom.map((room, index) => ({
-    id: room.id,
-    key: room.id,
-    stt: index + 1,
-    maPhong: room.maPhong,
-    ngayDen: room.ngayDen,
-    ngayDi: room.ngayDi,
-    soLuongKhach: room.soLuongKhach,
-    maNguoiDung: room.maNguoiDung,
-  }));
+  const data = listBookingRoom.map((room, index) => {
+    return {
+      id: room.id,
+      key: room.id,
+      stt: index + 1,
+      maPhong: room.maPhong,
+      ngayDen: moment(room.ngayDen).format("DD/MM/YYYY "),
+      ngayDi: moment(room.ngayDi).format("DD/MM/YYYY"),
+      soLuongKhach: room.soLuongKhach,
+      maNguoiDung: room.maNguoiDung,
+    };
+  });
   const columns = [
     {
       name: "stt",
@@ -85,7 +86,7 @@ export default function Booking() {
     },
     {
       name: "action",
-      label: "Action",
+      label: "Hành động",
       options: {
         filter: true,
         sort: false,
@@ -116,7 +117,16 @@ export default function Booking() {
     bookingRoomServ
       .getDetailBookingRoom(roomId)
       .then((res) => {
-        setEditData(res.data.content);
+        const editedNgayDen = moment(res.data.content.ngayDen).startOf("day");
+        const editedNgayDi = moment(res.data.content.ngayDi).startOf("day");
+
+        const editedData = {
+          ...res.data.content,
+          ngayDen: editedNgayDen,
+          ngayDi: editedNgayDi,
+        };
+
+        setEditData(editedData);
         setIsOpen(true);
       })
       .catch((err) => {
