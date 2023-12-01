@@ -1,12 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { POPUP_NAME } from "../../constants/popup/index";
-import Login from "./Login";
-import Register from "./Register";
-import Profile from "./Profile";
+import Login from "./Login/Login";
+import Register from "./Register/Register";
+import { POPUP_NAME } from "./hook/usePopup";
 
 const Popup = () => {
-  const popup = useSelector((state) => state?.popupSlice?.popup);
+  const popup = useSelector((state) => state.popupSlice?.popup);
   if (!popup) return null;
 
   switch (popup) {
@@ -14,8 +13,6 @@ const Popup = () => {
       return <Login />;
     case POPUP_NAME.REGISTER:
       return <Register />;
-    case POPUP_NAME.EDIT_PROFILE:
-      return <Profile />;
     default:
       return null;
   }

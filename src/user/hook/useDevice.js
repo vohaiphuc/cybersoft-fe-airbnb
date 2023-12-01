@@ -1,4 +1,3 @@
-import React from 'react'
 import { useWindowWidth } from '@react-hook/window-size'
 
 export default function useDevice() {

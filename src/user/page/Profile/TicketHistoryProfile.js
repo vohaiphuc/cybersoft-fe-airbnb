@@ -5,7 +5,7 @@ import 'moment/locale/vi'
 import { NavLink } from 'react-router-dom';
 import { userRoute } from '../../route/userRoute';
 
-export default function TicketHistory({ user }) {
+export default function TicketHistoryProfile({ user }) {
     const [bookingList, setBookingList] = useState(null)
     const [roomList, setRoomList] = useState(null);
 
@@ -26,7 +26,7 @@ export default function TicketHistory({ user }) {
             .catch((err) => {
                 console.log(err);
             });
-    }, [])
+    }, [user.id])
 
     bookingList?.forEach(booking => {
         const room = roomList?.filter(room => room.id === booking.maPhong)
@@ -48,9 +48,7 @@ export default function TicketHistory({ user }) {
                 }
             }
 
-
-
-            return <div className="flex space-x-5">
+            return <div className="flex space-x-5" key={item.maPhong}>
                 <NavLink to={userRoute.detail.id(item.maPhong)}>
                     <img src={item.roomDetail?.hinhAnh} alt="" className='rounded object-cover' style={{ width: 100, height: 100, maxWidth: 'unset' }} />
                 </NavLink>

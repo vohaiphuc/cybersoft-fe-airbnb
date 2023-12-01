@@ -2,16 +2,16 @@ import { faBars, faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Avatar, Button, Dropdown } from "antd";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setPopup } from "../../redux/popupSlice";
-import { POPUP_NAME } from "../../constants/popup";
+import { useSelector } from "react-redux";
 import { userLocalStorage } from "../../api/localService";
 import { useNavigate } from "react-router-dom";
 import { userRoute } from "../../route/userRoute";
+import { POPUP_NAME, usePopup } from "../Popup/hook/usePopup";
+import AvatarIcon from "./asset/user.jpg"
 
 export default function NavBar() {
   const navigate = useNavigate()
-  const dispatch = useDispatch();
+  const popup = usePopup()
   const { user } = useSelector((state) => state.userSlice) || {};
   const { token } = user || {};
   const handleLogOut = () => {
@@ -20,13 +20,12 @@ export default function NavBar() {
   };
   const handleToggleAuth = (type) => {
     if (type === "login") {
-      dispatch(setPopup({ popup: POPUP_NAME.LOGIN }));
+      popup.open(POPUP_NAME.LOGIN)
       return;
     } else if (type === "register") {
-      dispatch(setPopup({ popup: POPUP_NAME.REGISTER }));
+      popup.open(POPUP_NAME.REGISTER)
       return;
     }
-    // dispatch(setPopup({ popup: POPUP_NAME.PROFILE }));
     navigate(userRoute.account.path)
   };
 
@@ -55,16 +54,6 @@ export default function NavBar() {
       </Button>
     );
   };
-  // const renderProfileButton = () => {
-  //   return (
-  //     <Button
-  //       className="text-black w-full h-full shadow-none border-none text-left hover:!border-none hover:!bg-transparent p-0 hover:!text-black"
-  //       onClick={handleToggleAuth()}
-  //     >
-  //       Thông tin cá nhân
-  //     </Button>
-  //   );
-  // };
 
   const items = [
     token
@@ -116,7 +105,7 @@ export default function NavBar() {
         <div className="profile space-x-3 flex items-center cursor-pointer">
           <FontAwesomeIcon icon={faBars} />
           <Avatar
-            src="https://t3.ftcdn.net/jpg/05/53/79/60/360_F_553796090_XHrE6R9jwmBJUMo9HKl41hyHJ5gqt9oz.jpg"
+            src={AvatarIcon}
             size={30}
           />
         </div>

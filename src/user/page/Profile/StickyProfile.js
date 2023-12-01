@@ -1,11 +1,11 @@
 import React from "react";
 import { CheckCircleOutlined } from "@ant-design/icons";
-import UploadAvatar from "./UploadAvatar";
+import UploadAvatarSticky from "./UploadAvatarSticky";
 
-const StickyInfo = () => {
+const StickyProfile = () => {
   return (
     <div className="w-full sticky top-28 border rounded-lg p-5">
-      <UploadAvatar />
+      <UploadAvatarSticky />
       <div className="mt-2">
         <div className="flex items-center">
           <CheckCircleOutlined className="text-green-600" />
@@ -31,4 +31,4 @@ const StickyInfo = () => {
   );
 };
 
-export default StickyInfo;
+export default StickyProfile;

@@ -1,14 +1,15 @@
+import "./asset/style.scss";
 import React, { useState } from "react";
 import { Button, Form, Input } from "antd";
 import { UnlockOutlined, UserOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../../redux/userSlice";
-import { setPopup } from "../../redux/popupSlice";
-import { POPUP_NAME } from "../../constants/popup";
-import Logo from "../../component/Logo";
+import { loginUser } from "../../../redux/userSlice";
+import Logo from "../../Logo";
+import { POPUP_NAME, usePopup } from "../hook/usePopup";
 
 const FormLogin = () => {
   const dispatch = useDispatch();
+  const popup = usePopup()
   const { loading } = useSelector((state) => state.userSlice);
   const [isFormDirty, setIsFormDirty] = useState(false);
 
@@ -58,7 +59,7 @@ const FormLogin = () => {
             ]}
             hasFeedback
           >
-            <Input au prefix={<UserOutlined />} placeholder="Email..." />
+            <Input au="true" prefix={<UserOutlined />} placeholder="Email..." />
           </Form.Item>
         </div>
         <div className="mb-6">
@@ -103,10 +104,7 @@ const FormLogin = () => {
             Don't have an account?
             <div
               className="text-rose-700 hover:text-rose-500 hover:underline underline-offset-4 tracking-wider duration-200 active pl-1 cursor-pointer"
-              to="/register"
-              onClick={() => {
-                dispatch(setPopup({ popup: POPUP_NAME.REGISTER }));
-              }}
+              onClick={() => popup.open(POPUP_NAME.REGISTER)}
             >
               Sign up
             </div>

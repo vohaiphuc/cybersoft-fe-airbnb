@@ -1,5 +1,4 @@
-import { faStar, faStarHalf } from '@fortawesome/free-regular-svg-icons'
-import { faStarAndCrescent, faStarHalfAlt, faStarHalfStroke, faStarOfDavid, faStarOfLife } from '@fortawesome/free-solid-svg-icons'
+import { faStar } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'

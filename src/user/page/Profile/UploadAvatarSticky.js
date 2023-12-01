@@ -12,7 +12,7 @@ const getBase64 = (file) =>
     reader.onerror = (error) => reject(error);
   });
 
-const UploadAvatar = () => {
+const UploadAvatarSticky = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
@@ -80,4 +80,4 @@ const UploadAvatar = () => {
   );
 };
 
-export default UploadAvatar;
+export default UploadAvatarSticky;

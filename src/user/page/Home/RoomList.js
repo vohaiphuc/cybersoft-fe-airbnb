@@ -9,7 +9,7 @@ export default function RoomList({ list }) {
 
     const renderRoom = () => (
         list?.map((room, index) => {
-            let idIndex = _.findIndex(locationList, (item) => item.id == room.maViTri)
+            let idIndex = _.findIndex(locationList, (item) => item.id === room.maViTri)
             if (idIndex > -1) {
                 room.locationDetail = {
                     tenViTri: locationList[idIndex].tenViTri,

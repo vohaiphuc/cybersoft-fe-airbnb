@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Button, DatePicker, Form, Input, Select } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { validatePhoneNumber } from "./asset/utils";
-import { registerUser } from "../../redux/userSlice";
 import dayjs from "dayjs";
 import {
   MailOutlined,
@@ -11,12 +10,13 @@ import {
   EnvironmentOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { setPopup } from "../../redux/popupSlice";
-import { POPUP_NAME } from "../../constants/popup";
-import Logo from "../../component/Logo";
+import { registerUser } from "../../../redux/userSlice";
+import Logo from "../../Logo";
+import { POPUP_NAME, usePopup } from "../hook/usePopup";
 
 const FormRegister = () => {
   const dispatch = useDispatch();
+  const popup = usePopup()
   const { loading } = useSelector((state) => state.userSlice);
   const [isFormDirty, setIsFormDirty] = useState(false);
 
@@ -211,9 +211,7 @@ const FormRegister = () => {
         </div>
         <div
           className="col-span-2 text-center text-rose-600 hover:text-rose-500 hover:underline underline-offset-4 tracking-wider duration-200 underline cursor-pointer"
-          onClick={() => {
-            dispatch(setPopup({ popup: POPUP_NAME.LOGIN }));
-          }}
+          onClick={() => popup.open(POPUP_NAME.LOGIN)}
         >
           Sign in
         </div>

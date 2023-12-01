@@ -1,8 +1,8 @@
 import { faRedditAlien } from '@fortawesome/free-brands-svg-icons'
 import { faChessBishop, faChessKing, faChessQueen, faCompass, faFloppyDisk, faHand, faHeart, faHospital, faHourglass, faIdBadge, faLemon, faMap, faMoon, faPaperPlane } from '@fortawesome/free-regular-svg-icons'
-import { faArrowLeft, faArrowRight, faChess, faChevronLeft, faChevronRight, faFilter, faSliders } from '@fortawesome/free-solid-svg-icons'
+import { faChess, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Button, Carousel, ConfigProvider, Skeleton } from 'antd'
+import { Carousel, Skeleton } from 'antd'
 import React, { useRef, useState } from 'react'
 import FilterModal from './FilterModal'
 import useDevice from '../../hook/useDevice'
@@ -133,7 +133,7 @@ export default function OptionSlider({ list, handleFilterRoom }) {
             <div className='flex-auto w-4/5 relative'>
                 <Carousel arrows={false} slidesToShow={slidesToShow} ref={refCarousel}>
                     {carouselItems.map((item, index) => {
-                        const active = itemActive == index ? 'active' : ""
+                        const active = itemActive === index ? 'active' : ""
                         return <div key={index} className={`slider-item ${active}`}
                             onClick={() => { setItemActive(index) }}
                         >
@@ -146,12 +146,12 @@ export default function OptionSlider({ list, handleFilterRoom }) {
                 </Carousel>
                 <div className="slider-arrow-container">
                     <div
-                        className={`slider-arrow slider-arrow-prev ${sliderArrow == 0 ? 'hidden' : 'flex'}`}
+                        className={`slider-arrow slider-arrow-prev ${sliderArrow === 0 ? 'hidden' : 'flex'}`}
                         onClick={handleSlidePrev}>
                         <FontAwesomeIcon icon={faChevronLeft} className='mx-auto ' />
                     </div>
                     <div
-                        className={`slider-arrow slider-arrow-next ${sliderArrow == maxSlide ? 'hidden' : 'flex'}`}
+                        className={`slider-arrow slider-arrow-next ${sliderArrow === maxSlide ? 'hidden' : 'flex'}`}
                         onClick={handleSlideNext}>
                         <FontAwesomeIcon icon={faChevronRight} className='mx-auto ' />
                     </div>

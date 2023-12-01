@@ -1,20 +1,19 @@
+import "react-date-range/dist/styles.css";
 import { Button, Modal, notification } from "antd";
 import { addDays, differenceInDays } from "date-fns";
 import React, { useMemo, useState } from "react";
-import "react-date-range/dist/styles.css";
 import { StarFilled } from "@ant-design/icons";
 import Calendar from "../Calendar";
 import { formattedDate } from "../asset/utils";
 import { roomServ } from "../../../api/api";
 import styles from "./Detail.module.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { setPopup } from "../../../redux/popupSlice";
-import { POPUP_NAME } from "../../../constants/popup";
+import { useSelector } from "react-redux";
+import { POPUP_NAME, usePopup } from "../../../component/Popup/hook/usePopup";
 
 const Booking = ({ data }) => {
   const { giaTien, khach, id } = data || {};
-  const { user } = useSelector((state) => state?.userSlice?.user) || {};
-  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.userSlice?.user) || {};
+  const popup = usePopup()
 
   const [guest, setGuest] = useState(0);
   const [toggleCalendar, setToggleCalendar] = useState(false);
@@ -72,8 +71,7 @@ const Booking = ({ data }) => {
         throw error;
       }
     } else {
-      //Handle push to login to booking room
-      dispatch(setPopup({ popup: POPUP_NAME.LOGIN }));
+      popup.open(POPUP_NAME.LOGIN)
     }
   };
 

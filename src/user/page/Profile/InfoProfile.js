@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-const Info = () => {
+const InfoProfile = () => {
   const { user } = useSelector((state) => state?.userSlice?.user) || {};
   const PROFILE_LIST = [
     {
@@ -50,4 +50,4 @@ const Info = () => {
   );
 };
 
-export default Info;
+export default InfoProfile;

@@ -1,7 +1,6 @@
 import { faSliders } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button, Checkbox, ConfigProvider, Input, InputNumber, Modal, Slider } from 'antd';
-import _ from 'lodash';
+import { Button, Checkbox, ConfigProvider, InputNumber, Modal, Slider } from 'antd';
 import React, { useEffect, useState } from 'react'
 import useDevice from '../../hook/useDevice';
 
@@ -52,9 +51,9 @@ export default function FilterModal({ list, handleFilterRoom, resetModal }) {
             item.giaTien >= rangeGiaTien.start && item.giaTien <= rangeGiaTien.end
         )
 
-        filter = (phongNgu > 0) ? filter.filter(item => item.phongNgu == phongNgu) : filter
-        filter = (giuong > 0) ? filter.filter(item => item.giuong == giuong) : filter
-        filter = (phongTam > 0) ? filter.filter(item => item.phongTam == phongTam) : filter
+        filter = (phongNgu > 0) ? filter.filter(item => item.phongNgu === phongNgu) : filter
+        filter = (giuong > 0) ? filter.filter(item => item.giuong === giuong) : filter
+        filter = (phongTam > 0) ? filter.filter(item => item.phongTam === phongTam) : filter
 
         // tien nghi
         filter = (wifi) ? filter.filter(item => item.wifi) : filter

@@ -1,22 +1,28 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-import StickyInfo from "../../component/Profile/Sticky";
-import Info from "../../component/Profile/Info";
 import { Button } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import { setPopup } from "../../redux/popupSlice";
-import { POPUP_NAME } from "../../constants/popup";
+import { useSelector } from "react-redux";
 import "./asset/style.scss";
-import TicketHistory from "./TicketHistory";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-regular-svg-icons";
+import StickyProfile from "./StickyProfile";
+import InfoProfile from "./InfoProfile";
+import { POPUP_NAME, usePopup } from "../../component/Popup/hook/usePopup";
+import TicketHistoryProfile from "./TicketHistoryProfile";
+import { userLocalStorage } from "../../api/localService";
+import useDevice from "../../hook/useDevice";
 
 export default function Profile() {
-  const dispatch = useDispatch();
+  const popup = usePopup()
+  const { isMobile } = useDevice()
   const { user } = useSelector((state) => state?.userSlice?.user || {});
   const handleOpenPopupUpdate = () => {
-    dispatch(setPopup({ popup: POPUP_NAME.EDIT_PROFILE }));
+    popup.open(POPUP_NAME.EDIT_PROFILE)
   };
+  const handleLogout = () => {
+    userLocalStorage.remove()
+    window.location.reload();
+  }
 
   if (!user?.id) return null;
 
@@ -28,7 +34,7 @@ export default function Profile() {
       </Helmet>
       <div className="flex flex-wrap py-4 md:py-6">
         <div className="w-full md:w-1/3">
-          <StickyInfo />
+          <StickyProfile />
         </div>
         <div className="w-full md:w-2/3">
           <div className="md:py-0 py-4 px-0 lg:px-10">
@@ -43,8 +49,15 @@ export default function Profile() {
                 Chỉnh sửa
               </Button>
             </div>
-            <Info />
-            <TicketHistory user={user} />
+            <InfoProfile />
+            {isMobile && (
+              <button
+                className="bg-black text-white rounded-3xl px-5 py-2 mt-5 w-full"
+                onClick={handleLogout}>
+                Đăng xuất
+              </button>
+            )}
+            <TicketHistoryProfile user={user} />
           </div>
         </div>
       </div>

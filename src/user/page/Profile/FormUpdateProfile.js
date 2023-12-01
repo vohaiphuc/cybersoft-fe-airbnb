@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "../../redux/userSlice";
 import dayjs from "dayjs";
 import { MailOutlined, PhoneOutlined, UserOutlined } from "@ant-design/icons";
-import { validatePhoneNumber } from "../../page/Register/asset/utils";
-import Logo from "../Logo";
+import { validatePhoneNumber } from "../Register/asset/utils";
+import Logo from "../../component/Logo";
 
-const UpdateForm = () => {
+const FormUpdateProfile = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state?.userSlice?.user);
   const [isFormDirty, setIsFormDirty] = useState(false);
@@ -165,4 +165,4 @@ const UpdateForm = () => {
   );
 };
 
-export default React.memo(UpdateForm);
+export default React.memo(FormUpdateProfile);
