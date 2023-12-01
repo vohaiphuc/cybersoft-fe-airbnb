@@ -16,7 +16,7 @@ import { POPUP_NAME, usePopup } from "../hook/usePopup";
 
 const FormRegister = () => {
   const dispatch = useDispatch();
-  const popup = usePopup()
+  const popup = usePopup();
   const { loading } = useSelector((state) => state.userSlice);
   const [isFormDirty, setIsFormDirty] = useState(false);
 
@@ -54,7 +54,7 @@ const FormRegister = () => {
         name: "",
         email: "",
         phone: "",
-        gender: "Gender",
+        gender: "Giới tính",
         password: "",
         address: "",
       }}
@@ -73,18 +73,18 @@ const FormRegister = () => {
       <div className="md:grid md:grid-cols-2 gap-x-4 gap-y-1">
         <div className="mb-1">
           <Form.Item
-            label="Username"
+            label="Tài khoản"
             name="name"
             rules={[
               {
                 required: true,
-                message: "Please input your username!",
+                message: "Nhập tài khoản!",
               },
             ]}
             hasFeedback
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
           >
-            <Input prefix={<UserOutlined />} placeholder="Username..." />
+            <Input prefix={<UserOutlined />} placeholder="Tài khoản..." />
           </Form.Item>
         </div>
         <div className="mb-1">
@@ -94,7 +94,7 @@ const FormRegister = () => {
             rules={[
               {
                 required: true,
-                message: "Please input your email!",
+                message: "Nhập thông tin email!",
               },
             ]}
             hasFeedback
@@ -105,29 +105,29 @@ const FormRegister = () => {
         </div>
         <div className="mb-1">
           <Form.Item
-            label="Phone number"
+            label="Số điện thoại"
             name="phone"
             rules={[
               {
                 required: true,
                 validator: validatePhoneNumber,
-                message: "Please input your phone number!",
+                message: "Nhập số điện thoại!",
               },
             ]}
             hasFeedback
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
           >
-            <Input prefix={<PhoneOutlined />} placeholder="Phone..." />
+            <Input prefix={<PhoneOutlined />} placeholder="Số điện thoại..." />
           </Form.Item>
         </div>
         <div className="mb-1">
           <Form.Item
-            label="Password"
+            label="Mật khẩu"
             name="password"
             rules={[
               {
                 required: true,
-                message: "Please input your password!",
+                message: "Nhập mật khẩu!",
               },
             ]}
             hasFeedback
@@ -135,29 +135,29 @@ const FormRegister = () => {
           >
             <Input.Password
               prefix={<UnlockOutlined />}
-              placeholder="Password..."
+              placeholder="Mật khẩu..."
             />
           </Form.Item>
         </div>
         <div className="mb-1">
           <Form.Item
-            label="Address"
+            label="Địa chỉ"
             name="address"
             rules={[
               {
                 required: true,
-                message: "Please input your code!",
+                message: "Nhập địa chỉ!",
               },
             ]}
             hasFeedback
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
           >
-            <Input prefix={<EnvironmentOutlined />} placeholder="Address..." />
+            <Input prefix={<EnvironmentOutlined />} placeholder="Địa chỉ..." />
           </Form.Item>
         </div>
         <div className="mb-1">
           <Form.Item
-            label="Birthday"
+            label="Ngày sinh"
             name="birthday"
             hasFeedback
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
@@ -170,12 +170,12 @@ const FormRegister = () => {
         </div>
         <div className="mb-1">
           <Form.Item
-            label="Gender"
+            label="Giới tính"
             name="gender"
             rules={[
               {
                 required: true,
-                message: "Please input your code!",
+                message: "Chọn giới tính",
               },
             ]}
             hasFeedback
@@ -213,7 +213,7 @@ const FormRegister = () => {
           className="col-span-2 text-center text-rose-600 hover:text-rose-500 hover:underline underline-offset-4 tracking-wider duration-200 underline cursor-pointer"
           onClick={() => popup.open(POPUP_NAME.LOGIN)}
         >
-          Sign in
+          Đăng nhập
         </div>
       </div>
     </Form>
