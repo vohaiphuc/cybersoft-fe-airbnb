@@ -1,11 +1,30 @@
 import React, { useState } from "react";
+import { Modal } from "antd";
+import { usePopup } from "../../component/Popup/hook/usePopup";
 import { Button, DatePicker, Form, Input, Select } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "../../redux/userSlice";
 import dayjs from "dayjs";
 import { MailOutlined, PhoneOutlined, UserOutlined } from "@ant-design/icons";
-import { validatePhoneNumber } from "../Register/asset/utils";
+import { validatePhoneNumber } from "./asset/utils";
 import Logo from "../../component/Logo";
+
+const ModalUpdateProfile = () => {
+  const popup = usePopup()
+
+  return (
+    <Modal
+      centered
+      open={true}
+      onOk={() => popup.close()}
+      onCancel={() => popup.close()}
+      footer={null}
+    >
+      <FormUpdateProfile />
+    </Modal>
+  );
+};
+export default React.memo(ModalUpdateProfile);
 
 const FormUpdateProfile = () => {
   const dispatch = useDispatch();
@@ -69,17 +88,18 @@ const FormUpdateProfile = () => {
       <div className="md:grid md:grid-cols-2 gap-x-4 gap-y-1">
         <div className="mb-1">
           <Form.Item
-            label="Username"
+            label="Tên người dùng"
             name="name"
             rules={[
               {
-                message: "Please input your username!",
+                required: true,
+                message: "Vui lòng điền tên người dùng!",
               },
             ]}
             hasFeedback
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
           >
-            <Input prefix={<UserOutlined />} placeholder="Username..." />
+            <Input prefix={<UserOutlined />} placeholder="Tên người dùng..." />
           </Form.Item>
         </div>
         <div className="mb-1">
@@ -88,6 +108,7 @@ const FormUpdateProfile = () => {
             name="email"
             rules={[
               {
+                required: true,
                 message: "Please input your email!",
               },
             ]}
@@ -99,23 +120,23 @@ const FormUpdateProfile = () => {
         </div>
         <div className="mb-1">
           <Form.Item
-            label="Phone number"
+            label="Số điện thoại"
             name="phone"
             rules={[
               {
                 validator: validatePhoneNumber,
-                message: "Please input your phone number!",
+                message: "Vui lòng điền số điện thoại!",
               },
             ]}
             hasFeedback
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
           >
-            <Input prefix={<PhoneOutlined />} placeholder="Phone..." />
+            <Input prefix={<PhoneOutlined />} placeholder="Số điện thoại..." />
           </Form.Item>
         </div>
         <div className="mb-1">
           <Form.Item
-            label="Birthday"
+            label="Ngày sinh"
             name="birthday"
             hasFeedback
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
@@ -123,12 +144,13 @@ const FormUpdateProfile = () => {
             <DatePicker
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-[0.3rem] dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               format={dateFormat}
+              placeholder="Chọn ngày..."
             />
           </Form.Item>
         </div>
         <div className="mb-1">
           <Form.Item
-            label="Gender"
+            label="Giới tính"
             name="gender"
             hasFeedback
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
@@ -164,5 +186,3 @@ const FormUpdateProfile = () => {
     </Form>
   );
 };
-
-export default React.memo(FormUpdateProfile);

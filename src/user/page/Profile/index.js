@@ -40,14 +40,14 @@ export default function Profile() {
           <div className="md:py-0 py-4 px-0 lg:px-10">
             <div className="flex items-center justify-between">
               <p className='text-2xl font-semibold'>Hồ sơ</p>
-              <Button
+              <button
                 onClick={handleOpenPopupUpdate}
                 type="outline"
-                className="border-red-500 hover:bg-red-400 transition hover:text-white space-x-2"
+                className="border-red-500 hover:bg-red-400 transition hover:text-white space-x-2 border-[1px] rounded-md px-3 py-1 text-sm"
               >
                 <FontAwesomeIcon icon={faEdit} />
-                Chỉnh sửa
-              </Button>
+                <span>Chỉnh sửa</span>
+              </button>
             </div>
             <InfoProfile />
             {isMobile && (
