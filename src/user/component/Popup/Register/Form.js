@@ -50,11 +50,11 @@ const FormRegister = () => {
       layout="vertical"
       name="register"
       initialValues={{
-        birthday: dayjs("01/01/2001", dateFormat),
+        birthday: undefined,
         name: "",
         email: "",
         phone: "",
-        gender: "Giới tính",
+        gender: undefined,
         password: "",
         address: "",
       }}
@@ -160,10 +160,17 @@ const FormRegister = () => {
             label="Ngày sinh"
             name="birthday"
             hasFeedback
+            rules={[
+              {
+                required: true,
+                message: "Chọn ngày sinh!",
+              },
+            ]}
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
           >
             <DatePicker
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-[0.3rem] dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Ngày sinh..."
               format={dateFormat}
             />
           </Form.Item>
@@ -175,7 +182,7 @@ const FormRegister = () => {
             rules={[
               {
                 required: true,
-                message: "Chọn giới tính",
+                message: "Chọn giới tính!",
               },
             ]}
             hasFeedback
@@ -183,6 +190,7 @@ const FormRegister = () => {
           >
             <Select
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Giới tính"
               options={[
                 {
                   value: true,
