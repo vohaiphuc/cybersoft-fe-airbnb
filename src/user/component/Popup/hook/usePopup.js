@@ -4,6 +4,7 @@ import { clearPopup, setPopup } from '../../../redux/popupSlice'
 export const POPUP_NAME = {
     LOGIN: "LOGIN",
     REGISTER: "REGISTER",
+    ROOMFILTER: "ROOMFILTER"
 }
 
 export const usePopup = () => {

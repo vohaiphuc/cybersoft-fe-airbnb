@@ -2,10 +2,10 @@ import { faStar } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { userRoute } from "../../route/userRoute";
+import { userRoute } from "../../../route/userRoute";
 import { Skeleton } from 'antd'
 
-export default function RoomItem({ room, loading, keyIndex }) {
+export default function ItemRoom({ room, loading, keyIndex }) {
     const { id, hinhAnh, tenPhong, giaTien, locationDetail } = room
     const [componentLoading, setComponentLoading] = useState(loading);
     const [opacity, setOpacity] = useState(0);

@@ -1,19 +1,20 @@
 import { faRedditAlien } from '@fortawesome/free-brands-svg-icons'
 import { faChessBishop, faChessKing, faChessQueen, faCompass, faFloppyDisk, faHand, faHeart, faHospital, faHourglass, faIdBadge, faLemon, faMap, faMoon, faPaperPlane } from '@fortawesome/free-regular-svg-icons'
-import { faChess, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { faChess, faChevronLeft, faChevronRight, faSliders } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Carousel, Skeleton } from 'antd'
 import React, { useRef, useState } from 'react'
-import FilterModal from './FilterModal'
-import useDevice from '../../hook/useDevice'
+import useDevice from '../../../hook/useDevice'
 import { useSelector } from 'react-redux'
+import { usePopup, POPUP_NAME } from '../../../component/Popup/hook/usePopup'
 
-export default function OptionSlider({ list, handleFilterRoom }) {
+export default function OptionSlider() {
     const [itemActive, setItemActive] = useState(0);
     const [sliderArrow, setSliderArrow] = useState(0);
     const [modalId, setModalId] = useState(null);
     const refCarousel = useRef()
     const loading = useSelector(s => s.skeletonSlice.room)
+    const popup = usePopup()
 
     const { isMobile, isTablet, isDesktop } = useDevice()
     let slidesToShow
@@ -107,11 +108,6 @@ export default function OptionSlider({ list, handleFilterRoom }) {
         }
     }
 
-    const resetModal = () => {
-        setModalId(Math.random())
-        handleFilterRoom(list)
-    }
-
     const CustomSkeleton = ({ children }) => {
         return !loading ? (
             <div className='flex flex-col items-center space-y-1'>
@@ -158,7 +154,11 @@ export default function OptionSlider({ list, handleFilterRoom }) {
                 </div>
             </div>
             <div className='basis-[fit-content]'>
-                <FilterModal list={list} handleFilterRoom={handleFilterRoom} key={modalId} resetModal={resetModal} />
+                <div className='flex items-center space-x-3 border-[1px] p-3 md:px-5 md:py-4 rounded-lg cursor-pointer'
+                    onClick={() => popup.open(POPUP_NAME.ROOMFILTER)}>
+                    <FontAwesomeIcon icon={faSliders} />
+                    <span className='text-xs hidden md:block'>Bộ lọc</span>
+                </div>
             </div>
         </div>
     )

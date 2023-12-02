@@ -1,31 +1,26 @@
+import "./asset/style.scss"
 import React, { useEffect, useState } from 'react'
 import { roomServ } from '../../api/api'
-import RoomList from './RoomList'
-import OptionSlider from './OptionSlider';
-import "./asset/style.scss"
+import OptionSlider from './OptionSlider/OptionSlider';
+import { useDispatch, useSelector } from 'react-redux';
+import { setRoomListAll } from "../../redux/homeSlice"
+import ListRoom from './ListRoom/ListRoom';
 
 export default function Home() {
-    const [roomListAll, setRoomListAll] = useState(null);
-    const [roomListFilter, setRoomListFilter] = useState(null);
+    const dispatch = useDispatch()
 
     useEffect(() => {
         roomServ.get()
             .then((res) => {
-                const list = res.data.content
-                setRoomListAll(list)
-                setRoomListFilter(list)
+                dispatch(setRoomListAll(res.data.content))
             })
             .catch((err) => {
                 console.log(err);
             });
     }, [])
 
-    const handleFilterRoom = (listFilter) => {
-        setRoomListFilter(listFilter ? listFilter : roomListAll)
-    }
-
     return <div className='space-y-3 lg:space-y-5 mb-3 lg:my-5'>
-        <OptionSlider list={roomListAll} handleFilterRoom={handleFilterRoom} />
-        <RoomList list={roomListFilter} />
+        <OptionSlider />
+        <ListRoom />
     </div>
 }
