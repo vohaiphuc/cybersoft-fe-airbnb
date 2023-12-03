@@ -13,12 +13,7 @@ const validationSchema = yup.object().shape({
   soLuongKhach: yup.string().required("Vui lòng nhập số lượng khách"),
   maNguoiDung: yup.string().required("Vui lòng nhập mã người dùng"),
 });
-export default function EditBookingRoom({
-  setIsOpen,
-  isOpen,
-  editData,
-  getData,
-}) {
+export default function EditBooking({ setIsOpen, isOpen, editData, getData }) {
   const methods = useForm({
     defaultValues: {
       maPhong: "",

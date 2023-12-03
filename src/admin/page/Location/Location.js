@@ -4,8 +4,8 @@ import MUIDataTable from "mui-datatables";
 import { Button, message } from "antd";
 import { locationServ } from "../../api/api";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import AddLocation from "./AddLocation";
-import EditLocation from "./EditLocation";
+import AddLocation from "./ModalAddLocation";
+import EditLocation from "./ModalEditLocation";
 export default function Location() {
   let [isOpen, setIsOpen] = useState(false);
   const [editData, setEditData] = useState({});

@@ -1,5 +1,4 @@
 import React from "react";
-import { UserOutlined, VideoCameraOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
 export default function MenuLeft() {

@@ -3,6 +3,7 @@ import "./asset/style.scss";
 import MenuLeft from "./MenuLeft";
 import Headers from "./Header";
 import { Layout, theme } from "antd";
+import Spinner from "../component/spinner/Spinner";
 const { Sider, Content } = Layout;
 const MainLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);

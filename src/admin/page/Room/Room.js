@@ -4,8 +4,8 @@ import MUIDataTable from "mui-datatables";
 import { Button, Popover, message } from "antd";
 import { roomServ } from "../../api/api";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import AddRoom from "./AddRoom";
-import EditRoom from "./EditRoom";
+import AddRoom from "./ModalAddRoom";
+import EditRoom from "./ModalEditRoom";
 export default function Room() {
   const [isOpen, setIsOpen] = useState(false);
   const [listRooms, setListRooms] = useState([]);

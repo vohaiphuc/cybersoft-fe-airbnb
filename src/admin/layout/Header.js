@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { Layout, Menu, Button, theme, Popover } from "antd";
+import { Layout, Button, theme } from "antd";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { userLocalStorage } from "../api/localService";

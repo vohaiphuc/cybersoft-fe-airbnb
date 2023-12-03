@@ -4,9 +4,9 @@ import MUIDataTable from "mui-datatables";
 import { Button, message } from "antd";
 import { bookingRoomServ } from "../../api/api";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import EditBookingRoom from "./EditBookingRoom";
-import AddBookingRoom from "./AddBookingRoom";
 import moment from "moment";
+import AddBooking from "./ModalAddBooking";
+import EditBooking from "./ModalEditBooking";
 export default function Booking() {
   let [isOpen, setIsOpen] = useState(false);
   const [editData, setEditData] = useState({});
@@ -150,8 +150,8 @@ export default function Booking() {
   };
   return (
     <div>
-      <AddBookingRoom getData={getData} />
-      <EditBookingRoom
+      <AddBooking getData={getData} />
+      <EditBooking
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         getData={getData}

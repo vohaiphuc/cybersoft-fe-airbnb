@@ -16,7 +16,6 @@ export const https = axios.create({
 https.interceptors.request.use(
   function (config) {
     store.dispatch(setLoadingOn());
-    // console.log("api di");
     return config;
   },
   function (error) {

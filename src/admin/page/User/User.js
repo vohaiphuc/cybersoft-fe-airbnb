@@ -4,8 +4,9 @@ import { userServ } from "../../api/api";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import MUIDataTable from "mui-datatables";
 import "./asset/style.scss";
-import AddUser from "./AddUser";
-import EditUser from "./EditUser";
+import AddUser from "./ModalAddUser";
+import EditUser from "./ModalEditUser";
+import Spinner from "../../component/spinner/Spinner";
 
 export default function User() {
   let [isOpen, setIsOpen] = useState(false);
