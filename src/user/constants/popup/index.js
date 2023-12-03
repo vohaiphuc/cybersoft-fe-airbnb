@@ -1,5 +1,0 @@
-export const POPUP_NAME = {
-  LOGIN: "LOGIN",
-  REGISTER: "REGISTER",
-  EDIT_PROFILE: "EDIT_PROFILE",
-};

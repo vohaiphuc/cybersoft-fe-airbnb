@@ -10,7 +10,7 @@ export default function MapLocation({ locationInfo }) {
         <div className='sticky w-full' style={{ top, height }}>
             <div className="mapouter w-full" style={{ height }}>
                 <div className="gmap_canvas w-full" style={{ height }}>
-                    <iframe src={`https://maps.google.com/maps?q=${locationInfo?.tenViTri}&t=&z=${zoomLevel}&ie=UTF8&iwloc=&output=embed`} frameBorder={0} scrolling="no" style={{ width: "100%", height: "100%" }} />
+                    <iframe title='gmap' src={`https://maps.google.com/maps?q=${locationInfo?.tenViTri}&t=&z=${zoomLevel}&ie=UTF8&iwloc=&output=embed`} frameBorder={0} scrolling="no" style={{ width: "100%", height: "100%" }} />
                     <style dangerouslySetInnerHTML={{ __html: ".mapouter{position:relative;background:#fff;} .maprouter a{color:#fff !important;position:absolute !important;top:0 !important;z-index:0 !important;}" }} />
                     <style dangerouslySetInnerHTML={{ __html: ".gmap_canvas{overflow:hidden}.gmap_canvas iframe{position:relative;z-index:2}" }} />
                 </div>

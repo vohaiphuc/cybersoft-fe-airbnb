@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import "./asset/style.scss"
+import React, { useEffect } from 'react'
 import Logo from './Logo'
 import NavBar from './NavBar'
-import "./style.scss"
 import SearchBar from './SearchBar/SearchBar'
 import NormalSearchbar from './SearchBar/NormalSearchbar'
 import ExpandSearchbar from './SearchBar/ExpandSearchbar'
@@ -22,7 +22,7 @@ export default function Header({ searchBar }) {
 
 	useEffect(() => {
 		const handleClick = (e) => {
-			if (e.target == ref1.current || ref2.current.contains(e.target)) {
+			if (e.target === ref1.current || ref2.current.contains(e.target)) {
 				setActiveIndex(null)
 			}
 		}

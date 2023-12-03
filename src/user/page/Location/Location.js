@@ -28,7 +28,7 @@ export default function Location() {
             .catch((err) => {
                 console.log(err);
             });
-    }, [])
+    }, [locationId])
 
     return (
         <div className='flex space-x-5 justify-between'>

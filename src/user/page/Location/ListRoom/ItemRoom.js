@@ -1,5 +1,5 @@
 import { faStar, faStarHalf, faUser } from '@fortawesome/free-regular-svg-icons'
-import { faBed, faPerson, faStarAndCrescent, faStarHalfAlt, faStarHalfStroke, faStarOfDavid, faStarOfLife } from '@fortawesome/free-solid-svg-icons'
+import { faBed } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import { NavLink } from 'react-router-dom'

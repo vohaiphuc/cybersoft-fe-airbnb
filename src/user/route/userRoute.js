@@ -11,13 +11,10 @@
 import Home from "../page/Home/Home";
 import Room from "../page/Room/Room";
 import Location from "../page/Location/Location";
-import Login from "../page/Login/Login";
-import Register from "../page/Register/Register";
 import PageNotFound from "../page/404/PageNotFound";
 import DefaultLayout from "../layout/DefaultLayout";
 import Profile from "../page/Profile";
 import PrivateRoute from "./guardRoute";
-import BookedRooms from "../page/BookedRooms";
 
 export const userRoute = {
   home: {
@@ -58,41 +55,12 @@ export const userRoute = {
     id: (id) => `/location/${id}`
   },
 
-  login: {
-    path: "/login",
-    element: (
-      <DefaultLayout>
-        <Login />
-      </DefaultLayout>
-    ),
-  },
-
-  register: {
-    path: "/register",
-    element: (
-      <DefaultLayout>
-        <Register />
-      </DefaultLayout>
-    ),
-  },
-
   account: {
     path: "/profile",
     element: (
       <DefaultLayout>
         <PrivateRoute>
           <Profile />
-        </PrivateRoute>
-      </DefaultLayout>
-    ),
-  },
-
-  booked: {
-    path: "/booked-rooms",
-    element: (
-      <DefaultLayout>
-        <PrivateRoute>
-          <BookedRooms />
         </PrivateRoute>
       </DefaultLayout>
     ),
@@ -106,4 +74,4 @@ export const userRoute = {
       </DefaultLayout>
     ),
   },
-};
+}
