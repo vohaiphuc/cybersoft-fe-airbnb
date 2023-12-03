@@ -1,19 +1,18 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { roomServ } from "../../api/api";
 import * as yup from "yup";
 import { Checkbox, message } from "antd";
 const validationSchema = yup.object().shape({
-  id: yup.number().required("Vui lòng nhập id"),
   tenPhong: yup.string().required("Vui lòng nhập tên phòng"),
-  khach: yup.number().required("Vui lòng nhập số lượng khách"),
-  phongNgu: yup.number().required("Vui lòng nhập phòng ngủ"),
-  giuong: yup.number().required("Vui lòng nhập giường"),
-  phongTam: yup.number().required("Vui lòng nhập phòng tắm"),
+  khach: yup.string().required("Vui lòng nhập số lượng khách"),
+  phongNgu: yup.string().required("Vui lòng nhập phòng ngủ"),
+  giuong: yup.string().required("Vui lòng nhập giường"),
+  phongTam: yup.string().required("Vui lòng nhập phòng tắm"),
   moTa: yup.string().required("Vui lòng nhập mô tả"),
-  giaTien: yup.number().required("Vui lòng nhập giá tiền"),
+  giaTien: yup.string().required("Vui lòng nhập giá tiền"),
   mayGiat: yup.boolean().required("Vui lòng nhập máy giặt"),
   banLa: yup.boolean().required("Vui lòng nhập ban la"),
   tivi: yup.boolean().required("Vui lòng nhập tivi"),
@@ -23,13 +22,12 @@ const validationSchema = yup.object().shape({
   doXe: yup.boolean().required("Vui lòng nhập đỗ xe"),
   hoBoi: yup.boolean().required("Vui lòng nhập hồ bơi"),
   banUi: yup.boolean().required("Vui lòng nhập bàn ủi"),
-  maViTri: yup.number().required("Vui lòng nhập mã vị trí"),
+  maViTri: yup.string().required("Vui lòng nhập mã vị trí"),
   hinhAnh: yup.string().required("Vui lòng nhập hình ảnh"),
 });
 export default function EditRoom({ getData, isOpen, editData, setIsOpen }) {
   const methods = useForm({
     defaultValues: {
-      id: 0,
       tenPhong: "",
       khach: "",
       phongNgu: "",
@@ -65,7 +63,6 @@ export default function EditRoom({ getData, isOpen, editData, setIsOpen }) {
   }
   const { id } = editData;
   const onSubmit = (values) => {
-    console.log(values);
     roomServ
       .editRoom(id, values)
       .then(() => {
@@ -82,7 +79,6 @@ export default function EditRoom({ getData, isOpen, editData, setIsOpen }) {
   useEffect(() => {
     if (editData) {
       reset({
-        id: editData.id,
         tenPhong: editData.tenPhong,
         khach: editData.khach,
         phongNgu: editData.phongNgu,
@@ -144,23 +140,6 @@ export default function EditRoom({ getData, isOpen, editData, setIsOpen }) {
                   <div className="mt-2">
                     <form onSubmit={handleSubmit(onSubmit)}>
                       <div className="flex justify-between">
-                        <div className="relative z-0 w-full mb-6 group mr-3">
-                          <input
-                            type="text"
-                            disabled
-                            name="id"
-                            className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer`}
-                            placeholder=" "
-                            onChange={(e) => setValue("id", e.target.value)}
-                            {...register("id")}
-                          />
-                          {errors.id && (
-                            <p className="text-red-500">{errors.id.message}</p>
-                          )}
-                          <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            Id
-                          </label>
-                        </div>
                         <div className="relative z-0 w-full mb-6 group">
                           <input
                             type="text"

@@ -7,7 +7,6 @@ import * as yup from "yup";
 import { DatePicker, message } from "antd";
 import moment from "moment";
 const validationSchema = yup.object().shape({
-  id: yup.number().required("Vui lòng nhập id"),
   maPhong: yup.string().required("Vui lòng nhập mã phòng"),
   ngayDen: yup.string().required("Vui lòng nhập ngày đến"),
   ngayDi: yup.string().required("Vui lòng nhập ngày đi "),
@@ -22,7 +21,6 @@ export default function EditBookingRoom({
 }) {
   const methods = useForm({
     defaultValues: {
-      id: null,
       maPhong: "",
       ngayDen: "",
       ngayDi: "",
@@ -42,8 +40,9 @@ export default function EditBookingRoom({
   function closeModal() {
     setIsOpen(false);
   }
+  const { id } = editData;
   const onSubmit = (values) => {
-    const { id, ngayDen, ngayDi, ...rest } = values;
+    const { ngayDen, ngayDi, ...rest } = values;
     const editedNgayDen = moment(ngayDen).startOf("day").format("YYYY-MM-DD");
     const editedNgayDi = moment(ngayDi).startOf("day").format("YYYY-MM-DD");
     const roomData = {
@@ -73,7 +72,6 @@ export default function EditBookingRoom({
   useEffect(() => {
     if (editData) {
       reset({
-        id: editData.id,
         maPhong: editData.maPhong,
         ngayDen: editData.ngayDen,
         ngayDi: editData.ngayDi,
@@ -118,23 +116,6 @@ export default function EditBookingRoom({
                   </Dialog.Title>
                   <div className="mt-2">
                     <form onSubmit={handleSubmit(onSubmit)}>
-                      <div class="relative z-0 w-full mb-6 group">
-                        <input
-                          disabled
-                          type="number"
-                          name="id"
-                          className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer`}
-                          placeholder=" "
-                          onChange={(e) => setValue("id", e.target.value)}
-                          {...register("id")}
-                        />
-                        {errors.id && (
-                          <p className="text-red-500">{errors.id.message}</p>
-                        )}
-                        <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                          Id
-                        </label>
-                      </div>
                       <div class="relative z-0 w-full mb-6 group">
                         <input
                           type="text"

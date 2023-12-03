@@ -120,7 +120,7 @@ export default function AddUser({ getData }) {
                     Thêm người dùng
                   </Dialog.Title>
                   <div className="mt-2">
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
                       <div className="relative z-0 w-full mb-6 group">
                         <input
                           disabled
@@ -212,7 +212,7 @@ export default function AddUser({ getData }) {
                             onChange={(date, dateString) =>
                               handleBirthday(dateString)
                             }
-                            className="w-full mt-5"
+                            className="w-full mt-5 bg-transparent border-0 "
                           />
                           {errors.birthday && (
                             <p className="text-red-500">
@@ -225,7 +225,7 @@ export default function AddUser({ getData }) {
                         </div>
                         <div className="flex w-1/2 flex-col ">
                           <Select
-                            className="w-full mt-5"
+                            className="w-full mt-5 "
                             placeholder="Chọn giới tính"
                             name="gender"
                             onChange={handleGender}

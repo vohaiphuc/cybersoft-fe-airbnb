@@ -6,7 +6,6 @@ import { locationServ } from "../../api/api";
 import * as yup from "yup";
 import { message } from "antd";
 const validationSchema = yup.object().shape({
-  id: yup.number().required("Vui lòng nhập id"),
   tenViTri: yup.string().required("Vui lòng nhập vị trí"),
   tinhThanh: yup.string().required("Vui lòng nhập tỉnh thành"),
   quocGia: yup.string().required("Vui lòng nhập quốc gia"),
@@ -15,7 +14,6 @@ const validationSchema = yup.object().shape({
 export default function EditLocation({ setIsOpen, isOpen, editData, getData }) {
   const methods = useForm({
     defaultValues: {
-      id: 0,
       tenViTri: "",
       tinhThanh: "",
       quocGia: "",
@@ -34,11 +32,10 @@ export default function EditLocation({ setIsOpen, isOpen, editData, getData }) {
   function closeModal() {
     setIsOpen(false);
   }
-
+  const { id } = editData;
   const onSubmit = (values) => {
-    const { id, ...data } = values;
     locationServ
-      .editLocation(id, data)
+      .editLocation(id, values)
       .then(() => {
         message.success("Cập nhật thành công");
         setIsOpen(false);
@@ -52,7 +49,6 @@ export default function EditLocation({ setIsOpen, isOpen, editData, getData }) {
   useEffect(() => {
     if (editData) {
       reset({
-        id: editData.id,
         tenViTri: editData.tenViTri,
         tinhThanh: editData.tinhThanh,
         quocGia: editData.quocGia,
@@ -96,23 +92,6 @@ export default function EditLocation({ setIsOpen, isOpen, editData, getData }) {
                   </Dialog.Title>
                   <div className="mt-2">
                     <form onSubmit={handleSubmit(onSubmit)}>
-                      <div className="relative z-0 w-full mb-6 group">
-                        <input
-                          disabled
-                          type="number"
-                          name="id"
-                          className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer`}
-                          placeholder=" "
-                          onChange={(e) => setValue("id", e.target.value)}
-                          {...register("id")}
-                        />
-                        {errors.id && (
-                          <p className="text-red-500">{errors.id.message}</p>
-                        )}
-                        <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                          Id
-                        </label>
-                      </div>
                       <div className="relative z-0 w-full mb-6 group">
                         <input
                           type="text"
