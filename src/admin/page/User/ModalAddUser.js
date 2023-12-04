@@ -42,6 +42,7 @@ export default function AddUser({ getData }) {
     formState: { errors },
     register,
   } = methods;
+
   function closeModal() {
     setIsOpen(false);
   }
@@ -49,6 +50,7 @@ export default function AddUser({ getData }) {
   function openModal() {
     setIsOpen(true);
   }
+
   const onSubmit = (values) => {
     const formattedValues = {
       ...values,
@@ -121,7 +123,7 @@ export default function AddUser({ getData }) {
                   </Dialog.Title>
                   <div className="mt-2">
                     <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-                      <div className="relative z-0 w-full mb-6 group">
+                      <div className="hidden relative z-0 w-full mb-6 group">
                         <input
                           disabled
                           type="text"
@@ -159,7 +161,7 @@ export default function AddUser({ getData }) {
                           type="email"
                           name="email"
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                          placeholder=" "
+                          placeholder=""
                           onChange={(e) => setValue("email", e.target.value)}
                           {...register("email")}
                         />
@@ -176,6 +178,7 @@ export default function AddUser({ getData }) {
                           name="password"
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                           placeholder=" "
+                          autoComplete="new-password"
                           onChange={(e) => setValue("password", e.target.value)}
                           {...register("password")}
                         />
@@ -213,6 +216,7 @@ export default function AddUser({ getData }) {
                               handleBirthday(dateString)
                             }
                             className="w-full mt-5 bg-transparent border-0 "
+                            format="DD/MM/YYYY"
                           />
                           {errors.birthday && (
                             <p className="text-red-500">

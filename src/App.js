@@ -2,9 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import _ from "lodash";
 import { userRoute } from "./user/route/userRoute";
 import { adminRoute } from "./admin/route/adminRoute";
-import Popup from "./user/component/Popup";
-import ModalBg from "./user/component/Modal/ModalBg";
-import MenuMobile from "./user/component/MenuMobile/MenuMobile";
+import Spinner from "./admin/component/spinner/Spinner";
 
 function App() {
   const createRoutes = (routeList) =>
@@ -15,13 +13,11 @@ function App() {
   return (
     <>
       <BrowserRouter>
+        <Spinner />
         <Routes>
           {createRoutes(userRoute)}
           {createRoutes(adminRoute)}
         </Routes>
-        <ModalBg />
-        <Popup />
-        <MenuMobile />
       </BrowserRouter>
     </>
   );

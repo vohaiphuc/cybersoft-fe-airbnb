@@ -9,7 +9,7 @@ export default function Spinner() {
       style={{
         width: "100vw",
         height: "100vh",
-        background: "black",
+        background: "white",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

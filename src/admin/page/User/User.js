@@ -6,7 +6,7 @@ import MUIDataTable from "mui-datatables";
 import "./asset/style.scss";
 import AddUser from "./ModalAddUser";
 import EditUser from "./ModalEditUser";
-import Spinner from "../../component/spinner/Spinner";
+import dayjs from 'dayjs'
 
 export default function User() {
   let [isOpen, setIsOpen] = useState(false);
@@ -26,15 +26,29 @@ export default function User() {
   useEffect(() => {
     getData();
   }, []);
-  const data = listUsers.map((user, index) => ({
-    id: user.id,
-    key: user.id,
-    stt: index + 1,
-    name: user.name,
-    email: user.email,
-    birthday: user.birthday,
-    role: user.role,
-  }));
+
+  const data = listUsers.map((user, index) => {
+
+    let convertBirthday = dayjs(user.birthday, "DD/MM/YYYY")
+    let convertBirthday2 = dayjs(user.birthday, "YYYY-MM-DD")
+    let birthday = ""
+    if (convertBirthday.isValid()) {
+      birthday = convertBirthday.format('DD/MM/YYYY')
+    } else if (convertBirthday2.isValid()) {
+      birthday = convertBirthday2.format('DD/MM/YYYY')
+    }
+
+    return {
+      id: user.id,
+      key: user.id,
+      stt: index + 1,
+      name: user.name,
+      email: user.email,
+      birthday: birthday,
+      role: user.role,
+    }
+  });
+
   const columns = [
     {
       name: "stt",

@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react'
 import Header from '../component/Header/Header'
 import Footer from '../component/Footer/Footer'
+import MenuMobile from '../component/MenuMobile/MenuMobile'
+import ModalBg from '../component/Modal/ModalBg'
+import Popup from '../component/Popup'
 
 export default function DefaultLayout({ children }) {
     return (
@@ -14,6 +17,9 @@ export default function DefaultLayout({ children }) {
             <footer className='px-3 lg:px-10 xl:px-20 bg-[#F7F7F7]'>
                 <Footer />
             </footer>
+            <ModalBg />
+            <Popup />
+            <MenuMobile />
         </>
     )
 }

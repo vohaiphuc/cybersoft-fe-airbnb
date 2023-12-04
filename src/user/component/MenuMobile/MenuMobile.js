@@ -4,8 +4,7 @@ import { useWindowWidth } from '@react-hook/window-size'
 import React, { useEffect, useState } from 'react'
 import { userRoute } from '../../route/userRoute'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { setPopup } from '../../redux/popupSlice'
+import { useSelector } from 'react-redux'
 import "./style.scss"
 import { POPUP_NAME, usePopup } from '../Popup/hook/usePopup'
 
@@ -14,7 +13,6 @@ export default function MenuMobile() {
     const isMobile = windowWidth < 1000
     const [show, setShow] = useState(isMobile);
     const navigate = useNavigate()
-    const dispatch = useDispatch()
     const popup = usePopup()
     const { user } = useSelector(s => s.userSlice)
     const urlPath = useLocation().pathname

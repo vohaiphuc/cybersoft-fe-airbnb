@@ -1,13 +1,3 @@
-/**
- * adminRoute được sử dụng để tạo Route trong App.js
- *
- *
- *
- * Khi sử dụng với useNavigate()
- * Thay vì: navigate("/user")
- * Sẽ là: navigate(adminRoute.user.path)
- */
-
 import Home from "../page/Home/Home";
 import Booking from "../page/Booking/Booking";
 import Location from "../page/Location/Location";
@@ -32,34 +22,42 @@ export const adminRoute = {
   booking: {
     path: "/admin/booking",
     element: (
-      <MainLayout>
-        <Booking />
-      </MainLayout>
+      <PrivateRoute>
+        <MainLayout>
+          <Booking />
+        </MainLayout>
+      </PrivateRoute>
     ),
   },
   location: {
     path: "/admin/location",
     element: (
-      <MainLayout>
-        <Location />
-      </MainLayout>
+      <PrivateRoute>
+        <MainLayout>
+          <Location />
+        </MainLayout>
+      </PrivateRoute>
     ),
   },
   login: { path: "/admin/login", element: <Login /> },
   room: {
     path: "/admin/room",
     element: (
-      <MainLayout>
-        <Room />
-      </MainLayout>
+      <PrivateRoute>
+        <MainLayout>
+          <Room />
+        </MainLayout>
+      </PrivateRoute>
     ),
   },
   user: {
     path: "/admin/user",
     element: (
-      <MainLayout>
-        <User />
-      </MainLayout>
+      <PrivateRoute>
+        <MainLayout>
+          <User />
+        </MainLayout>
+      </PrivateRoute>
     ),
   },
   other: { path: "admin/*", element: <PageNotFound /> },

@@ -4,6 +4,7 @@ import { Layout, Button, theme } from "antd";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { userLocalStorage } from "../api/localService";
+import { adminRoute } from "../route/adminRoute";
 const { Header } = Layout;
 export default function Headers({ setCollapsed, collapsed }) {
   const { user } = useSelector((state) => state.adminSlice);
@@ -12,7 +13,7 @@ export default function Headers({ setCollapsed, collapsed }) {
   } = theme.useToken();
   const handleLogout = () => {
     userLocalStorage.remove();
-    window.location.href = "/admin";
+    window.location.href = adminRoute.home.path;
   };
 
   return (
@@ -46,7 +47,7 @@ export default function Headers({ setCollapsed, collapsed }) {
         </div>
       ) : (
         <Button type="primary" danger>
-          <Link to="/admin/login">Đăng nhập</Link>
+          <Link to={adminRoute.login.path}>Đăng nhập</Link>
         </Button>
       )}
     </Header>

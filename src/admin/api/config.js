@@ -15,10 +15,27 @@ export const https = axios.create({
 });
 https.interceptors.request.use(
   function (config) {
-    store.dispatch(setLoadingOn());
+    const { url } = config;
+    switch (url) {
+      case "/users":
+        store.dispatch(setLoadingOn());
+        break;
+      case "/phong-thue":
+        store.dispatch(setLoadingOn());
+        break;
+      case "/vi-tri":
+        store.dispatch(setLoadingOn());
+        break;
+      case "/dat-phong":
+        store.dispatch(setLoadingOn());
+        break;
+      default:
+        break;
+    }
     return config;
   },
   function (error) {
+    store.dispatch(setLoadingOff());
     return Promise.reject(error);
   }
 );
@@ -29,24 +46,25 @@ https.interceptors.response.use(
       case "/users":
         setTimeout(() => {
           store.dispatch(setLoadingOff());
-        }, 1000);
+        }, 500);
         break;
       case "/phong-thue":
         setTimeout(() => {
           store.dispatch(setLoadingOff());
-        }, 1000);
+        }, 500);
         break;
       case "/vi-tri":
         setTimeout(() => {
           store.dispatch(setLoadingOff());
-        }, 1000);
+        }, 500);
         break;
       case "/dat-phong":
         setTimeout(() => {
           store.dispatch(setLoadingOff());
-        }, 1000);
+        }, 500);
         break;
       default:
+        store.dispatch(setLoadingOff());
         break;
     }
     return response;

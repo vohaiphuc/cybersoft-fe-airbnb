@@ -6,6 +6,8 @@ import { bookingRoomServ } from "../../api/api";
 import * as yup from "yup";
 import { DatePicker, message } from "antd";
 import moment from "moment";
+import dayjs from 'dayjs';
+
 const validationSchema = yup.object().shape({
   maPhong: yup.string().required("Vui lòng nhập mã phòng"),
   ngayDen: yup.string().required("Vui lòng nhập ngày đến"),
@@ -38,8 +40,8 @@ export default function EditBooking({ setIsOpen, isOpen, editData, getData }) {
   const { id } = editData;
   const onSubmit = (values) => {
     const { ngayDen, ngayDi, ...rest } = values;
-    const editedNgayDen = moment(ngayDen).startOf("day").format("YYYY-MM-DD");
-    const editedNgayDi = moment(ngayDi).startOf("day").format("YYYY-MM-DD");
+    const editedNgayDen = moment(ngayDen).startOf("day").format("DD/MM/YYYY");
+    const editedNgayDi = moment(ngayDi).startOf("day").format("DD/MM/YYYY");
     const roomData = {
       id,
       ngayDen: editedNgayDen,
@@ -111,7 +113,7 @@ export default function EditBooking({ setIsOpen, isOpen, editData, getData }) {
                   </Dialog.Title>
                   <div className="mt-2">
                     <form onSubmit={handleSubmit(onSubmit)}>
-                      <div class="relative z-0 w-full mb-6 group">
+                      <div className="relative z-0 w-full mb-6 group">
                         <input
                           type="text"
                           name="maPhong"
@@ -133,15 +135,19 @@ export default function EditBooking({ setIsOpen, isOpen, editData, getData }) {
                         <div className=" z-0 w-full mb-6 group flex">
                           <div className="flex w-full flex-col mr-3 ">
                             <DatePicker
-                              defaultValue={moment(
-                                editData.ngayDen,
+                              defaultValue={dayjs(
+                                moment(editData.ngayDen).format("DD/MM/YYYY"),
                                 "DD/MM/YYYY"
                               )}
                               name="ngayDen"
-                              onChange={(date, dateString) =>
+                              onChange={(date, dateString) => {
+                                console.log(date);
+                                console.log(dateString);
                                 handleDateStart(dateString)
                               }
+                              }
                               className="w-full mt-5"
+                              format="DD/MM/YYYY"
                             />
                             {errors.ngayDen && (
                               <p className="text-red-500">
@@ -149,15 +155,15 @@ export default function EditBooking({ setIsOpen, isOpen, editData, getData }) {
                               </p>
                             )}
                           </div>
-                          <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                          <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                             Ngày đến
                           </label>
                         </div>
                         <div className=" z-0 w-full mb-6 group flex">
                           <div className="flex w-full flex-col">
                             <DatePicker
-                              defaultValue={moment(
-                                editData.ngayDi,
+                              defaultValue={dayjs(
+                                moment(editData.ngayDi).format("DD/MM/YYYY"),
                                 "DD/MM/YYYY"
                               )}
                               name="ngayDi"
@@ -165,6 +171,7 @@ export default function EditBooking({ setIsOpen, isOpen, editData, getData }) {
                                 handleDateEnd(dateString)
                               }
                               className="w-full mt-5"
+                              format="DD/MM/YYYY"
                             />
                             {errors.ngayDi && (
                               <p className="text-red-500">
@@ -197,7 +204,7 @@ export default function EditBooking({ setIsOpen, isOpen, editData, getData }) {
                           Số lượng khách
                         </label>
                       </div>
-                      <div class="relative z-0 w-full mb-6 group">
+                      <div className="relative z-0 w-full mb-6 group">
                         <input
                           type="number"
                           name="maNguoiDung"
