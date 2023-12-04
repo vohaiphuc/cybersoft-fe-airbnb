@@ -13,7 +13,9 @@ const AccountInfo = () => {
         <div className="flex items-start w-full">
           <CrownOutlined className="pt-1" />
           <div className="ml-4">
-            <h3 className={styles.title_account}>TruongThanh là Chủ nhà siêu cấp</h3>
+            <h3 className={styles.title_account}>
+              VinhThoai là Chủ nhà siêu cấp
+            </h3>
             <p className={styles.desc}>
               Chủ nhà siêu cấp là những chủ nhà có kinh nghiệm, được đánh giá
               cao và là những người cam kết mang lại quãng thời gian ở tuyệt vời
