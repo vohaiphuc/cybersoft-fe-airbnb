@@ -9,7 +9,7 @@ import { POPUP_NAME, usePopup } from "../hook/usePopup";
 
 const FormLogin = () => {
   const dispatch = useDispatch();
-  const popup = usePopup()
+  const popup = usePopup();
   const { loading } = useSelector((state) => state.userSlice);
   const [isFormDirty, setIsFormDirty] = useState(false);
 
@@ -43,7 +43,7 @@ const FormLogin = () => {
           <Logo />
         </div>
         <div className="hidden lg:block font-semibold text-3xl text-blue-800 text-center">
-          Login
+          Đăng nhập
         </div>
       </div>
       <div>
@@ -54,7 +54,7 @@ const FormLogin = () => {
             rules={[
               {
                 required: true,
-                message: "Please input your email!",
+                message: "Nhập thông tin email!",
               },
             ]}
             hasFeedback
@@ -64,19 +64,19 @@ const FormLogin = () => {
         </div>
         <div className="mb-6">
           <Form.Item
-            label="Password"
+            label="Mật khẩu"
             name="password"
             rules={[
               {
                 required: true,
-                message: "Please input your password!",
+                message: "Nhập mật khẩu!",
               },
             ]}
             hasFeedback
           >
             <Input.Password
               prefix={<UnlockOutlined />}
-              placeholder="Password..."
+              placeholder="Mật khẩu..."
             />
           </Form.Item>
         </div>
@@ -101,12 +101,12 @@ const FormLogin = () => {
         </div>
         <div className="text-center">
           <div className="pb-3">
-            Don't have an account?
+            Bạn không có tài khoản?
             <div
               className="text-rose-700 hover:text-rose-500 hover:underline underline-offset-4 tracking-wider duration-200 active pl-1 cursor-pointer"
               onClick={() => popup.open(POPUP_NAME.REGISTER)}
             >
-              Sign up
+              Đăng ký
             </div>
           </div>
         </div>
