@@ -304,6 +304,7 @@ export default function AddRoom({ getData }) {
                       <div className="flex justify-around items-center">
                         <div className="relative z-0 w-full mb-6 group mr-3">
                           <Checkbox
+                            rootClassName="custom-checkbox"
                             name="mayGiat"
                             onChange={(e) => onChange(e, "mayGiat")}
                             className="text-white"
@@ -318,6 +319,7 @@ export default function AddRoom({ getData }) {
                         </div>
                         <div className="relative z-0 w-full mb-6 group mr-3">
                           <Checkbox
+                            rootClassName="custom-checkbox"
                             name="banLa"
                             onChange={(e) => onChange(e, "banLa")}
                             className="text-white"
@@ -332,6 +334,7 @@ export default function AddRoom({ getData }) {
                         </div>
                         <div className="relative z-0 w-full mb-6 group mr-3">
                           <Checkbox
+                            rootClassName="custom-checkbox"
                             name="tivi"
                             onChange={(e) => onChange(e, "tivi")}
                             className="text-white"
@@ -348,6 +351,7 @@ export default function AddRoom({ getData }) {
                       <div className="flex justify-between items-center">
                         <div className="relative z-0 w-full mb-6 group mr-3">
                           <Checkbox
+                            rootClassName="custom-checkbox"
                             name="dieuHoa"
                             onChange={(e) => onChange(e, "dieuHoa")}
                             className="text-white"
@@ -362,6 +366,7 @@ export default function AddRoom({ getData }) {
                         </div>
                         <div className="relative z-0 w-full mb-6 group mr-3">
                           <Checkbox
+                            rootClassName="custom-checkbox"
                             name="wifi"
                             onChange={(e) => onChange(e, "wifi")}
                             className="text-white"
@@ -376,6 +381,7 @@ export default function AddRoom({ getData }) {
                         </div>
                         <div className="relative z-0 w-full mb-6 group mr-3">
                           <Checkbox
+                            rootClassName="custom-checkbox"
                             name="bep"
                             onChange={(e) => onChange(e, "bep")}
                             className="text-white"
@@ -390,6 +396,7 @@ export default function AddRoom({ getData }) {
                       <div className="flex justify-between items-center">
                         <div className="relative z-0 w-full mb-6 group mr-3">
                           <Checkbox
+                            rootClassName="custom-checkbox"
                             name="doXe"
                             onChange={(e) => onChange(e, "doXe")}
                             className="text-white"
@@ -404,6 +411,7 @@ export default function AddRoom({ getData }) {
                         </div>
                         <div className="relative z-0 w-full mb-6 group mr-3">
                           <Checkbox
+                            rootClassName="custom-checkbox"
                             name="hoBoi"
                             onChange={(e) => onChange(e, "hoBoi")}
                             className="text-white"
@@ -418,6 +426,7 @@ export default function AddRoom({ getData }) {
                         </div>
                         <div className="relative z-0 w-full mb-6 group mr-3">
                           <Checkbox
+                            rootClassName="custom-checkbox"
                             name="banUi"
                             onChange={(e) => onChange(e, "banUi")}
                             className="text-white"
