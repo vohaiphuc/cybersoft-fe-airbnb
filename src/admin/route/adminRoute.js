@@ -6,7 +6,7 @@ import Room from "../page/Room/Room";
 import User from "../page/User/User";
 import PageNotFound from "../page/404/PageNotFound";
 import MainLayout from "../layout";
-import PrivateRoute from "../layout/PrivateRoute";
+import PrivateRoute from "./PrivateRoute";
 
 export const adminRoute = {
   home: {

@@ -4,10 +4,11 @@ import { Avatar, Button, Dropdown } from "antd";
 import React from "react";
 import { useSelector } from "react-redux";
 import { userLocalStorage } from "../../api/localService";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { userRoute } from "../../route/userRoute";
 import { POPUP_NAME, usePopup } from "../Popup/hook/usePopup";
 import AvatarIcon from "./asset/user.jpg"
+import { adminRoute } from "../../../admin/route/adminRoute";
 
 export default function NavBar() {
   const navigate = useNavigate()
@@ -30,16 +31,24 @@ export default function NavBar() {
   };
 
   const renderAuthButton = (type) => {
+    let buttonText = ""
+    switch (type) {
+      case "login":
+        buttonText = "Đăng nhập"
+        break
+      case "register":
+        buttonText = "Đăng ký"
+        break
+      default:
+        buttonText = "Thông tin cá nhân"
+        break
+    }
     return (
       <Button
         className="text-black w-full h-full shadow-none border-none text-left hover:!border-none hover:!bg-transparent p-0 hover:!text-black"
         onClick={() => handleToggleAuth(type)}
       >
-        {type === "login"
-          ? "Đăng nhập"
-          : type === "register"
-            ? "Đăng ký"
-            : "Thông tin cá nhân"}
+        {buttonText}
       </Button>
     );
   };
@@ -89,9 +98,9 @@ export default function NavBar() {
   return (
     <>
       <button className="py-1 px-3">
-        <a href="#" className="font-semibold">
+        <NavLink to={adminRoute.home.path} className="font-semibold">
           Trở thành chủ nhà
-        </a>
+        </NavLink>
       </button>
       <div className="mr-6 ml-3 cursor-pointer">
         <FontAwesomeIcon icon={faGlobe} />

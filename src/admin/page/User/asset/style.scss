@@ -1,6 +1,7 @@
 .modal-edit-user,
 .modal-add-user {
     .ant-picker {
+        padding-left: 0;
         background: none !important;
         border-radius: 0;
         border: none;
@@ -16,12 +17,19 @@
             > input {
                 color: #fff;
                 &::placeholder {
-                    color: #fff; /* Màu cho placeholder */
+                    color: #9b9b9b; /* Màu cho placeholder */
                 }
             }
         }
         .ant-picker-suffix {
             color: #fff;
+        }
+        .ant-picker-clear {
+            background: #0f172a;
+            color: rgb(164, 164, 164);
+            &:hover {
+                color: white;
+            }
         }
     }
     .ant-select {

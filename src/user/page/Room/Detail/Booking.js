@@ -9,6 +9,7 @@ import { roomServ } from "../../../api/api";
 import styles from "./Detail.module.scss";
 import { useSelector } from "react-redux";
 import { POPUP_NAME, usePopup } from "../../../component/Popup/hook/usePopup";
+import dayjs from 'dayjs'
 
 const Booking = ({ data }) => {
   const { giaTien, khach, id } = data || {};
@@ -53,8 +54,8 @@ const Booking = ({ data }) => {
       try {
         const res = await roomServ.postBookingRoom({
           maPhong: id,
-          ngayDen: dates?.[0]?.startDate,
-          ngayDi: dates?.[0]?.endDate,
+          ngayDen: dayjs(dates?.[0]?.startDate).add(7, 'hours').format(),
+          ngayDi: dayjs(dates?.[0]?.endDate).add(7, 'hours').format(),
           soLuongKhach: guest,
           maNguoiDung: user?.id,
         });

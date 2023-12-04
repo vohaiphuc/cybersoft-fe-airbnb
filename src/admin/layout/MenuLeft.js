@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Menu } from "antd";
-import { Link, NavLink, useLocation, useParams, useSearchParams } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { adminRoute } from "../route/adminRoute";
-import { useDispatch } from "react-redux";
-import { setLoadingOff, setLoadingOn } from "../redux/spinnerSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { faHouse, faLocation, faTicket } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRotateBack, faHouse, faLocation, faTicket } from "@fortawesome/free-solid-svg-icons";
+import { userRoute } from "../../user/route/userRoute";
+
 export default function MenuLeft() {
   const [selectKey, setSelectKey] = useState(null);
   const { pathname } = useLocation()
@@ -60,6 +60,15 @@ export default function MenuLeft() {
           key: "4",
           label: <NavLink to={adminRoute.booking.path}>Quản lý đặt phòng</NavLink>,
           icon: <FontAwesomeIcon icon={faTicket} />
+        },
+        {
+          type: 'divider',
+          style: { borderColor: 'white' }
+        },
+        {
+          key: "5",
+          label: <NavLink to={userRoute.home.path}>Trang chủ</NavLink>,
+          icon: <FontAwesomeIcon icon={faArrowRotateBack} />
         },
       ]}
     />

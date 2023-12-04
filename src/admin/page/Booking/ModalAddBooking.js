@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { bookingRoomServ } from "../../api/api";
 import * as yup from "yup";
 import { message, DatePicker } from "antd";
+import dayjs from "dayjs";
 const validationSchema = yup.object().shape({
   id: yup.number().required("Vui lòng nhập id"),
   maPhong: yup.string().required("Vui lòng nhập mã phòng"),
@@ -46,6 +47,9 @@ export default function AddBooking({ getData }) {
   const handleDateEnd = (dateString) => {
     setValue("ngayDi", dateString);
   };
+  const handleDate = (dateTarget, date) => {
+    setValue(dateTarget, dayjs(date).startOf('day').format())
+  }
   const onSubmit = (values) => {
     bookingRoomServ
       .addBookingRoom(values)
@@ -83,7 +87,7 @@ export default function AddBooking({ getData }) {
             <div className="fixed inset-0 bg-black/25" />
           </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto">
+          <div className="fixed inset-0 overflow-y-auto modal-booking">
             <div className="flex min-h-full items-center justify-center p-4 text-center">
               <Transition.Child
                 as={Fragment}
@@ -103,7 +107,7 @@ export default function AddBooking({ getData }) {
                   </Dialog.Title>
                   <div className="mt-2">
                     <form onSubmit={handleSubmit(onSubmit)}>
-                      <div className="relative z-0 w-full mb-6 group mr-3">
+                      <div className="hidden relative z-0 w-full mb-6 group mr-3">
                         <input
                           disabled
                           type="number"
@@ -145,9 +149,11 @@ export default function AddBooking({ getData }) {
                               placeholder="DD/MM/YYYY"
                               name="ngayDen"
                               onChange={(date, dateString) =>
-                                handleDateStart(dateString)
+                                // handleDateStart(dateString)
+                                handleDate("ngayDen", date)
                               }
                               className="w-full mt-5"
+                              format="DD/MM/YYYY"
                             />
                             {errors.ngayDen && (
                               <p className="text-red-500">
@@ -165,9 +171,11 @@ export default function AddBooking({ getData }) {
                               placeholder="DD/MM/YYYY"
                               name="ngayDi"
                               onChange={(date, dateString) =>
-                                handleDateEnd(dateString)
+                                // handleDateEnd(dateString)
+                                handleDate("ngayDi", date)
                               }
                               className="w-full mt-5"
+                              format="DD/MM/YYYY"
                             />
                             {errors.ngayDi && (
                               <p className="text-red-500">

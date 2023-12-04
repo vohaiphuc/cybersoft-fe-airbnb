@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -10,46 +10,69 @@ import { userLocalStorage } from "../../api/localService";
 import { useNavigate } from "react-router-dom";
 import { message } from "antd";
 import { adminRoute } from "../../route/adminRoute";
+import { userRoute } from "../../../user/route/userRoute";
+
 const validationSchema = yup.object().shape({
-  email: yup.string().required("Email is required"),
-  password: yup.string().required("Password is required"),
+  email: yup.string().required("Vui lòng điền email"),
+  password: yup.string().required("Vui lòng điền mật khẩu"),
 });
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const methods = useForm({
     defaultValues: {
-      email: "",
-      password: "",
+      email: "vohai24@gmail.com",
+      password: "123123",
     },
     resolver: yupResolver(validationSchema),
   });
+
   const {
     setValue,
     handleSubmit,
     formState: { errors },
     register,
   } = methods;
+
   const onSubmit = (values) => {
     userServ
       .login(values)
       .then((res) => {
-        message.success("Đăng nhập thành công");
-        dispatch(setLogin(res.data.content));
-        userLocalStorage.set(res.data.content);
-        navigate(adminRoute.user.path);
+        const response = res.data.content
+        const role = response.user.role
+        if (role === "ADMIN") {
+          message.success("Đăng nhập thành công");
+          dispatch(setLogin(response));
+          userLocalStorage.set(response);
+          // navigate(adminRoute.user.path);
+          window.location.href = adminRoute.user.path
+        } else {
+          message.error("Tài khoản không có quyền truy cập trang quản trị!");
+        }
       })
       .catch((err) => {
-        message.error("Đăng nhập thất bại");
+        console.log("🚀 ~ file: Login.js:54 ~ onSubmit ~ err:", err)
+        message.error("Tài khoản hoặc mật khẩu không đúng!");
       });
   };
-  return (
+
+  const user = userLocalStorage.get()?.user;
+
+  useEffect(() => {
+    if (user && user.role !== "ADMIN") {
+      navigate(userRoute.home.path);
+    } else if (user && user.role === "ADMIN") {
+      navigate(adminRoute.home.path);
+    }
+  }, [user]);
+
+  return !user && (
     <>
-      <div className="form-content">
-        <div className="container">
-          <h1>Đăng Nhập Admin</h1>
+      <div className="form-content flex justify-center">
+        <div className="container space-y-10">
+          <h1>Đăng nhập Quản trị viên</h1>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="relative z-0 w-full mb-8 group mt-5">
+            <div className="relative z-0 w-full mb-12 group mt-5">
               <input
                 autoComplete="off"
                 type="text"
@@ -66,7 +89,7 @@ export default function Login() {
                 Email
               </label>
             </div>
-            <div className="relative z-0 w-full mb-6 group mt-5">
+            <div className="relative z-0 w-full mb-10 group mt-5">
               <input
                 type="password"
                 name="password"
@@ -82,7 +105,7 @@ export default function Login() {
                 Mật khẩu
               </label>
             </div>
-            <input type="submit" />
+            <button type="submit" className="border-2 border-white rounded-full text-white w-full py-3">Đăng nhập</button>
           </form>
         </div>
       </div>

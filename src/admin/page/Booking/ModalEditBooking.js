@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { bookingRoomServ } from "../../api/api";
 import * as yup from "yup";
 import { DatePicker, message } from "antd";
-import moment from "moment";
 import dayjs from 'dayjs';
 
 const validationSchema = yup.object().shape({
@@ -39,17 +38,13 @@ export default function EditBooking({ setIsOpen, isOpen, editData, getData }) {
   }
   const { id } = editData;
   const onSubmit = (values) => {
-    const { ngayDen, ngayDi, ...rest } = values;
-    const editedNgayDen = moment(ngayDen).startOf("day").format("DD/MM/YYYY");
-    const editedNgayDi = moment(ngayDi).startOf("day").format("DD/MM/YYYY");
     const roomData = {
+      ...values,
       id,
-      ngayDen: editedNgayDen,
-      ngayDi: editedNgayDi,
-      ...rest,
+      ngayDen: dayjs(values.ngayDen).format(),
+      ngayDi: dayjs(values.ngayDi).format(),
     };
-    bookingRoomServ
-      .editBookingRoom(id, roomData)
+    bookingRoomServ.editBookingRoom(id, roomData)
       .then((res) => {
         setIsOpen(false);
         message.success("Cập nhật thành công");
@@ -60,12 +55,11 @@ export default function EditBooking({ setIsOpen, isOpen, editData, getData }) {
         setIsOpen(false);
       });
   };
-  const handleDateStart = (dateString) => {
-    setValue("ngayDen", dateString);
-  };
-  const handleDateEnd = (dateString) => {
-    setValue("ngayDi", dateString);
-  };
+
+  const handleDate = (dateTarget, date) => {
+    setValue(dateTarget, dayjs(date).format())
+  }
+
   useEffect(() => {
     if (editData) {
       reset({
@@ -93,7 +87,7 @@ export default function EditBooking({ setIsOpen, isOpen, editData, getData }) {
             <div className="fixed inset-0 bg-black/25" />
           </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto">
+          <div className="fixed inset-0 overflow-y-auto modal-booking">
             <div className="flex min-h-full items-center justify-center p-4 text-center">
               <Transition.Child
                 as={Fragment}
@@ -135,19 +129,14 @@ export default function EditBooking({ setIsOpen, isOpen, editData, getData }) {
                         <div className=" z-0 w-full mb-6 group flex">
                           <div className="flex w-full flex-col mr-3 ">
                             <DatePicker
-                              defaultValue={dayjs(
-                                moment(editData.ngayDen).format("DD/MM/YYYY"),
-                                "DD/MM/YYYY"
-                              )}
+                              defaultValue={dayjs(editData.ngayDen)}
                               name="ngayDen"
                               onChange={(date, dateString) => {
-                                console.log(date);
-                                console.log(dateString);
-                                handleDateStart(dateString)
-                              }
-                              }
+                                handleDate("ngayDen", date)
+                              }}
                               className="w-full mt-5"
                               format="DD/MM/YYYY"
+                              placeholder="DD/MM/YYYY"
                             />
                             {errors.ngayDen && (
                               <p className="text-red-500">
@@ -162,16 +151,14 @@ export default function EditBooking({ setIsOpen, isOpen, editData, getData }) {
                         <div className=" z-0 w-full mb-6 group flex">
                           <div className="flex w-full flex-col">
                             <DatePicker
-                              defaultValue={dayjs(
-                                moment(editData.ngayDi).format("DD/MM/YYYY"),
-                                "DD/MM/YYYY"
-                              )}
+                              defaultValue={dayjs(editData.ngayDi)}
                               name="ngayDi"
                               onChange={(date, dateString) =>
-                                handleDateEnd(dateString)
+                                handleDate("ngayDi", date)
                               }
                               className="w-full mt-5"
                               format="DD/MM/YYYY"
+                              placeholder="DD/MM/YYYY"
                             />
                             {errors.ngayDi && (
                               <p className="text-red-500">

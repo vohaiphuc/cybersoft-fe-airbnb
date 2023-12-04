@@ -24,12 +24,10 @@ export function parseDate(dateString) {
     try {
       const parsedDate = parse(preprocessedDateString, format, new Date());
       if (!isNaN(parsedDate.getTime())) {
-        // Parsing successful
         return parsedDate;
       }
     } catch (error) {
       console.log(error);
-      // Parsing failed with this format, try the next one
     }
   }
 

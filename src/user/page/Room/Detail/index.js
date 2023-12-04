@@ -31,7 +31,7 @@ const RoomDetail = () => {
   }
 
   return (
-    <article className="container px-4 mx-auto py-6 lg:py-10">
+    <article className="container px-2 mx-auto py-6 lg:py-10">
       <Helmet>
         <title>{roomDetail?.tenPhong}</title>
         <meta name="description" content={roomDetail?.moTa} />

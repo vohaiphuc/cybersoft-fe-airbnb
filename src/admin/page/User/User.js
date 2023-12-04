@@ -7,6 +7,7 @@ import "./asset/style.scss";
 import AddUser from "./ModalAddUser";
 import EditUser from "./ModalEditUser";
 import dayjs from 'dayjs'
+import ButtonSortToolbar from "../components/ButtonSortToolbar";
 
 export default function User() {
   let [isOpen, setIsOpen] = useState(false);
@@ -27,7 +28,7 @@ export default function User() {
     getData();
   }, []);
 
-  const data = listUsers.map((user, index) => {
+  const data = listUsers?.map((user, index) => {
 
     let convertBirthday = dayjs(user.birthday, "DD/MM/YYYY")
     let convertBirthday2 = dayjs(user.birthday, "YYYY-MM-DD")
@@ -48,6 +49,12 @@ export default function User() {
       role: user.role,
     }
   });
+
+  const [sortToggle, setSortToggle] = useState(true)
+  const dataSorted = sortToggle ? data : data.reverse()
+  const reverseData = () => {
+    setSortToggle(!sortToggle)
+  }
 
   const columns = [
     {
@@ -96,9 +103,9 @@ export default function User() {
       label: "Hành động",
       options: {
         filter: true,
-        sort: false,
+        sort: true,
         customBodyRender: (value, tableMeta) => {
-          const userId = data[tableMeta.rowIndex].id;
+          const userId = dataSorted[tableMeta.rowIndex]?.id;
           return (
             <div>
               <Button
@@ -157,11 +164,12 @@ export default function User() {
       />
       <MUIDataTable
         title={"Quản lý danh sách người dùng"}
-        data={data}
+        data={dataSorted}
         columns={columns}
         options={{
           selectableRows: "none",
           caseSensitive: true,
+          customToolbar: () => <ButtonSortToolbar reverseData={reverseData} />
         }}
       />
     </React.Fragment>

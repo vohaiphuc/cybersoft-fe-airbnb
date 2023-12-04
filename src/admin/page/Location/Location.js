@@ -6,6 +6,7 @@ import { locationServ } from "../../api/api";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import AddLocation from "./ModalAddLocation";
 import EditLocation from "./ModalEditLocation";
+import ButtonSortToolbar from "../components/ButtonSortToolbar";
 export default function Location() {
   let [isOpen, setIsOpen] = useState(false);
   const [editData, setEditData] = useState({});
@@ -32,6 +33,13 @@ export default function Location() {
     quocGia: location.quocGia,
     hinhAnh: location.hinhAnh,
   }));
+
+  const [sortToggle, setSortToggle] = useState(true)
+  const dataSorted = sortToggle ? data : data.reverse()
+  const reverseData = () => {
+    setSortToggle(!sortToggle)
+  }
+
   const columns = [
     {
       name: "stt",
@@ -85,7 +93,7 @@ export default function Location() {
         filter: true,
         sort: false,
         customBodyRender: (value, tableMeta) => {
-          const locationId = data[tableMeta.rowIndex].id;
+          const locationId = dataSorted[tableMeta.rowIndex].id;
           return (
             <div>
               <Button
@@ -126,10 +134,10 @@ export default function Location() {
           prevListLocation.filter((location) => location.id !== locationId)
         );
         getData();
-        message.success("Delete location success fully");
+        message.success("Xóa thành công!");
       })
       .catch((err) => {
-        message.error("Delete location error");
+        message.error("Xảy ra lỗi");
         console.log(err);
       });
   };
@@ -143,14 +151,15 @@ export default function Location() {
         editData={editData}
       />
       <MUIDataTable
-        title={"Quản lý thông tin vị trí"}
-        data={data}
+        title="Quản lý thông tin vị trí"
+        data={dataSorted}
         columns={columns}
         options={{
           selectableRows: "none",
           caseSensitive: true,
           download: false,
           print: false,
+          customToolbar: () => <ButtonSortToolbar reverseData={reverseData} />
         }}
       />
     </div>

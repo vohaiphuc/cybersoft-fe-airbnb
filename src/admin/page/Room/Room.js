@@ -6,6 +6,7 @@ import { roomServ } from "../../api/api";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import AddRoom from "./ModalAddRoom";
 import EditRoom from "./ModalEditRoom";
+import ButtonSortToolbar from "../components/ButtonSortToolbar";
 export default function Room() {
   const [isOpen, setIsOpen] = useState(false);
   const [listRooms, setListRooms] = useState([]);
@@ -51,6 +52,13 @@ export default function Room() {
     moTa: room.moTa,
     giaTien: room.giaTien,
   }));
+
+  const [sortToggle, setSortToggle] = useState(true)
+  const dataSorted = sortToggle ? data : data.reverse()
+  const reverseData = () => {
+    setSortToggle(!sortToggle)
+  }
+
   const columns = [
     {
       name: "stt",
@@ -121,7 +129,7 @@ export default function Room() {
         sort: false,
         customBodyRender: (value, tableMeta) => {
           const index = tableMeta.rowIndex;
-          const room = listRooms[index];
+          const room = dataSorted[index];
           return (
             <Popover
               content={
@@ -229,13 +237,14 @@ export default function Room() {
       />
       <MUIDataTable
         title={"Quản lý danh sách phòng"}
-        data={data}
+        data={dataSorted}
         columns={columns}
         options={{
           selectableRows: "none",
           caseSensitive: true,
           download: false,
           print: false,
+          customToolbar: () => <ButtonSortToolbar reverseData={reverseData} />
         }}
       />
     </div>

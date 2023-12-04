@@ -1,10 +1,10 @@
 import { Button, ConfigProvider, DatePicker, Input } from 'antd';
-import React from 'react'
+import React, { useRef } from 'react'
 import DateInput from './DateInput';
 import useModalBg from '../../../Modal/useModalBg';
 import useActiveInput from './useActiveInput';
-
 const { RangePicker } = DatePicker
+
 const startDate = 'startDate'
 const endDate = 'endDate'
 
@@ -15,6 +15,7 @@ export default function DateOption({ date, setDate, singleCalendar }) {
     const key1 = 1
     const key2 = 2
     const active = (activeIndex == key1 || activeIndex == key2) && isOpenModal
+    const ref = useRef()
 
     const handleCalendarChange = ([start, end]) => {
         if (activeIndex == key1 && start) {
@@ -23,6 +24,7 @@ export default function DateOption({ date, setDate, singleCalendar }) {
         }
         else if (activeIndex == key2 && end) {
             setDate([start, end])
+            setActiveIndex(3)
         }
     }
 
@@ -41,6 +43,7 @@ export default function DateOption({ date, setDate, singleCalendar }) {
             <div className="w-full -z-10 -translate-y-full">
                 <ThemeRangePicker>
                     <RangePicker
+                        ref={ref}
                         open={active}
                         format='DD/MM/YYYY'
                         style={{ width: "100%", border: 0 }}

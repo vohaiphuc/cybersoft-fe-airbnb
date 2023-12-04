@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { userLocalStorage } from "../api/localService";
-import { adminRoute } from "../route/adminRoute";
+import { adminRoute } from "./adminRoute";
 import { useNavigate } from "react-router-dom";
 
 export default function PrivateRoute({ children }) {

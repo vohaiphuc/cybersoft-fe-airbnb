@@ -26,15 +26,6 @@ export const userRoute = {
     ),
   },
 
-  room: {
-    path: "/room",
-    element: (
-      <DefaultLayout>
-        <Room />
-      </DefaultLayout>
-    ),
-  },
-
   detail: {
     path: "/room/:id",
     element: (

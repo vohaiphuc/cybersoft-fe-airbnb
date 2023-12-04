@@ -39,7 +39,6 @@ const CommentForm = ({ editing, id, commentId, setEditing }) => {
     // Clear the form after submission
     form.resetFields();
   };
-  console.log(editing);
 
   useEffect(() => {
     form.setFieldsValue({ comment: editing });

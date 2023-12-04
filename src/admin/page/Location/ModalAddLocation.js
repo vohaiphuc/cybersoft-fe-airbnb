@@ -92,11 +92,11 @@ export default function AddLocation({ getData }) {
                     as="h3"
                     className="text-2xl font-medium leading-6 text-white mb-6 text-center"
                   >
-                    Add Location
+                    Thêm vị trí
                   </Dialog.Title>
                   <div className="mt-2">
                     <form onSubmit={handleSubmit(onSubmit)}>
-                      <div className="relative z-0 w-full mb-6 group mr-3">
+                      <div className="hidden relative z-0 w-full mb-6 group mr-3">
                         <input
                           disabled
                           type="number"

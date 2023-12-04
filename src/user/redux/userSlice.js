@@ -25,7 +25,8 @@ export const registerUser = createAsyncThunk(
         dispatch(setLogin(loginResponse.data.content.user));
         notification.success({ message: "Tạo tài khoản thành công !" });
         dispatch(clearPopup({ popup: "" }));
-        userLocalStorage.set(loginResponse.data.content.user);
+        userLocalStorage.set(loginResponse.data.content);
+        window.location.reload()
         return loginResponse.data.content.user;
       }
     } catch (error) {
@@ -168,13 +169,11 @@ const userSlice = createSlice({
         state.loading = true;
       })
       .addCase(updateProfile.fulfilled, (state, action) => {
-        // Handle state updates for a successful profile update
         state.loading = false;
       })
       .addCase(updateProfile.rejected, (state) => {
         state.loading = false;
       })
-      // Get list bookedRooms by userId
       .addCase(getListBookedRooms.fulfilled, (state, action) => {
         state.loading = false;
         state.bookedRooms = action.payload;

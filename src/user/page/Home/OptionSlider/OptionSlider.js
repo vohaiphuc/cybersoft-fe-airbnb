@@ -141,15 +141,21 @@ export default function OptionSlider() {
                     })}
                 </Carousel>
                 <div className="slider-arrow-container">
-                    <div
-                        className={`slider-arrow slider-arrow-prev ${sliderArrow === 0 ? 'hidden' : 'flex'}`}
-                        onClick={handleSlidePrev}>
-                        <FontAwesomeIcon icon={faChevronLeft} className='mx-auto ' />
+                    <div className={`${sliderArrow === 0 ? 'hidden' : 'flex'}`}>
+                        <div
+                            className="slider-arrow slider-arrow-prev"
+                            onClick={handleSlidePrev}>
+                            <FontAwesomeIcon icon={faChevronLeft} className='mx-auto' />
+                        </div>
+                        <div className='arrow-shadow arrow-shadow-prev'></div>
                     </div>
-                    <div
-                        className={`slider-arrow slider-arrow-next ${sliderArrow === maxSlide ? 'hidden' : 'flex'}`}
-                        onClick={handleSlideNext}>
-                        <FontAwesomeIcon icon={faChevronRight} className='mx-auto ' />
+                    <div className={`${sliderArrow === maxSlide ? 'hidden' : 'flex'}`}>
+                        <div
+                            className="slider-arrow slider-arrow-next"
+                            onClick={handleSlideNext}>
+                            <FontAwesomeIcon icon={faChevronRight} className='mx-auto' />
+                        </div>
+                        <div className='arrow-shadow arrow-shadow-next'></div>
                     </div>
                 </div>
             </div>

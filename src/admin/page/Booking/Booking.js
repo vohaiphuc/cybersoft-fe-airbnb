@@ -7,6 +7,7 @@ import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import moment from "moment";
 import AddBooking from "./ModalAddBooking";
 import EditBooking from "./ModalEditBooking";
+import ButtonSortToolbar from "../components/ButtonSortToolbar";
 export default function Booking() {
   let [isOpen, setIsOpen] = useState(false);
   const [editData, setEditData] = useState({});
@@ -17,7 +18,7 @@ export default function Booking() {
       .then((res) => {
         setListBookingRoom(res.data.content);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
   useEffect(() => {
     getData();
@@ -34,6 +35,13 @@ export default function Booking() {
       maNguoiDung: room.maNguoiDung,
     };
   });
+
+  const [sortToggle, setSortToggle] = useState(true)
+  const dataSorted = sortToggle ? data : data.reverse()
+  const reverseData = () => {
+    setSortToggle(!sortToggle)
+  }
+
   const columns = [
     {
       name: "stt",
@@ -91,7 +99,7 @@ export default function Booking() {
         filter: true,
         sort: false,
         customBodyRender: (value, tableMeta) => {
-          const roomId = data[tableMeta.rowIndex].id;
+          const roomId = dataSorted[tableMeta.rowIndex].id;
           return (
             <div>
               <Button
@@ -141,10 +149,10 @@ export default function Booking() {
           prevListBookingRoom.filter((room) => room.id !== roomId)
         );
         getData();
-        message.success("Delete location success fully");
+        message.success("Xóa thành công!");
       })
       .catch((err) => {
-        message.error("Delete location error");
+        message.error("Xảy ra lỗi!");
         console.log(err);
       });
   };
@@ -159,13 +167,14 @@ export default function Booking() {
       />
       <MUIDataTable
         title={"Quản lý đặt phòng"}
-        data={data}
+        data={dataSorted}
         columns={columns}
         options={{
           selectableRows: "none",
           caseSensitive: true,
           download: false,
           print: false,
+          customToolbar: () => <ButtonSortToolbar reverseData={reverseData} />
         }}
       />
     </div>

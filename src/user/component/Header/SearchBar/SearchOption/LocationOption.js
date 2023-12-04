@@ -24,9 +24,14 @@ export default function LocationOption({ setLocationId, locationLt }) {
         return label.indexOf(input) > -1
     }
 
-    const handleOnclick = () => {
-        setActiveIndex(key)
-        ref.current.focus()
+    const handleOnclick = ({ target }) => {
+        if (target.classList.contains("ant-select-item-option-content") || target.classList.contains("ant-select-item")) {
+            setActiveIndex(1)
+            ref.current.blur()
+        } else {
+            setActiveIndex(key)
+            ref.current.focus()
+        }
     }
 
     return (

@@ -31,7 +31,7 @@ export default function AddUser({ getData }) {
       phone: "",
       birthday: null,
       gender: "",
-      role: "",
+      role: "ADMIN",
     },
     resolver: yupResolver(validationSchema),
   });
@@ -55,7 +55,6 @@ export default function AddUser({ getData }) {
     const formattedValues = {
       ...values,
       gender: values.gender === "Nam" ? true : false,
-      birthday: moment(values.birthday).format("DD/MM/YYYY"),
     };
     userServ
       .addUser(formattedValues)
@@ -272,6 +271,7 @@ export default function AddUser({ getData }) {
                               label: "USER",
                             },
                           ]}
+                          defaultValue="ADMIN"
                         />
                         {errors.role && (
                           <p className="text-red-500">{errors.role.message}</p>
