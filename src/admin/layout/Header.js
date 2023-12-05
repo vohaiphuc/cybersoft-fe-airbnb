@@ -38,9 +38,9 @@ export default function Headers({ setCollapsed, collapsed }) {
       />
       {user ? (
         <div>
-          <Button type="text" danger className="mr-2">
+          <span className="mr-2 text-[#ff4d4f] font-semibold">
             {user.user.name}
-          </Button>
+          </span>
           <Button type="primary" danger onClick={() => handleLogout()}>
             Đăng xuất
           </Button>

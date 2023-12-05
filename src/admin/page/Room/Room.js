@@ -7,6 +7,7 @@ import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import AddRoom from "./ModalAddRoom";
 import EditRoom from "./ModalEditRoom";
 import ButtonSortToolbar from "../components/ButtonSortToolbar";
+import FormTemplate from "../components/FormTemplate";
 export default function Room() {
   const [isOpen, setIsOpen] = useState(false);
   const [listRooms, setListRooms] = useState([]);

@@ -41,10 +41,20 @@
             border: 0 !important;
         }
         .ant-select-selection-placeholder {
-            color: #fff !important;
+            color: #9b9b9b !important;
         }
         .ant-select-selection-item {
             color: #fff !important;
+        }
+        .ant-select-clear {
+            background: #0f172a;
+            color: rgb(164, 164, 164);
+            &:hover {
+                color: white;
+            }
+        }
+        .ant-select-selector {
+            padding-left: 0;
         }
     }
 }
