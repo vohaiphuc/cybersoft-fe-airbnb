@@ -77,7 +77,7 @@ export default function EditBooking({ setIsOpen, isOpen, editData, getData }) {
   }, [editData, reset]);
   return (
     <FormTemplate isOpen={isOpen} setIsOpen={setIsOpen} title="Cập nhật đặt phòng">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className="modal-booking">
         <div className="relative z-0 w-full mb-6 group">
           <input
             type="text"

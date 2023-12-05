@@ -79,7 +79,7 @@ export default function AddBooking({ getData }) {
         </button>
       </div>
       <FormTemplate isOpen={isOpen} setIsOpen={setIsOpen} title="Thêm đặt phòng">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} className="modal-booking">
           <div className="hidden relative z-0 w-full mb-6 group mr-3">
             <input
               disabled
